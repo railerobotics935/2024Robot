@@ -50,6 +50,10 @@ RobotContainer::RobotContainer() {
                 m_driveController.GetRawButton(ControllerConstants::kFieldRelativeSwitchIndex));
         },
         {&m_drive}));
+
+    // Add auto name options
+    m_autoChooser.SetDefaultOption("Other Auto", m_otherAuto);
+    m_autoChooser.AddOption("Figure8", m_defaultAuto);
 }
 
 void RobotContainer::ConfigureButtonBindings() {
@@ -77,8 +81,8 @@ void RobotContainer::ConfigureButtonBindings() {
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
 
-// builds and return auto command from pathplanner
-return PathPlannerAuto("Example Auto").ToPtr();
+    // Builds and returns auto commands from pathplanner
+    return PathPlannerAuto(m_autoChooser.GetSelected()).ToPtr();
 
 
 // Basic wpilib trajectory follow

@@ -8,28 +8,34 @@
 #include "Robot.h"
 
 /**
- * First bassed on an offseason commmand robot project for the 2023 season,
+ * Bassed on an offseason commmand robot project for the 2023 season,
  * this code is the for our Robot in the 2024 frc season
  *
  * List of items need to be compleated, list may change or be amended as 
  * we decide on adding new features
  * 
  * TODO: Create Pathplanner Auto
- *    TODO: Implement basic autobuilder to follow a single path
- *    TODO: Implement a SensableChooser to pick between paths
- *    TODO: Regester commands
- *    TODO: Create Autos using commands
+ *    DONE: Implement basic autobuilder to follow a single path
+ *    DONE: Implement a SensableChooser to pick between paths
  *    TODO: Create Allience side supplyer for autobuilder
+ *    TODO: Verfiy
  * 
  * TODO: Create Apriltag recongition system
  *    TODO: decide on camera location/configuatoin
  *    TODO: code it on a coprocesser
  *    TODO: Pull 3d postion from smartdashboard to the robot
+ *    TODO: Verfiy
  * 
  * TODO: Add Robot Code
  *    TODO: Split robot into subsystems
  *    TODO: Create commands for each action needed
  *    TODO: Map keybindings for each command
+ *    TODO: Regester Command for auto
+ *    TODO: Create Autos using command
+ *    TODO: Verfiy
+ * 
+ * TODO: Clean up code
+ *    TODO: Fix indentation size
  * 
  *  Team 935
 */

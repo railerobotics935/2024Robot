@@ -51,4 +51,11 @@ class RobotContainer {
   frc::SlewRateLimiter<units::scalar> m_rotLimiter{2 / 1_s};
 
   void ConfigureButtonBindings();
+
+  // Sendable chooser for auto
+  frc::SendableChooser<std::string> m_autoChooser;
+
+  // Auto options coresponding to the name of the autos                                             
+  std::string m_defaultAuto = "Figure8";
+  std::string m_otherAuto = "OtherAuto";
 };
