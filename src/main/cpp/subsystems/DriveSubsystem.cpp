@@ -11,15 +11,17 @@
 #include <frc/geometry/Pose2d.h>
 #include <frc/kinematics/ChassisSpeeds.h>
 
-//#include "pathplanner/lib/auto/AutoBuilder.h"
-//#include "pathplanner/lib/util/HolonomicPathFollowerConfig.h"
-//#include "pathplanner/lib/util/PIDConstants.h"
-//#include "pathplanner/lib/util/ReplanningConfig.h"
+#include "pathplanner/lib/auto/AutoBuilder.h"
+#include "pathplanner/lib/util/HolonomicPathFollowerConfig.h"
+#include "pathplanner/lib/util/PIDConstants.h"
+#include "pathplanner/lib/util/ReplanningConfig.h"
 
 #include <iostream>
 #include "Constants.h"
 
 using namespace DriveConstants;
+
+using namespace pathplanner;
 
 DriveSubsystem::DriveSubsystem()
   : m_frontLeft{kFrontLeftDriveMotorPort,
@@ -51,7 +53,8 @@ DriveSubsystem::DriveSubsystem()
                 m_backLeft.GetPosition(), m_backRight.GetPosition()},
                 frc::Pose2d{}} 
 {
-/* New Pathplanner version
+  
+// TODO: Create Allience side supplyer for autobuilder
 // Configure the AutoBuilder last
 AutoBuilder::configureHolonomic(
     [this](){ return GetPose(); }, // Robot pose supplier
@@ -65,10 +68,10 @@ AutoBuilder::configureHolonomic(
         0.4_m, // Drive base radius in meters. Distance from robot center to furthest module.
         ReplanningConfig() // Default path replanning config. See the API for the options here
     ),
+    [this](){return false;}, // Supplier that determines if paths should be flipped to the other side of the field. This will maintain a global blue alliance origin.
     this // Reference to this subsystem to set requirements
 );
 
-*/
 }
 
 void DriveSubsystem::Periodic() {

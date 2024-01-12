@@ -16,13 +16,12 @@
  * 
  * TODO: Create Pathplanner Auto
  *    TODO: Implement basic autobuilder to follow a single path
- *    TODO: Create different paths
  *    TODO: Implement a SensableChooser to pick between paths
  *    TODO: Regester commands
  *    TODO: Create Autos using commands
+ *    TODO: Create Allience side supplyer for autobuilder
  * 
  * TODO: Create Apriltag recongition system
- *    TODO: learn about them
  *    TODO: decide on camera location/configuatoin
  *    TODO: code it on a coprocesser
  *    TODO: Pull 3d postion from smartdashboard to the robot
@@ -77,9 +76,8 @@ void Robot::TeleopInit() {
   // teleop starts running. If you want the autonomous to
   // continue until interrupted by another command, remove
   // this line or comment it out.
-  if (m_autonomousCommand != nullptr) {
+  if (m_autonomousCommand) {
     m_autonomousCommand->Cancel();
-    m_autonomousCommand = nullptr;
   }
 }
 

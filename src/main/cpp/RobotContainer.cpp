@@ -21,15 +21,13 @@
 #include <units/velocity.h>
 #include <frc2/command/button/JoystickButton.h>
 
-//#include "pathplanner/lib/PathPlanner.h"
-//#include "pathplanner/lib/auto/SwerveAutoBuilder.h"
-//#include "pathplanner/lib/commands/PPSwerveControllerCommand.h"
+#include <pathplanner/lib/commands/PathPlannerAuto.h>
 
 #include "Constants.h"
 #include "subsystems/DriveSubsystem.h"
 
 using namespace DriveConstants;
-//using namespace pathplanner;
+using namespace pathplanner;
 
 RobotContainer::RobotContainer() {
     // Initialize all of your commands and subsystems here
@@ -77,46 +75,14 @@ void RobotContainer::ConfigureButtonBindings() {
     parkSwitch.WhileTrue(frc2::cmd::Run([&] {m_drive.Park();}, {&m_drive}));
 }
 
-frc2::Command* RobotContainer::GetAutonomousCommand() {
+frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
+
+// builds and return auto command from pathplanner
+return PathPlannerAuto("Example Auto").ToPtr();
+
+
+// Basic wpilib trajectory follow
 #if 0
-      // Set up config for trajectory
-    frc::TrajectoryConfig config(AutoConstants::kMaxSpeed,
-                                AutoConstants::kMaxAcceleration);
-    // Add kinematics to ensure max speed is actually obeyed
-    config.SetKinematics(m_drive.m_driveKinematics);
-
-
-    std::vector<PathPlannerTrajectory> pathGroup = PathPlanner::loadPathGroup("Test Drive Forward", {PathConstraints(4_mps, 3_mps_sq)});
-
-
-    frc::ProfiledPIDController<units::radians> thetaController{
-        AutoConstants::kPThetaController, 0, 0,
-        AutoConstants::kThetaControllerConstraints};
-
-    thetaController.EnableContinuousInput(units::radian_t{-std::numbers::pi},
-                                            units::radian_t{std::numbers::pi});
-
-    std::unordered_map<std::string, std::shared_ptr<frc2::Command>> eventMap;
-
-    // Swerve Command builder for pathplanner
-    SwerveAutoBuilder autoBuilder(
-        [this]() { printf("GetPose\r\n"); return m_drive.GetPose(); }, // Function to supply current robot pose
-        [this](auto initPose) { printf("ResetOdometry\r\n"); m_drive.ResetOdometry(initPose); }, // Function used to reset odometry at the beginning of auto
-        m_drive.m_driveKinematics,
-        PIDConstants(5.0, 0.0, 0.0), // PID constants to correct for translation error (used to create the X and Y PID controllers)
-        PIDConstants(0.5, 0.0, 0.0), // PID constants to correct for rotation error (used to create the rotation controller)
-        [this](auto states) { printf("SetStates\r\n"); m_drive.SetModuleStates(states);}, // Output function that accepts field relative ChassisSpeeds
-        eventMap, // Our event map
-        { &m_drive }, // Drive requirements, usually just a single drive subsystem
-        true // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
-    );
-
-    frc2::CommandPtr fullAuto = autoBuilder.fullAuto(pathGroup);
-    frc2::Command* autoCommand = fullAuto.get();
-    return autoCommand;
-
-#endif
-
   // Set up config for trajectory
   frc::TrajectoryConfig config{AutoConstants::kMaxSpeed,
                                AutoConstants::kMaxAcceleration};
@@ -157,7 +123,5 @@ return new frc2::SequentialCommandGroup(
     frc2::InstantCommand(
         [this]() { m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false); }, {}));
     
-    
-  
-
+#endif
 }
