@@ -22,8 +22,8 @@ SwerveModule::SwerveModule(int driveMotorPort,
   // Set the distance per pulse for the drive encoder. We can simply use the
   // distance traveled for one rotation of the wheel divided by the encoder
   // resolution. Don't forget the gear ratio of the swerve drive module.
-  m_driveEncoder.SetVelocityConversionFactor(ModuleConstants::kDriveEncoderConversionFacotr);
-  m_driveEncoder.SetPositionConversionFactor(ModuleConstants::kDriveEncoderConversionFacotr);
+  m_driveEncoder.SetVelocityConversionFactor(ModuleConstants::kDriveVelocityEncoderConversionFactor);
+  m_driveEncoder.SetPositionConversionFactor(ModuleConstants::kDrivePositionEncoderConversionFactor);
 
   // Invert Turing motor so it turns CCW for positive voltage
   m_driveMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
@@ -64,7 +64,7 @@ void SwerveModule::SetDesiredState(
   const auto driveFeedforward = m_driveFeedforward.Calculate(state.speed);
 
   // Set the motor outputs.
-  m_driveMotor.SetVoltage(units::volt_t{driveOutput} + driveFeedforward);
+  m_driveMotor.SetVoltage(units::volt_t{driveOutput} + units::volt_t{driveFeedforward});
   m_turningMotor.SetVoltage(units::volt_t{turnOutput});
   
 }

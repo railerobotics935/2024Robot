@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.169256702149768,
+        "x": 2.17,
         "y": 5.867781190107834
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.1756983764414763,
-        "y": 6.814156597901747
+        "x": 2.5703927771497916,
+        "y": 7.4163530145236445
       },
       "isLocked": false,
       "linkedName": "1"
@@ -20,12 +20,12 @@
         "y": 5.867781190107834
       },
       "prevControl": {
-        "x": 3.762730013441304,
-        "y": 4.855363840035107
+        "x": 3.6381230769690776,
+        "y": 4.169968132733336
       },
       "nextControl": {
-        "x": 3.673637973394016,
-        "y": 6.858213644870939
+        "x": 3.7924584940084975,
+        "y": 7.46299674417474
       },
       "isLocked": false,
       "linkedName": null
@@ -36,8 +36,8 @@
         "y": 5.867781190107834
       },
       "prevControl": {
-        "x": 2.1756983764414763,
-        "y": 4.802218119641965
+        "x": 2.5330777934289146,
+        "y": 4.244579398249139
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,16 +46,16 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.3,
-      "rotationDegrees": -38.19328222943637,
-      "rotateFast": false
+      "waypointRelativePos": 0.6,
+      "rotationDegrees": -92.1795465937926,
+      "rotateFast": true
     }
   ],
   "constraintZones": [
     {
       "name": "New Constraints Zone",
       "minWaypointRelativePos": 0.25,
-      "maxWaypointRelativePos": 0.95,
+      "maxWaypointRelativePos": 0.5,
       "constraints": {
         "maxVelocity": 0.5,
         "maxAcceleration": 3.0,
@@ -79,13 +79,13 @@
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
-    "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 720.0
+    "maxAngularVelocity": 240.0,
+    "maxAngularAcceleration": 500.0
   },
   "goalEndState": {
     "velocity": 0,
     "rotation": -178.66778014613047,
-    "rotateFast": false
+    "rotateFast": true
   },
   "reversed": false,
   "folder": null,

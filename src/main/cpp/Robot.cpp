@@ -17,13 +17,14 @@
  * TODO: Create Pathplanner Auto
  *    DONE: Implement basic autobuilder to follow a single path
  *    DONE: Implement a SensableChooser to pick between paths
- *    TODO: Create Allience side supplyer for autobuilder
+ *    DONE: Create Allience side supplyer for autobuilder
  *    TODO: Verfiy
  * 
  * TODO: Create Apriltag recongition system
  *    TODO: decide on camera location/configuatoin
- *    TODO: code it on a coprocesser
+ *    DONE: code it on a coprocesser
  *    TODO: Pull 3d postion from smartdashboard to the robot
+ *    TODO: Updtate the robot postion bassed on the apriltag
  *    TODO: Verfiy
  * 
  * TODO: Add Robot Code
@@ -33,6 +34,9 @@
  *    TODO: Regester Command for auto
  *    TODO: Create Autos using command
  *    TODO: Verfiy
+ * 
+ * TODO: Improvements
+ *    TODO: Work on fixing the abolute encoder problem witht the swerve
  * 
  * TODO: Clean up code
  *    TODO: Fix indentation size

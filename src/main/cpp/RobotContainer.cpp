@@ -52,8 +52,10 @@ RobotContainer::RobotContainer() {
         {&m_drive}));
 
     // Add auto name options
-    m_autoChooser.SetDefaultOption("Other Auto", m_otherAuto);
-    m_autoChooser.AddOption("Figure8", m_defaultAuto);
+    m_autoChooser.SetDefaultOption("Forward 1m", m_forward1m);
+    m_autoChooser.AddOption("Left 1m", m_left1m);
+    m_autoChooser.AddOption("Other Auto", m_circleAuto);
+    m_autoChooser.AddOption("Figure8", m_figure8);
 
     frc::Shuffleboard::GetTab("Autonomous").Add(m_autoChooser);
 }
@@ -64,6 +66,7 @@ void RobotContainer::ConfigureButtonBindings() {
     frc2::JoystickButton slowSwitch(&m_driveController, ControllerConstants::kSlowStateSwitchIndex); // Creates a new JoystickButton object for the slow switch on Drive Controller    
     frc2::JoystickButton parkSwitch(&m_driveController, ControllerConstants::kParkSwitchIndex); // Creates a new JoystickButton object for the brake switch on Drive Controller    
 
+    
     // I don't exactly know why this works, but the documentation for command based c++ is kinda bad 
     resetButton.OnTrue(frc2::cmd::Run([&] {m_drive.ZeroHeading();}, {&m_drive}));
     slowSwitch.WhileTrue(frc2::cmd::Run([&] {            
@@ -79,6 +82,7 @@ void RobotContainer::ConfigureButtonBindings() {
         {&m_drive}));
 
     parkSwitch.WhileTrue(frc2::cmd::Run([&] {m_drive.Park();}, {&m_drive}));
+    
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {

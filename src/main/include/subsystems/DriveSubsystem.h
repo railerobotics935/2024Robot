@@ -15,6 +15,7 @@
 #include <frc2/command/SubsystemBase.h>
 #include <networktables/NetworkTableEntry.h>
 #include <networktables/NetworkTableInstance.h>
+#include <frc/smartdashboard/Field2d.h>
 
 #include "Constants.h"
 #include "SwerveModule.h"
@@ -22,6 +23,11 @@
 class DriveSubsystem : public frc2::SubsystemBase {
  public:
   DriveSubsystem();
+  /**
+   * Will return true when the robot is on the red allience. Specificly
+   * for the pathplanner path orientaion
+   */
+  bool InRedAlience();
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -151,6 +157,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
     nt::NetworkTableEntry nte_robot_x;
     nt::NetworkTableEntry nte_robot_y;
 
+    frc::Field2d m_field;
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 

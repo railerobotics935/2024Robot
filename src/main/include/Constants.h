@@ -53,7 +53,7 @@ constexpr double kFrontRightDriveEncoderOffset = 2.787 + std::numbers::pi;
 constexpr double kBackLeftDriveEncoderOffset =  -0.155 + std::numbers::pi;
 constexpr double kBackRightDriveEncoderOffset = -1.850 + std::numbers::pi;
 
-constexpr auto kRobotMaxLinearVelocity = 16_mps;
+constexpr auto kRobotMaxLinearVelocity = 4.6_mps; // 4.6
 constexpr auto kRobotMaxAngularVelocity = std::numbers::pi * 5_rad_per_s;
 
 }  // namespace DriveConstants
@@ -64,20 +64,25 @@ namespace ModuleConstants {
 constexpr double ANALOG_TO_RAD_FACTOR = 1.2566;     // 0 to 5.0 volt = 2PI rad
 constexpr double SPARK_MAX_ANALOG_TO_RAD_FACTOR = 1.9040;     // 0 to 3.3 volt = 2PI rad  should come back and revisit this to maybe fix anolog things.
 
-constexpr int kEncoderCPR = 1024;
 constexpr double kWheelRadiusMeters = 0.0508;
 constexpr int kEncoderResolution = 42;
 constexpr double kGearRatio = 6.75;
 
-constexpr double kDriveEncoderConversionFacotr = (2.0 * std::numbers::pi * kWheelRadiusMeters 
+constexpr double kDriveVelocityEncoderConversionFactor = (2.0 * std::numbers::pi * kWheelRadiusMeters 
                                                 / (kGearRatio * kEncoderResolution));
+
+constexpr double kDrivePositionEncoderConversionFactor = (2.0 * std::numbers::pi * kWheelRadiusMeters 
+                                                / (kGearRatio));
 
 constexpr auto kModuleMaxAngularVelocity =  std::numbers::pi * 9_rad_per_s;  // radians per second ?????????
 constexpr auto kModuleMaxAngularAcceleration = std::numbers::pi * 20_rad_per_s / 1_s;  // radians per second^2
-constexpr auto kMaxLinearVelocity = 16_mps;
+constexpr auto kMaxLinearVelocity = 4.6_mps;
 
 constexpr double kPModuleTurningController = 1;
+
 constexpr double kPModuleDriveController = 1;
+constexpr double kIModuleDriveController = 0.1;
+constexpr double kDModuleDriveController = 0.1;
 }  // namespace ModuleConstants
 
 namespace AutoConstants {

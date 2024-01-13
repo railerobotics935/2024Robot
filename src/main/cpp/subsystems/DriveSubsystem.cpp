@@ -10,6 +10,8 @@
 #include <units/velocity.h>
 #include <frc/geometry/Pose2d.h>
 #include <frc/kinematics/ChassisSpeeds.h>
+#include <frc/shuffleboard/Shuffleboard.h>
+#include <frc/DriverStation.h>
 
 #include "pathplanner/lib/auto/AutoBuilder.h"
 #include "pathplanner/lib/util/HolonomicPathFollowerConfig.h"
@@ -51,7 +53,7 @@ DriveSubsystem::DriveSubsystem()
                 m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw),
                 {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
                 m_backLeft.GetPosition(), m_backRight.GetPosition()},
-                frc::Pose2d{}} 
+                frc::Pose2d{(units::meter_t)3.0, (units::meter_t)3.0, m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw)}} 
 {
   
 // TODO: Create Allience side supplyer for autobuilder
@@ -64,11 +66,12 @@ AutoBuilder::configureHolonomic(
     HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
         PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
         PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
-        4.5_mps, // Max module speed, in m/s
-        0.4_m, // Drive base radius in meters. Distance from robot center to furthest module.
+        4.6_mps, // Max module speed, in m/s
+        0.43_m, // Drive base radius in meters. Distance from robot center to furthest module.
         ReplanningConfig() // Default path replanning config. See the API for the options here
     ),
-    [this](){return false;}, // Supplier that determines if paths should be flipped to the other side of the field. This will maintain a global blue alliance origin.
+    // Supplier that determines if paths should be flipped to the other side of the field. This will maintain a global blue alliance origin.
+    [this](){return InRedAlience();},
     this // Reference to this subsystem to set requirements
   );
 
@@ -103,7 +106,17 @@ AutoBuilder::configureHolonomic(
   nte_robot_x = nt_table->GetEntry("Swerve Drive/Robot X");
   nte_robot_y = nt_table->GetEntry("Swerve Drive/Robot Y");
 
+  // Send Field to shuffleboard
+  frc::Shuffleboard::GetTab("Field").Add(m_field);
 
+}
+
+// Returns true is the allience selected is red
+bool DriveSubsystem::InRedAlience() {
+  if (frc::DriverStation::GetAlliance() == frc::DriverStation::Alliance::kBlue)
+    return false;
+  else
+    return true;
 }
 
 void DriveSubsystem::Periodic() {
@@ -129,6 +142,9 @@ void DriveSubsystem::Periodic() {
   //nte_fr_raw_encoder_voltage.SetDouble(m_frontRight.GetEncoderVoltage());
   //nte_bl_raw_encoder_voltage.SetDouble(m_backLeft.GetEncoderVoltage());
   //nte_br_raw_encoder_voltage.SetDouble(m_backRight.GetEncoderVoltage());
+
+  // Set robot possition wto shuffleboard field
+  m_field.SetRobotPose(m_odometry.GetPose());
 
 }
 

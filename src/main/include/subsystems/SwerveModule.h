@@ -46,11 +46,11 @@ class SwerveModule {
   
   double m_kTurningEncoderOffset;
   
-  frc::PIDController m_drivePIDController{ModuleConstants::kPModuleDriveController, 0, 0};
+  frc::PIDController m_drivePIDController{ModuleConstants::kPModuleDriveController, ModuleConstants::kIModuleDriveController, ModuleConstants::kDModuleDriveController};
 
   frc::ProfiledPIDController<units::radians> m_turningPIDController{
       12.5, 190.0, 0.15,
       {ModuleConstants::kModuleMaxAngularVelocity, ModuleConstants::kModuleMaxAngularAcceleration}};
-  frc::SimpleMotorFeedforward<units::meters> m_driveFeedforward{0.5_V, 1_V / 1_mps};
+  frc::SimpleMotorFeedforward<units::meters> m_driveFeedforward{1_V, 2_V / 1_mps};
 
 };
