@@ -54,6 +54,8 @@ RobotContainer::RobotContainer() {
     // Add auto name options
     m_autoChooser.SetDefaultOption("Other Auto", m_otherAuto);
     m_autoChooser.AddOption("Figure8", m_defaultAuto);
+
+    frc::Shuffleboard::GetTab("Autonomous").Add(m_autoChooser);
 }
 
 void RobotContainer::ConfigureButtonBindings() {
@@ -83,7 +85,6 @@ frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
 
     // Builds and returns auto commands from pathplanner
     return PathPlannerAuto(m_autoChooser.GetSelected()).ToPtr();
-
 
 // Basic wpilib trajectory follow
 #if 0

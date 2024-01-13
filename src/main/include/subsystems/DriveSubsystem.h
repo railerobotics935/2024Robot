@@ -13,6 +13,8 @@
 #include <frc/kinematics/SwerveDriveKinematics.h>
 #include <frc/kinematics/SwerveDriveOdometry.h>
 #include <frc2/command/SubsystemBase.h>
+#include <networktables/NetworkTableEntry.h>
+#include <networktables/NetworkTableInstance.h>
 
 #include "Constants.h"
 #include "SwerveModule.h"
@@ -121,6 +123,34 @@ class DriveSubsystem : public frc2::SubsystemBase {
       frc::Translation2d{-kWheelBase / 2, -kTrackWidth / 2}};
 
  private:
+    // Declaring all of the network table entries
+    nt::NetworkTableEntry nte_fl_set_angle;
+    nt::NetworkTableEntry nte_fr_set_angle;
+    nt::NetworkTableEntry nte_bl_set_angle;
+    nt::NetworkTableEntry nte_br_set_angle;
+    nt::NetworkTableEntry nte_fl_set_speed;
+    nt::NetworkTableEntry nte_fr_set_speed;
+    nt::NetworkTableEntry nte_bl_set_speed;
+    nt::NetworkTableEntry nte_br_set_speed;
+    
+    nt::NetworkTableEntry nte_fl_real_angle;
+    nt::NetworkTableEntry nte_fr_real_angle;
+    nt::NetworkTableEntry nte_bl_real_angle;
+    nt::NetworkTableEntry nte_br_real_angle;
+    nt::NetworkTableEntry nte_fl_real_speed;
+    nt::NetworkTableEntry nte_fr_real_speed;
+    nt::NetworkTableEntry nte_bl_real_speed;
+    nt::NetworkTableEntry nte_br_real_speed;
+
+    nt::NetworkTableEntry nte_fl_raw_encoder_voltage;
+    nt::NetworkTableEntry nte_fr_raw_encoder_voltage;
+    nt::NetworkTableEntry nte_bl_raw_encoder_voltage;
+    nt::NetworkTableEntry nte_br_raw_encoder_voltage;
+
+    nt::NetworkTableEntry nte_gyro_angle;
+    nt::NetworkTableEntry nte_robot_x;
+    nt::NetworkTableEntry nte_robot_y;
+
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 

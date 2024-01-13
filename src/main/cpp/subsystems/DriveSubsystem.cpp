@@ -70,7 +70,39 @@ AutoBuilder::configureHolonomic(
     ),
     [this](){return false;}, // Supplier that determines if paths should be flipped to the other side of the field. This will maintain a global blue alliance origin.
     this // Reference to this subsystem to set requirements
-);
+  );
+
+  // Initialize shuffleboard communication
+  auto nt_inst = nt::NetworkTableInstance::GetDefault();
+  auto nt_table = nt_inst.GetTable("datatable");
+
+  nte_fl_set_angle = nt_table->GetEntry("Swerve Drive/Front Left/Set Angle");
+  nte_fr_set_angle = nt_table->GetEntry("Swerve Drive/Front Right/Set Angle");
+  nte_bl_set_angle = nt_table->GetEntry("Swerve Drive/Back Left/Set Angle");
+  nte_br_set_angle = nt_table->GetEntry("Swerve Drive/Back Right/Set Angle");
+  nte_fl_set_speed = nt_table->GetEntry("Swerve Drive/Front Left/Set Speed");
+  nte_fr_set_speed = nt_table->GetEntry("Swerve Drive/Front Right/Set Speed");
+  nte_bl_set_speed = nt_table->GetEntry("Swerve Drive/Back Left/Set Speed");
+  nte_br_set_speed = nt_table->GetEntry("Swerve Drive/Back Right/Set Speed");
+
+  nte_fl_real_angle = nt_table->GetEntry("Swerve Drive/Front Left/Real Angle");
+  nte_fr_real_angle = nt_table->GetEntry("Swerve Drive/Front Right/Real Angle");
+  nte_bl_real_angle = nt_table->GetEntry("Swerve Drive/Back Left/Real Angle");
+  nte_br_real_angle = nt_table->GetEntry("Swerve Drive/Back Right/Real Angle");
+  nte_fl_real_speed = nt_table->GetEntry("Swerve Drive/Front Left/Real Speed");
+  nte_fr_real_speed = nt_table->GetEntry("Swerve Drive/Front Right/Real Speed");
+  nte_bl_real_speed = nt_table->GetEntry("Swerve Drive/Back Left/Real Speed");
+  nte_br_real_speed = nt_table->GetEntry("Swerve Drive/Back Right/Real Speed");
+
+  nte_fl_raw_encoder_voltage = nt_table->GetEntry("Swerve Drive/Front Left/Encoder Voltage");
+  nte_fr_raw_encoder_voltage = nt_table->GetEntry("Swerve Drive/Front Right/Encoder Voltage");
+  nte_bl_raw_encoder_voltage = nt_table->GetEntry("Swerve Drive/Back Left/Encoder Voltage");
+  nte_br_raw_encoder_voltage = nt_table->GetEntry("Swerve Drive/Back Right/Encoder Voltage");
+
+  nte_gyro_angle = nt_table->GetEntry("Swerve Drive/Gyro Angle");
+  nte_robot_x = nt_table->GetEntry("Swerve Drive/Robot X");
+  nte_robot_y = nt_table->GetEntry("Swerve Drive/Robot Y");
+
 
 }
 
@@ -79,6 +111,25 @@ void DriveSubsystem::Periodic() {
   m_odometry.Update(m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw),
                     {m_frontLeft.GetPosition(), m_frontRight.GetPosition(), 
                     m_backLeft.GetPosition(), m_backRight.GetPosition()});
+                    
+  nte_fl_real_angle.SetDouble((double)m_frontLeft.GetState().angle.Radians());
+  nte_fr_real_angle.SetDouble((double)m_frontRight.GetState().angle.Radians());
+  nte_bl_real_angle.SetDouble((double)m_backLeft.GetState().angle.Radians());
+  nte_br_real_angle.SetDouble((double)m_backRight.GetState().angle.Radians());
+  nte_fl_real_speed.SetDouble((double)m_frontLeft.GetState().speed);
+  nte_fr_real_speed.SetDouble((double)m_frontRight.GetState().speed);
+  nte_bl_real_speed.SetDouble((double)m_backLeft.GetState().speed);
+  nte_br_real_speed.SetDouble((double)m_backRight.GetState().speed);
+
+  nte_gyro_angle.SetDouble((double)m_odometry.GetPose().Rotation().Radians());
+  nte_robot_x.SetDouble((double)m_odometry.GetPose().X());
+  nte_robot_y.SetDouble((double)m_odometry.GetPose().Y());
+
+  //nte_fl_raw_encoder_voltage.SetDouble(m_frontLeft.GetEncoderVoltage());
+  //nte_fr_raw_encoder_voltage.SetDouble(m_frontRight.GetEncoderVoltage());
+  //nte_bl_raw_encoder_voltage.SetDouble(m_backLeft.GetEncoderVoltage());
+  //nte_br_raw_encoder_voltage.SetDouble(m_backRight.GetEncoderVoltage());
+
 }
 
 void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
@@ -98,6 +149,17 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
   m_frontRight.SetDesiredState(fr);
   m_backLeft.SetDesiredState(bl);
   m_backRight.SetDesiredState(br);
+
+  // Network table entries
+  nte_fl_set_angle.SetDouble((double)fl.angle.Radians());
+  nte_fr_set_angle.SetDouble((double)fr.angle.Radians());
+  nte_bl_set_angle.SetDouble((double)bl.angle.Radians());
+  nte_br_set_angle.SetDouble((double)br.angle.Radians());
+  nte_fl_set_speed.SetDouble((double)fl.speed);
+  nte_fr_set_speed.SetDouble((double)fr.speed);
+  nte_bl_set_speed.SetDouble((double)bl.speed);
+  nte_br_set_speed.SetDouble((double)br.speed);
+  
 }
 
 void DriveSubsystem::DriveWithChassisSpeeds(frc::ChassisSpeeds speeds) {
