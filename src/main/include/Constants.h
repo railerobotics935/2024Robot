@@ -56,6 +56,8 @@ constexpr double kBackRightDriveEncoderOffset = -1.850 + std::numbers::pi;
 constexpr auto kRobotMaxLinearVelocity = 4.6_mps; // 4.6
 constexpr auto kRobotMaxAngularVelocity = std::numbers::pi * 5_rad_per_s;
 
+constexpr auto kDriveBaseRadius = 0.46_m;
+
 }  // namespace DriveConstants
 
 namespace ModuleConstants {
@@ -76,7 +78,7 @@ constexpr double kDrivePositionEncoderConversionFactor = (2.0 * std::numbers::pi
 
 constexpr auto kModuleMaxAngularVelocity =  std::numbers::pi * 9_rad_per_s;  // radians per second ?????????
 constexpr auto kModuleMaxAngularAcceleration = std::numbers::pi * 20_rad_per_s / 1_s;  // radians per second^2
-constexpr auto kMaxLinearVelocity = 4.6_mps;
+constexpr auto kModuleMaxLinearVelocity = 4.6_mps;
 
 constexpr double kPModuleTurningController = 1;
 
@@ -87,18 +89,16 @@ constexpr double kDModuleDriveController = 0.1;
 
 namespace AutoConstants {
 
-// Not valuable numbers yet
-constexpr auto kMaxSpeed = 3_mps;
-constexpr auto kMaxAcceleration = 3_mps_sq;
-constexpr auto kMaxAngularSpeed = 3.142_rad_per_s;
-constexpr auto kMaxAngularAcceleration = 3.142_rad_per_s_sq;
+// Only Constants here are the PID constants. Look in path planner for max veleocty/acceleration constants
+// PID Constants for the tranlation (X and Y movement) of the robot during auto
+constexpr double kPTanslationController = 6.0;
+constexpr double kITanslationController = 1.7;
+constexpr double kDTanslationController = 0.0;
 
-constexpr double kPXController = 0.5;
-constexpr double kPYController = 0.5;
-constexpr double kPThetaController = 0.5;
-
-extern const frc::TrapezoidProfile<units::radians>::Constraints
-    kThetaControllerConstraints;
+// PID Constants for the rotation, or Yaw of the robot
+constexpr double kPRotationController = 5.0;
+constexpr double kIRotationController = 0.0;
+constexpr double kDRotationController = 0.0;
 
 }  // namespace AutoConstants
 

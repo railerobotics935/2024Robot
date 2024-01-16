@@ -56,7 +56,6 @@ DriveSubsystem::DriveSubsystem()
                 frc::Pose2d{(units::meter_t)3.0, (units::meter_t)3.0, m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw)}} 
 {
   
-// TODO: Create Allience side supplyer for autobuilder
 // Configure the AutoBuilder last
 AutoBuilder::configureHolonomic(
     [this](){ return GetPose(); }, // Robot pose supplier
@@ -64,10 +63,10 @@ AutoBuilder::configureHolonomic(
     [this](){ return GetRobotRelativeSpeeds(); }, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
     [this](frc::ChassisSpeeds speeds){ DriveWithChassisSpeeds(speeds); }, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
     HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-        PIDConstants(5.0, 0.0, 0.0), // Translation PID constants
-        PIDConstants(5.0, 0.0, 0.0), // Rotation PID constants
-        4.6_mps, // Max module speed, in m/s
-        0.43_m, // Drive base radius in meters. Distance from robot center to furthest module.
+        PIDConstants(AutoConstants::kPTanslationController, AutoConstants::kITanslationController, AutoConstants::kDTanslationController), // Translation PID constants
+        PIDConstants(AutoConstants::kPRotationController, AutoConstants::kIRotationController, AutoConstants::kDRotationController), // Rotation PID constants
+        ModuleConstants::kModuleMaxLinearVelocity, // Max module speed, in m/s
+        kDriveBaseRadius, // Drive base radius in meters. Distance from robot center to furthest module.
         ReplanningConfig() // Default path replanning config. See the API for the options here
     ),
     // Supplier that determines if paths should be flipped to the other side of the field. This will maintain a global blue alliance origin.
@@ -157,7 +156,7 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
                           xSpeed, ySpeed, rot, m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw))
                     : frc::ChassisSpeeds{xSpeed, ySpeed, rot});
 
-  m_driveKinematics.DesaturateWheelSpeeds(&states, ModuleConstants::kMaxLinearVelocity);
+  m_driveKinematics.DesaturateWheelSpeeds(&states, ModuleConstants::kModuleMaxLinearVelocity);
 
   auto [fl, fr, bl, br] = states;
 
@@ -181,7 +180,7 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
 void DriveSubsystem::DriveWithChassisSpeeds(frc::ChassisSpeeds speeds) {
   auto states = m_driveKinematics.ToSwerveModuleStates(speeds);
 
-  m_driveKinematics.DesaturateWheelSpeeds(&states, ModuleConstants::kMaxLinearVelocity);
+  m_driveKinematics.DesaturateWheelSpeeds(&states, ModuleConstants::kModuleMaxLinearVelocity);
 
   auto [fl, fr, bl, br] = states;
 
@@ -194,7 +193,7 @@ void DriveSubsystem::DriveWithChassisSpeeds(frc::ChassisSpeeds speeds) {
 void DriveSubsystem::SetModuleStates(
     wpi::array<frc::SwerveModuleState, 4> desiredStates) {
   m_driveKinematics.DesaturateWheelSpeeds(&desiredStates,
-                                         ModuleConstants::kMaxLinearVelocity);
+                                         ModuleConstants::kModuleMaxLinearVelocity);
   m_frontLeft.SetDesiredState(desiredStates[0]);
   m_frontRight.SetDesiredState(desiredStates[1]);
   m_backLeft.SetDesiredState(desiredStates[2]);

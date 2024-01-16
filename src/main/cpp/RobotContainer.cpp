@@ -82,7 +82,6 @@ void RobotContainer::ConfigureButtonBindings() {
         {&m_drive}));
 
     parkSwitch.WhileTrue(frc2::cmd::Run([&] {m_drive.Park();}, {&m_drive}));
-    
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
