@@ -16,6 +16,7 @@
 #include <networktables/NetworkTableEntry.h>
 #include <networktables/NetworkTableInstance.h>
 #include <frc/smartdashboard/Field2d.h>
+#include <networktables/DoubleArrayTopic.h>
 
 #include "Constants.h"
 #include "SwerveModule.h"
@@ -111,11 +112,17 @@ class DriveSubsystem : public frc2::SubsystemBase {
    */
   void ResetOdometry(frc::Pose2d pose);
 
-    /**
-     * Sets the wheels on the swerve modules in an X shape 
-     * 
-    */
-   void Park();
+  /**
+   * Sets the wheels on the swerve modules in an X shape 
+   * 
+  */
+  void Park();
+
+  /**
+   *  Uses the 3d transfomation information from apriltag to further 
+   *  update the position of the robot
+  */
+  void EstimatePoseWithApriltags();
 
   units::meter_t kTrackWidth =
       0.5_m;  // Distance between centers of right and left wheels on robot
@@ -129,6 +136,8 @@ class DriveSubsystem : public frc2::SubsystemBase {
       frc::Translation2d{-kWheelBase / 2, -kTrackWidth / 2}};
 
  private:
+    nt::DoubleArraySubscriber nt_apriltagSub;
+
     // Declaring all of the network table entries
     nt::NetworkTableEntry nte_fl_set_angle;
     nt::NetworkTableEntry nte_fr_set_angle;
