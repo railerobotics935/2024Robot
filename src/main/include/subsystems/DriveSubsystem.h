@@ -16,13 +16,12 @@
 #include <networktables/NetworkTableEntry.h>
 #include <networktables/NetworkTableInstance.h>
 #include <frc/smartdashboard/Field2d.h>
-#include <networktables/DoubleArrayTopic.h>
 
 #include "Constants.h"
 #include "SwerveModule.h"
 
 class DriveSubsystem : public frc2::SubsystemBase {
- public:
+public:
   DriveSubsystem();
   /**
    * Will return true when the robot is on the red allience. Specificly
@@ -49,8 +48,8 @@ class DriveSubsystem : public frc2::SubsystemBase {
    *                      the field.
    */
   void Drive(units::meters_per_second_t xSpeed,
-             units::meters_per_second_t ySpeed, units::radians_per_second_t rot,
-             bool fieldRelative);
+              units::meters_per_second_t ySpeed, units::radians_per_second_t rot,
+              bool fieldRelative);
 
   /**
    * Drives the robot given a set of chasis speeds IN ROBOT RELATIVE
@@ -97,7 +96,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
    * @return The pose.
    */
   frc::Pose2d GetPose();
-  
+
   /**
    * Returns the chassis speeds of the robot IN ROBOT RELATIVE
    * 
@@ -125,48 +124,46 @@ class DriveSubsystem : public frc2::SubsystemBase {
   void EstimatePoseWithApriltags();
 
   units::meter_t kTrackWidth =
-      0.5_m;  // Distance between centers of right and left wheels on robot
+    0.5_m;  // Distance between centers of right and left wheels on robot
   units::meter_t kWheelBase =
-      0.7_m;  // Distance between centers of front and back wheels on robot
+    0.7_m;  // Distance between centers of front and back wheels on robot
 
   frc::SwerveDriveKinematics<4> m_driveKinematics{
-      frc::Translation2d{kWheelBase / 2, kTrackWidth / 2},
-      frc::Translation2d{kWheelBase / 2, -kTrackWidth / 2},
-      frc::Translation2d{-kWheelBase / 2, kTrackWidth / 2},
-      frc::Translation2d{-kWheelBase / 2, -kTrackWidth / 2}};
+    frc::Translation2d{kWheelBase / 2, kTrackWidth / 2},
+    frc::Translation2d{kWheelBase / 2, -kTrackWidth / 2},
+    frc::Translation2d{-kWheelBase / 2, kTrackWidth / 2},
+    frc::Translation2d{-kWheelBase / 2, -kTrackWidth / 2}};
 
- private:
-    nt::DoubleArraySubscriber nt_apriltagSub;
+private:
+  // Declaring all of the network table entries
+  nt::NetworkTableEntry nte_fl_set_angle;
+  nt::NetworkTableEntry nte_fr_set_angle;
+  nt::NetworkTableEntry nte_bl_set_angle;
+  nt::NetworkTableEntry nte_br_set_angle;
+  nt::NetworkTableEntry nte_fl_set_speed;
+  nt::NetworkTableEntry nte_fr_set_speed;
+  nt::NetworkTableEntry nte_bl_set_speed;
+  nt::NetworkTableEntry nte_br_set_speed;
+  
+  nt::NetworkTableEntry nte_fl_real_angle;
+  nt::NetworkTableEntry nte_fr_real_angle;
+  nt::NetworkTableEntry nte_bl_real_angle;
+  nt::NetworkTableEntry nte_br_real_angle;
+  nt::NetworkTableEntry nte_fl_real_speed;
+  nt::NetworkTableEntry nte_fr_real_speed;
+  nt::NetworkTableEntry nte_bl_real_speed;
+  nt::NetworkTableEntry nte_br_real_speed;
 
-    // Declaring all of the network table entries
-    nt::NetworkTableEntry nte_fl_set_angle;
-    nt::NetworkTableEntry nte_fr_set_angle;
-    nt::NetworkTableEntry nte_bl_set_angle;
-    nt::NetworkTableEntry nte_br_set_angle;
-    nt::NetworkTableEntry nte_fl_set_speed;
-    nt::NetworkTableEntry nte_fr_set_speed;
-    nt::NetworkTableEntry nte_bl_set_speed;
-    nt::NetworkTableEntry nte_br_set_speed;
-    
-    nt::NetworkTableEntry nte_fl_real_angle;
-    nt::NetworkTableEntry nte_fr_real_angle;
-    nt::NetworkTableEntry nte_bl_real_angle;
-    nt::NetworkTableEntry nte_br_real_angle;
-    nt::NetworkTableEntry nte_fl_real_speed;
-    nt::NetworkTableEntry nte_fr_real_speed;
-    nt::NetworkTableEntry nte_bl_real_speed;
-    nt::NetworkTableEntry nte_br_real_speed;
+  nt::NetworkTableEntry nte_fl_raw_encoder_voltage;
+  nt::NetworkTableEntry nte_fr_raw_encoder_voltage;
+  nt::NetworkTableEntry nte_bl_raw_encoder_voltage;
+  nt::NetworkTableEntry nte_br_raw_encoder_voltage;
 
-    nt::NetworkTableEntry nte_fl_raw_encoder_voltage;
-    nt::NetworkTableEntry nte_fr_raw_encoder_voltage;
-    nt::NetworkTableEntry nte_bl_raw_encoder_voltage;
-    nt::NetworkTableEntry nte_br_raw_encoder_voltage;
+  nt::NetworkTableEntry nte_gyro_angle;
+  nt::NetworkTableEntry nte_robot_x;
+  nt::NetworkTableEntry nte_robot_y;
 
-    nt::NetworkTableEntry nte_gyro_angle;
-    nt::NetworkTableEntry nte_robot_x;
-    nt::NetworkTableEntry nte_robot_y;
-
-    frc::Field2d m_field;
+  frc::Field2d m_field;
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 

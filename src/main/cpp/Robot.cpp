@@ -25,7 +25,7 @@
  * TODO: Create Apriltag recongition system
  *    TODO: decide on camera location/configuatoin
  *    DONE: code it on a coprocesser
- *    TODO: Pull 3d postion from smartdashboard to the robot
+ *    DONE: Pull 3d postion from smartdashboard to the robot
  *    TODO: Updtate the robot postion bassed on the apriltag
  *    TODO: Verfiy
  * 

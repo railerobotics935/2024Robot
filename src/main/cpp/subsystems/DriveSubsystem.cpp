@@ -78,7 +78,6 @@ AutoBuilder::configureHolonomic(
   // Initialize shuffleboard communication
   auto nt_inst = nt::NetworkTableInstance::GetDefault();
   auto nt_table = nt_inst.GetTable("datatable");
-  nt_apriltagSub = nt_table->GetDoubleArrayTopic("FrontCam/Tag_1/Pose").Subscribe({});
 
   nte_fl_set_angle = nt_table->GetEntry("Swerve Drive/Front Left/Set Angle");
   nte_fr_set_angle = nt_table->GetEntry("Swerve Drive/Front Right/Set Angle");
@@ -253,21 +252,7 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
       pose);
 }
 
-/**
- * List of things to do to keep organized
- * TODO: Update robot position with one Apriltag
- *    TODO: Pull apriltag array from NT
- *    TODO: Update Odometry with the new tranlsation 3d values
- * TODO: Adjust for multiple Apriltags
- * TODO: Test Accuracy/speed of detection
- * TODO: Classify when to rely more on apriltag position
- *    - Zones
- *    - Distance from apriltag
-*/
-void DriveSubsystem::EstimatePoseWithApriltags() {
-  // Get translation/rotation from apriltags
-  std::vector<double> apriltagVector = nt_apriltagSub.Get();
 
-  // Vector should be like translation 3d (x, y, z, rotx, roty, rotz)
-  
+void DriveSubsystem::EstimatePoseWithApriltags() {
+
 }
