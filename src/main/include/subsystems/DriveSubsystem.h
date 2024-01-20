@@ -19,6 +19,7 @@
 
 #include "Constants.h"
 #include "SwerveModule.h"
+#include "ApriltagSensor.h"
 
 class DriveSubsystem : public frc2::SubsystemBase {
 public:
@@ -121,7 +122,7 @@ public:
    *  Uses the 3d transfomation information from apriltag to further 
    *  update the position of the robot
   */
-  void EstimatePoseWithApriltags();
+  void EstimatePoseWithApriltag(int tag);
 
   units::meter_t kTrackWidth =
     0.5_m;  // Distance between centers of right and left wheels on robot
@@ -174,6 +175,9 @@ private:
 
   // The gyro sensor
   frc::ADIS16470_IMU m_gyro{frc::ADIS16470_IMU::IMUAxis::kZ, frc::ADIS16470_IMU::IMUAxis::kY, frc::ADIS16470_IMU::IMUAxis::kX};
+
+  // Apriltag sensor 
+  ApriltagSensor m_frontCameraSensor{"FrontCam"};
 
   // Odometry class for tracking robot pose
   // 4 defines the number of modules
