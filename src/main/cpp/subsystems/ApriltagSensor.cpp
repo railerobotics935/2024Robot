@@ -54,3 +54,19 @@ frc::Pose2d ApriltagSensor::GetRobotRelativePose(int tag) {
 
   return returnPose;
 }
+
+frc::Pose2d ApriltagSensor::GetFieldRelativePose(int tag) {
+  // Create pose2d to return
+  std::vector<double> poseArr = nte_pose[tag].GetDoubleArray(std::vector<double>());
+  
+  // Default to zeros
+  frc::Pose2d returnPose = frc::Pose2d((units::meter_t)0.0, (units::meter_t)0.0, (units::radian_t)0.0);
+
+  // If tracked, grab numbers
+  if (nte_status[tag].GetString("LOST") == "TRACKED") {
+    // Pose2d made up of x and y tranlation with z rotation
+    returnPose = frc::Pose2d((units::meter_t)poseArr[0], (units::meter_t)poseArr[1], (units::radian_t)poseArr[5]);
+  }
+
+  return returnPose;
+}

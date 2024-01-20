@@ -15,6 +15,9 @@
 #include <units/time.h>
 #include <units/velocity.h>
 #include <units/voltage.h>
+#include <frc/geometry/Pose3d.h>
+#include <frc/apriltag/AprilTagFields.h>
+
 
 #pragma once
 
@@ -26,6 +29,14 @@
  * command-specific namespaces within this header, which can then be used where
  * they are needed.
  */
+namespace RobotConstants {
+
+const units::meter_t kTrackWidth =
+  0.5_m;  // Distance between centers of right and left wheels on robot
+const units::meter_t kWheelBase =
+  0.7_m;  // Distance between centers of front and back wheels on robot
+
+}
 
 namespace DriveConstants {
 
@@ -53,7 +64,7 @@ constexpr double kFrontRightDriveEncoderOffset = 2.787 + std::numbers::pi;
 constexpr double kBackLeftDriveEncoderOffset =  -0.155 + std::numbers::pi;
 constexpr double kBackRightDriveEncoderOffset = -1.850 + std::numbers::pi;
 
-constexpr auto kRobotMaxLinearVelocity = 4.6_mps; // 4.6
+constexpr auto kRobotMaxLinearVelocity = 3.0_mps; // 4.6
 constexpr auto kRobotMaxAngularVelocity = std::numbers::pi * 5_rad_per_s;
 
 constexpr auto kDriveBaseRadius = 0.46_m;
@@ -68,7 +79,7 @@ constexpr double SPARK_MAX_ANALOG_TO_RAD_FACTOR = 1.9040;     // 0 to 3.3 volt =
 
 constexpr double kWheelRadiusMeters = 0.0508;
 constexpr int kEncoderResolution = 42;
-constexpr double kGearRatio = 6.75;
+constexpr double kGearRatio = 8.14;
 
 constexpr double kDriveVelocityEncoderConversionFactor = (2.0 * std::numbers::pi * kWheelRadiusMeters 
                                                 / (kGearRatio * kEncoderResolution));
@@ -78,7 +89,7 @@ constexpr double kDrivePositionEncoderConversionFactor = (2.0 * std::numbers::pi
 
 constexpr auto kModuleMaxAngularVelocity =  std::numbers::pi * 9_rad_per_s;  // radians per second ?????????
 constexpr auto kModuleMaxAngularAcceleration = std::numbers::pi * 20_rad_per_s / 1_s;  // radians per second^2
-constexpr auto kModuleMaxLinearVelocity = 4.6_mps;
+constexpr auto kModuleMaxLinearVelocity = 3.81_mps;
 
 constexpr double kPModuleTurningController = 1;
 
@@ -102,7 +113,7 @@ constexpr double kDRotationController = 0.0;
 
 }  // namespace AutoConstants
 
-namespace ControllerConstants{
+namespace ControllerConstants {
 
 // Controller Constants for the flight elite drive controller
 
@@ -123,3 +134,13 @@ constexpr int kResetGyroButtonIndex = 3;
 namespace IOConstants {
 constexpr int kDriverControllerPort = 0;
 }  // namespace OIConstants
+
+namespace CameraConstats {
+
+// Tranlsation of the camera relative to the robot
+// X if forward, Y is Left Z is up 
+
+  //frc::Pose3d kFrontCameraPose3d = {frc::Translation3d((units::meter_t)RobotConstants::kTrackWidth / 2, (units::meter_t)0.0, (units::meter_t)0.4064), 
+  //                                  frc::Rotation3d((units::radian_t)0.0, (units::radian_t)0.0, (units::radian_t)0.0)};
+
+}

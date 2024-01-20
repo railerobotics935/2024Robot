@@ -16,6 +16,7 @@
 #include <networktables/NetworkTableEntry.h>
 #include <networktables/NetworkTableInstance.h>
 #include <frc/smartdashboard/Field2d.h>
+#include <frc/apriltag/AprilTagFieldLayout.h>
 
 #include "Constants.h"
 #include "SwerveModule.h"
@@ -124,16 +125,11 @@ public:
   */
   void EstimatePoseWithApriltag(int tag);
 
-  units::meter_t kTrackWidth =
-    0.5_m;  // Distance between centers of right and left wheels on robot
-  units::meter_t kWheelBase =
-    0.7_m;  // Distance between centers of front and back wheels on robot
-
   frc::SwerveDriveKinematics<4> m_driveKinematics{
-    frc::Translation2d{kWheelBase / 2, kTrackWidth / 2},
-    frc::Translation2d{kWheelBase / 2, -kTrackWidth / 2},
-    frc::Translation2d{-kWheelBase / 2, kTrackWidth / 2},
-    frc::Translation2d{-kWheelBase / 2, -kTrackWidth / 2}};
+    frc::Translation2d{RobotConstants::kWheelBase / 2, RobotConstants::kTrackWidth / 2},
+    frc::Translation2d{RobotConstants::kWheelBase / 2, -RobotConstants::kTrackWidth / 2},
+    frc::Translation2d{-RobotConstants::kWheelBase / 2, RobotConstants::kTrackWidth / 2},
+    frc::Translation2d{-RobotConstants::kWheelBase / 2, -RobotConstants::kTrackWidth / 2}};
 
 private:
   // Declaring all of the network table entries

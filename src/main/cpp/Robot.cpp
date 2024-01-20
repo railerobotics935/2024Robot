@@ -16,19 +16,24 @@
  * we decide on adding new features
  * 
  * TODO: Create Pathplanner Auto
- *    DONE: Implement basic autobuilder to follow a single path
- *    DONE: Implement a SensableChooser to pick between paths
- *    DONE: Create Allience side supplyer for autobuilder
+ *    TODO: Fix Gear ratios
  *    TODO: Tune PID controller for accurate positioning
  *    TODO: Verfiy
  * 
  * TODO: Create Apriltag recongition system
  *    TODO: decide on camera location/configuatoin
- *    DONE: code it on a coprocesser
- *    DONE: Pull 3d postion from smartdashboard to the robot
- *    TODO: Updtate the robot postion bassed on the apriltag
+ *    TODO: Fix calibration and stability of image
+ *    TODO: Update the field relative robot postion bassed on the apriltag 
+ *      TODO: Create reference list for apriltag positions on fiels / Pull information about apriltag position
+ *      TODO: Correct the axis used for the apriltag to get correct pose3d
+ *      TODO: Verify 
+ *    TODO: Dynamilcy solve for mulitple cameras
+ *      TODO: Determine best algorith for using multiple apriltags
+ *      TODO: Implement for multiple tags
+ *      TODO: Implement for multiple cameras
+ *      TODO: Verify 
  *    TODO: Verfiy
- * 
+ *
  * TODO: Add Robot Code
  *    TODO: Split robot into subsystems
  *    TODO: Create commands for each action needed
@@ -38,7 +43,8 @@
  *    TODO: Verfiy
  * 
  * TODO: Improvements
- *    TODO: Work on fixing the abolute encoder problem witht the swerve
+ *    TODO: Work on fixing the abolute encoder problem with the swerve
+ *    TODO: Implement
  * 
  * TODO: Clean up code
  *    TODO: Fix indentation size

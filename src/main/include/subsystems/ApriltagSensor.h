@@ -26,6 +26,12 @@ public:
   */
   frc::Pose2d GetRobotRelativePose(int tag);
 
+  /**
+   * @param tag The ID number for the apriltag wanted to identify
+   * @return The Field Relative Pose2d
+  */
+  frc::Pose2d GetFieldRelativePose(int tag);
+
 private:
   // Declare Network table entrys for apriltag pos
   nt::NetworkTableEntry nte_status[MAX_NUM_TAGS];
