@@ -6,20 +6,7 @@
 
 #include "subsystems/ApriltagSensor.h"
 
-/**
- * List of things to do to keep organized
- * 
- * other things also in robot
- * 
- * DONE: Update robot position with one Apriltag
- *    DONE: Pull apriltag array from NT
- *    DONE: Update Odometry with the new tranlsation 3d values
- * DONE: Adjust for multiple Apriltags
- * TODO: Test Accuracy/speed of detection
- * TODO: Classify when to rely more on apriltag position
- *    - Zones
- *    - Distance from apriltag
-*/
+
 ApriltagSensor::ApriltagSensor(std::string cameraName) {
 	
 	// Set the camera name to identify whitch camera to look at in NT
@@ -46,6 +33,21 @@ ApriltagSensor::ApriltagSensor(std::string cameraName) {
 
 }
 
+frc::Pose3d ApriltagSensor::GetRawPose3d(int tag) {
+  // Grab Pose3d values in an vector
+  std::vector<double> poseArr = nte_pose[tag].GetDoubleArray(std::vector<double>());
+  
+  // Put array into translation3d and rotation3d
+  frc::Translation3d tagTranslation{(units::meter_t)poseArr[0], (units::meter_t)poseArr[1], (units::meter_t)poseArr[2]};
+  frc::Rotation3d tagRotation{(units::radian_t)poseArr[3], (units::radian_t)poseArr[4], (units::radian_t)poseArr[5]};
+
+  // Combine Translation3d and Rotation3d to make a Pose3d
+  frc::Pose3d returnPose{tagTranslation, tagRotation};
+
+  return returnPose;
+}
+
+
 frc::Pose2d ApriltagSensor::GetApriltagRelativePose(int tag) {
   // Grab Pose3d values in an vector
   std::vector<double> poseArr = nte_pose[tag].GetDoubleArray(std::vector<double>());
@@ -53,10 +55,12 @@ frc::Pose2d ApriltagSensor::GetApriltagRelativePose(int tag) {
   // Default to zeros
   frc::Pose2d returnPose = frc::Pose2d((units::meter_t)0.0, (units::meter_t)0.0, (units::radian_t)0.0);
 
-  // If tracked, grab numbers
+  // If tracked, return NT values
   if (nte_status[tag].GetString("LOST") == "TRACKED") {
-    // Pose2d made up of x and y tranlation with z rotation
-    returnPose = frc::Pose2d((units::meter_t)poseArr[0], (units::meter_t)poseArr[1], (units::radian_t)poseArr[5]);
+    // GetPose2d from Pose3d
+    returnPose = GetRawPose3d(tag).ToPose2d();
+
+    // Transform by camera Pose2d
     returnPose.TransformBy(CameraConstats::kFrontCameraTransform2d);
   }
 
@@ -70,10 +74,12 @@ frc::Transform2d ApriltagSensor::GetApriltagRelativeTransformation(int tag) {
   // Default to zeros
   frc::Transform2d returnTransformation{(units::meter_t)0.0, (units::meter_t)0.0, (units::radian_t)0.0};
 
-  // If tracked, grab numbers
+  // If tracked, return NT values
   if (nte_status[tag].GetString("LOST") == "TRACKED") {
-    // Transform2d made up of x and y tranlation with z rotation
-    returnTransformation = frc::Transform2d((units::meter_t)poseArr[0], (units::meter_t)poseArr[1], (units::radian_t)poseArr[5]);
+    // Grab Translation2d and Rotation2d componets of the Pose to make the transformation from the tag
+    returnTransformation = frc::Transform2d(GetRawPose3d(tag).ToPose2d().Translation(), GetRawPose3d(tag).ToPose2d().Rotation());
+
+    // Add the transformation from the camera Pose2d together
     returnTransformation.operator+(CameraConstats::kFrontCameraTransform2d);
   }
 

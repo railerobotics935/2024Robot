@@ -15,19 +15,21 @@
  * List of items need to be compleated, list may change or be amended as 
  * we decide on adding new features
  * 
- * Last clear of done things 1/20
+ * Last clear of done tasks 1/20
  * 
  * TODO: Create Pathplanner Auto
  *    TODO: Fix Gear ratios
  *    TODO: Tune PID controller for accurate positioning
- *    TODO: Verfiy
  * 
  * TODO: Create Apriltag recongition system
- *    DONE: decide on camera location/configuatoin
- *    TODO: Create reference list for apriltag positions on fiels / Pull information about apriltag position
- *    TODO: Correct the axis used for the apriltag to get correct pose3d
- *    TODO: Dynamilcy solve for mulitple cameras
- *    TODO: Verfiy
+ *    TODO: Finalize camera location/configuatoin
+ *    VERIFY: Create reference list for apriltag positions on fiels / Pull information about apriltag position
+ *    VERIFY: Transform apriltag Pose2d to get field relative robot position
+ *    VERIFY: Correct the axis used for the apriltag to get correct pose3d
+ *    TODO: Classify when to rely more on apriltag position
+ *        - Zones
+ *        - Distance from apriltag
+ *        - Pose estimators
  *
  * TODO: Add Robot Code
  *    TODO: Split robot into subsystems
@@ -35,15 +37,16 @@
  *    TODO: Map keybindings for each command
  *    TODO: Regester Command for auto
  *    TODO: Create Autos using command
- *    TODO: Verfiy
  * 
  * TODO: Improvements
  *    TODO: Work on fixing the abolute encoder problem with the swerve
  *    TODO: Implement rev through bore encoder
  *    TODO: Fix calibration and stability of image for apriltags
+ *    BUG: Command Bindings get stuck with controller switches
  * 
  * TODO: Clean up code
  *    DONE: Fix indentation size
+ *    TODO: Throughly comment code
  * 
  *  Team 935
 */

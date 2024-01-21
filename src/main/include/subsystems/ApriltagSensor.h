@@ -4,7 +4,9 @@
 
 #include <networktables/NetworktableEntry.h>
 #include <networktables/networkTableInstance.h>
-#include <frc/geometry/Pose2d.h>
+#include <frc/geometry/Pose3d.h>
+#include <frc/geometry/Transform2d.h>
+#include <frc/geometry/Pose3d.h>
 #include <frc/apriltag/AprilTagFieldLayout.h>
 
 #include <string.h>
@@ -23,7 +25,13 @@ public:
 
   /**
    * @param tag The ID number for the apriltag wanted to identify
-   * @return The Apriltag Relative Pose2d
+   * @return The raw Pose3d from the camera
+  */
+  frc::Pose3d GetRawPose3d(int tag);
+
+  /**
+   * @param tag The ID number for the apriltag wanted to identify
+   * @return The Apriltag Relative Pose2d of the center of the robot
   */
   frc::Pose2d GetApriltagRelativePose(int tag);
 
