@@ -5,6 +5,7 @@
 #include <networktables/NetworktableEntry.h>
 #include <networktables/networkTableInstance.h>
 #include <frc/geometry/Pose2d.h>
+#include <frc/apriltag/AprilTagFieldLayout.h>
 
 #include <string.h>
 
@@ -22,9 +23,15 @@ public:
 
   /**
    * @param tag The ID number for the apriltag wanted to identify
-   * @return The Robot Relative Pose2d
+   * @return The Apriltag Relative Pose2d
   */
-  frc::Pose2d GetRobotRelativePose(int tag);
+  frc::Pose2d GetApriltagRelativePose(int tag);
+
+  /**
+   * @param tag The ID number for the apriltag wanted to identify
+   * @return The Apriltag Relative transform2d
+  */
+  frc::Transform2d GetApriltagRelativeTransformation(int tag);
 
   /**
    * @param tag The ID number for the apriltag wanted to identify
@@ -39,4 +46,7 @@ private:
   nt::NetworkTableEntry nte_pose[MAX_NUM_TAGS];
 
   std::string m_cameraName;
+
+  // Field layout to get apriltag pose
+  frc::AprilTagFieldLayout m_fieldLayout{};
 };

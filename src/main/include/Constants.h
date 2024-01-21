@@ -139,8 +139,8 @@ namespace CameraConstats {
 
 // Tranlsation of the camera relative to the robot
 // X if forward, Y is Left Z is up 
-
-  //frc::Pose3d kFrontCameraPose3d = {frc::Translation3d((units::meter_t)RobotConstants::kTrackWidth / 2, (units::meter_t)0.0, (units::meter_t)0.4064), 
-  //                                  frc::Rotation3d((units::radian_t)0.0, (units::radian_t)0.0, (units::radian_t)0.0)};
-
+  const frc::Translation3d kFrontCameraTranlation3d{(units::meter_t)RobotConstants::kTrackWidth / 2, (units::meter_t)0.0, (units::meter_t)0.4064};
+  const frc::Rotation3d kFrontCameraRotation3d{(units::radian_t)0.0, (units::radian_t)0.0, (units::radian_t)0.0};
+  const frc::Pose3d kFrontCameraPose3d{kFrontCameraTranlation3d, kFrontCameraRotation3d};
+  const frc::Transform2d kFrontCameraTransform2d{kFrontCameraPose3d.ToPose2d().Translation(), kFrontCameraPose3d.ToPose2d().Rotation()};
 }
