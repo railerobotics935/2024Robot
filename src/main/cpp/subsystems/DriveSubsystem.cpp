@@ -259,5 +259,5 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
 void DriveSubsystem::EstimatePoseWithApriltag(int tag) {
 
   // Grab pose from apriltag sensor
-  ResetOdometry(m_frontCameraSensor.GetApriltagRelativePose(tag));
+  ResetOdometry(m_frontCameraSensor.GetFieldRelativePose(tag));
 }

@@ -8,6 +8,8 @@
 #include <frc/geometry/Transform2d.h>
 #include <frc/geometry/Pose3d.h>
 #include <frc/apriltag/AprilTagFieldLayout.h>
+#include <frc/Filesystem.h>
+#include <wpi/fs.h>
 
 #include <string.h>
 
@@ -55,6 +57,12 @@ private:
 
   std::string m_cameraName;
 
+  // Create path to deploy directory
+  fs::path deployDirectory{frc::filesystem::GetDeployDirectory() + "/2024-crescendo.json"};
+
+  // Specify the apriltag json file
+  // deployDirectory = deployDirectory / "2024-crescendo.json";
+
   // Field layout to get apriltag pose
-  frc::AprilTagFieldLayout m_fieldLayout{};
+  frc::AprilTagFieldLayout m_fieldLayout{deployDirectory.string()};
 };
