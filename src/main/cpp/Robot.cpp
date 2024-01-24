@@ -23,9 +23,9 @@
  * 
  * TODO: Create Apriltag recongition system
  *    TODO: Finalize camera location/configuatoin
- *    VERIFY: Create reference list for apriltag positions on fiels / Pull information about apriltag position
- *    VERIFY: Transform apriltag Pose2d to get field relative robot position
- *    VERIFY: Correct the axis used for the apriltag to get correct pose3d
+ *    DONE: Create reference list for apriltag positions on fiels / Pull information about apriltag position
+ *    DONE: Transform apriltag Pose2d to get field relative robot position
+ *    DONE: Correct the axis used for the apriltag to get correct pose3d
  *    TODO: Classify when to rely more on apriltag position
  *        - Zones
  *        - Distance from apriltag

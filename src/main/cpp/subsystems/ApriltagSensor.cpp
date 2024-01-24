@@ -49,9 +49,7 @@ frc::Pose3d ApriltagSensor::GetRawPose3d(int tag) {
 
 
 frc::Pose2d ApriltagSensor::GetApriltagRelativePose(int tag) {
-  // Grab Pose3d values in an vector
-  std::vector<double> poseArr = nte_pose[tag].GetDoubleArray(std::vector<double>());
-  
+
   // Default to zeros
   frc::Pose2d returnPose = frc::Pose2d((units::meter_t)0.0, (units::meter_t)0.0, (units::radian_t)0.0);
 
@@ -68,9 +66,7 @@ frc::Pose2d ApriltagSensor::GetApriltagRelativePose(int tag) {
 }
 
 frc::Transform2d ApriltagSensor::GetApriltagRelativeTransformation(int tag) {
-  // Grab Pose3d values in an vector
-  std::vector<double> poseArr = nte_pose[tag].GetDoubleArray(std::vector<double>());
-  
+
   // Default to zeros
   frc::Transform2d returnTransformation{(units::meter_t)0.0, (units::meter_t)0.0, (units::radian_t)0.0};
 
@@ -87,20 +83,15 @@ frc::Transform2d ApriltagSensor::GetApriltagRelativeTransformation(int tag) {
 }
 
 frc::Pose2d ApriltagSensor::GetFieldRelativePose(int tag) {
-  // Create pose2d to return
-  std::vector<double> poseArr = nte_pose[tag].GetDoubleArray(std::vector<double>());
-  
+
   // Default to zeros
   frc::Pose2d returnPose = frc::Pose2d((units::meter_t)0.0, (units::meter_t)0.0, (units::radian_t)0.0);
 
   // If tracked, grab numbers
   if (nte_status[tag].GetString("LOST") == "TRACKED") {
-    // Rotate the input pose by the angle of the tag to make it oriented like the field
-    //frc::Pose2d fieldCorrectedInputPose = GetApriltagRelativePose(tag).RotateBy((units::radian_t)(2 * std::numbers::pi) - m_fieldLayout.GetTagPose(tag).value().ToPose2d().Rotation().Radians());
 
     // Grab the Pose2d of the apriltag
     frc::Pose2d tagPoseOnField = m_fieldLayout.GetTagPose(tag).value().ToPose2d();
-    //frc::Pose2d tagPoseOnField = frc::Pose2d((units::meter_t)0, (units::meter_t)0, (units::radian_t)0);
 
     // Transform the field pose by the robot relative pose
     returnPose = tagPoseOnField.TransformBy(GetApriltagRelativeTransformation(tag));

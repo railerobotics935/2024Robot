@@ -49,6 +49,13 @@ public:
   */
   frc::Pose2d GetFieldRelativePose(int tag);
 
+  /**
+   * @return If the tag is tracked
+  */
+  bool TagIsTracked(int tag);
+
+
+
 private:
   // Declare Network table entrys for apriltag pos
   nt::NetworkTableEntry nte_status[MAX_NUM_TAGS];

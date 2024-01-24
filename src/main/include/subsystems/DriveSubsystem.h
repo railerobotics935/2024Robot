@@ -17,6 +17,7 @@
 #include <networktables/NetworkTableInstance.h>
 #include <frc/smartdashboard/Field2d.h>
 #include <frc/apriltag/AprilTagFieldLayout.h>
+#include <frc/estimator/SwerveDrivePoseEstimator.h>
 
 #include "Constants.h"
 #include "SwerveModule.h"
@@ -123,7 +124,7 @@ public:
    *  Uses the 3d transfomation information from apriltag to further 
    *  update the position of the robot
   */
-  void EstimatePoseWithApriltag(int tag);
+  void EstimatePoseWithApriltag();
 
   frc::SwerveDriveKinematics<4> m_driveKinematics{
     frc::Translation2d{RobotConstants::kWheelBase / 2, RobotConstants::kTrackWidth / 2},
@@ -178,4 +179,8 @@ private:
   // Odometry class for tracking robot pose
   // 4 defines the number of modules
   frc::SwerveDriveOdometry<4> m_odometry;
+
+  // Pose Estimator
+  frc::SwerveDrivePoseEstimator<4> m_poseEstimator;
+
 };

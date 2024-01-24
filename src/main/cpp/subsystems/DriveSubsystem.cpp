@@ -54,7 +54,14 @@ DriveSubsystem::DriveSubsystem()
                 m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw),
                 {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
                 m_backLeft.GetPosition(), m_backRight.GetPosition()},
-                frc::Pose2d{(units::meter_t)3.0, (units::meter_t)3.0, m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw)}} 
+                frc::Pose2d{(units::meter_t)3.0, (units::meter_t)3.0, m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw)}},
+
+    m_poseEstimator{m_driveKinematics, 
+                    m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw), 
+                    {m_frontLeft.GetPosition(), m_frontRight.GetPosition(), m_backLeft.GetPosition(), m_backRight.GetPosition()}, 
+                    frc::Pose2d((units::meter_t)0.0, (units::meter_t)0.0, (units::radian_t)0.0), 
+                    {0.05, 0.05, 0.05}, 
+                    {0.4, 0.4, 0.4}} 
 {
   
 // Configure the AutoBuilder last
@@ -127,7 +134,7 @@ void DriveSubsystem::Periodic() {
                     m_backLeft.GetPosition(), m_backRight.GetPosition()});
 */
   // set odometry relative to the apriltag
-  EstimatePoseWithApriltag(2);
+  EstimatePoseWithApriltag();
                     
   nte_fl_real_angle.SetDouble((double)m_frontLeft.GetState().angle.Radians());
   nte_fr_real_angle.SetDouble((double)m_frontRight.GetState().angle.Radians());
@@ -256,8 +263,13 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
       pose);
 }
 
-void DriveSubsystem::EstimatePoseWithApriltag(int tag) {
+void DriveSubsystem::EstimatePoseWithApriltag() {
 
-  // Grab pose from apriltag sensor
-  ResetOdometry(m_frontCameraSensor.GetFieldRelativePose(tag));
+  m_poseEstimator.Update(m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw), 
+                        {m_frontLeft.GetPosition(), m_frontRight.GetPosition(), m_backLeft.GetPosition(), m_backRight.GetPosition()});
+                
+  // iterate through each tag, adding it to the pose estimator if it is tracked
+  for (int tag = 1; tag <= 16; tag++) {
+    m_poseEstimator.AddVisionMeasurement(m_frontCameraSensor.GetFieldRelativePose(tag), (units::second_t)0.0); // Needs timestamp stuff
+  }
 }
