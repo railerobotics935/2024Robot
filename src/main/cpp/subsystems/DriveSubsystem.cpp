@@ -13,6 +13,7 @@
 #include <frc/kinematics/ChassisSpeeds.h>
 #include <frc/shuffleboard/Shuffleboard.h>
 #include <frc/DriverStation.h>
+#include <frc/Timer.h>
 
 #include "pathplanner/lib/auto/AutoBuilder.h"
 #include "pathplanner/lib/util/HolonomicPathFollowerConfig.h"
@@ -268,8 +269,9 @@ void DriveSubsystem::EstimatePoseWithApriltag() {
   m_poseEstimator.Update(m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw), 
                         {m_frontLeft.GetPosition(), m_frontRight.GetPosition(), m_backLeft.GetPosition(), m_backRight.GetPosition()});
                 
-  // iterate through each tag, adding it to the pose estimator if it is tracked
+  // Iterate through each tag, adding it to the pose estimator if it is tracked
   for (int tag = 1; tag <= 16; tag++) {
-    m_poseEstimator.AddVisionMeasurement(m_frontCameraSensor.GetFieldRelativePose(tag), (units::second_t)0.0); // Needs timestamp stuff
+    if (m_frontCameraSensor.TagIsTracked(tag))
+      m_poseEstimator.AddVisionMeasurement(m_frontCameraSensor.GetFieldRelativePose(tag), m_frontCameraSensor.GetTimestamp(tag)); // Needs timestamp stuff
   }
 }

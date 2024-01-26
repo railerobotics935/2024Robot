@@ -4,6 +4,7 @@
 #include <frc/apriltag/AprilTagFieldLayout.h>
 #include <Constants.h>
 
+
 #include "subsystems/ApriltagSensor.h"
 
 
@@ -16,7 +17,7 @@ ApriltagSensor::ApriltagSensor(std::string cameraName) {
 	auto nt_table = nt_inst.GetTable("SmartDashboard");
 
   // Cycle through each tag ID and get entry for each - status, depth and pose
-  char s_tableEntryPath[32];
+  char s_tableEntryPath[32]; 
   for (uint8_t i = 0; i < MAX_NUM_TAGS; i++) {
     // Status holds a sting, either "TRACKED" or "LOST"
     sprintf(s_tableEntryPath, "%s/Tag[%d]/Status", m_cameraName.c_str(), i);
@@ -98,4 +99,16 @@ frc::Pose2d ApriltagSensor::GetFieldRelativePose(int tag) {
   }
 
   return returnPose;
+}
+
+bool ApriltagSensor::TagIsTracked(int tag) {
+  // If tag is traked, return true, else return false
+  if (nte_status[tag].GetString("LOST") == "TRACKED")
+    return true;
+  else
+    return false;
+}
+
+units::second_t ApriltagSensor::GetTimestamp(int tag) {
+  return (units::second_t)(nte_pose[tag].GetLastChange() / 1000000.0);
 }

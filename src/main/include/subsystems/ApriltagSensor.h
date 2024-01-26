@@ -23,7 +23,7 @@
 */
 class ApriltagSensor {
 public:
-  ApriltagSensor(std::string cameraName);
+  ApriltagSensor (std::string cameraName);
 
   /**
    * @param tag The ID number for the apriltag wanted to identify
@@ -54,7 +54,11 @@ public:
   */
   bool TagIsTracked(int tag);
 
-
+  /**
+   * @param tag The ID number for the apriltag wanted to identify
+   * @return The Timestamp of a pose
+  */
+  units::second_t GetTimestamp(int tag);
 
 private:
   // Declare Network table entrys for apriltag pos
