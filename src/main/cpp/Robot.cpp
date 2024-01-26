@@ -45,7 +45,7 @@
  * 
  * TODO: Clean up code
  *    DONE: Fix indentation size
- *    TODO: Throughly comment code
+ *    TODO: Thoroughly comment code
  * 
  *  Team 935
 */
@@ -69,7 +69,15 @@ void Robot::RobotPeriodic() {
  * can use it to reset any subsystem information you want to clear when the
  * robot is disabled.
  */
-void Robot::DisabledInit() {}
+void Robot::DisabledInit() {
+    // This makes sure that the autonomous stops running when
+  // Disabled. If you want the autonomous to
+  // continue until interrupted by another command, remove
+  // this line or comment it out.
+  if (m_autonomousCommand) {
+    m_autonomousCommand->Cancel();
+  }
+}
 
 void Robot::DisabledPeriodic() {}
 
@@ -84,6 +92,7 @@ void Robot::AutonomousInit() {
     m_autonomousCommand->Schedule();
   }
 }
+
 
 void Robot::AutonomousPeriodic() {}
 

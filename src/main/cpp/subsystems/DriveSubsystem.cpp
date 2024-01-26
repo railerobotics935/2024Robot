@@ -130,12 +130,12 @@ bool DriveSubsystem::InRedAlience() {
 
 void DriveSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
-  /*  m_odometry.Update(m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw),
+  m_odometry.Update(m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw),
                     {m_frontLeft.GetPosition(), m_frontRight.GetPosition(), 
                     m_backLeft.GetPosition(), m_backRight.GetPosition()});
-*/
+
   // set odometry relative to the apriltag
-  EstimatePoseWithApriltag();
+  //EstimatePoseWithApriltag();
                     
   nte_fl_real_angle.SetDouble((double)m_frontLeft.GetState().angle.Radians());
   nte_fr_real_angle.SetDouble((double)m_frontRight.GetState().angle.Radians());

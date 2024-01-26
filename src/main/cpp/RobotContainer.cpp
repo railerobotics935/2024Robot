@@ -84,6 +84,10 @@ void RobotContainer::ConfigureButtonBindings() {
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
+  
+  // Reset Odometry and only start with where path planner thinks the robot is
+  // This will go away once we use apriltags to update our robot pose during disabled
+  //m_drive.ResetOdometry(frc::Pose2d((units::meter_t)0.0, (units::meter_t)0.0, (units::radian_t)0.0));
 
   // Builds and returns auto commands from pathplanner
   return PathPlannerAuto(m_autoChooser.GetSelected()).ToPtr();
