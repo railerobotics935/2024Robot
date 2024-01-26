@@ -18,7 +18,7 @@
  * Last clear of done tasks 1/20
  * 
  * TODO: Create Pathplanner Auto
- *    TODO: Fix Gear ratios
+ *    VERIFY: Fix Gear ratios
  *    TODO: Tune PID controller for accurate positioning
  * 
  * TODO: Create Apriltag recongition system
