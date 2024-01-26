@@ -65,7 +65,7 @@ constexpr double kBackLeftDriveEncoderOffset =  -0.155 + std::numbers::pi;
 constexpr double kBackRightDriveEncoderOffset = -1.850 + std::numbers::pi;
 
 constexpr auto kRobotMaxLinearVelocity = 3.0_mps; // 4.6
-constexpr auto kRobotMaxAngularVelocity = std::numbers::pi * 5_rad_per_s;
+constexpr auto kRobotMaxAngularVelocity = std::numbers::pi * 8_rad_per_s;
 
 constexpr auto kDriveBaseRadius = 0.46_m;
 
@@ -102,12 +102,12 @@ namespace AutoConstants {
 
 // Only Constants here are the PID constants. Look in path planner for max veleocty/acceleration constants
 // PID Constants for the tranlation (X and Y movement) of the robot during auto
-constexpr double kPTanslationController = 1.0; // 6.0
+constexpr double kPTanslationController = 4; // 6.0
 constexpr double kITanslationController = 0.0; // 1.7
 constexpr double kDTanslationController = 0.0; // 0.0
 
 // PID Constants for the rotation, or Yaw of the robot
-constexpr double kPRotationController = 1.0; // 5.0
+constexpr double kPRotationController = 5.0; // 5.0
 constexpr double kIRotationController = 0.0; // 0.0
 constexpr double kDRotationController = 0.0; // 0.0
 

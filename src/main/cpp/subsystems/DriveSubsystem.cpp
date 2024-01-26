@@ -55,7 +55,7 @@ DriveSubsystem::DriveSubsystem()
                 m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw),
                 {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
                 m_backLeft.GetPosition(), m_backRight.GetPosition()},
-                frc::Pose2d{(units::meter_t)3.0, (units::meter_t)3.0, m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw)}},
+                frc::Pose2d{(units::meter_t)0.0, (units::meter_t)0.0,  (units::radian_t)0.0}},
 
     m_poseEstimator{m_driveKinematics, 
                     m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw), 
