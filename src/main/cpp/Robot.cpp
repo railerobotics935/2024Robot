@@ -26,10 +26,9 @@
  *    DONE: Create reference list for apriltag positions on fiels / Pull information about apriltag position
  *    DONE: Transform apriltag Pose2d to get field relative robot position
  *    DONE: Correct the axis used for the apriltag to get correct pose3d
- *    TODO: Classify when to rely more on apriltag position
- *        - Zones
- *        - Distance from apriltag
- *        - Pose estimators
+ *    TODO: Itterate for multiple cameras
+ *    TODO: Create a poseEstimator for integration of robot
+ *      VERIFY: Add timestamp for pose estimator
  *
  * TODO: Add Robot Code
  *    TODO: Split robot into subsystems
