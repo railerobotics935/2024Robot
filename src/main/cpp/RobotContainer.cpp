@@ -56,6 +56,7 @@ RobotContainer::RobotContainer() {
   m_autoChooser.AddOption("Left 1m", m_left1m);
   m_autoChooser.AddOption("Other Auto", m_circleAuto);
   m_autoChooser.AddOption("Figure8", m_figure8);
+  m_autoChooser.AddOption("TokyoDrift", m_tokyoDrift);
 
   frc::Shuffleboard::GetTab("Autonomous").Add(m_autoChooser);
 }

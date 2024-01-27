@@ -60,4 +60,5 @@ class RobotContainer {
   std::string m_circleAuto = "OtherAuto";
   std::string m_forward1m = "Forward1m";
   std::string m_left1m = "Left1m";
+  std::string m_tokyoDrift = "TokyoDrift";
 };
