@@ -270,8 +270,8 @@ void DriveSubsystem::EstimatePoseWithApriltag() {
                         {m_frontLeft.GetPosition(), m_frontRight.GetPosition(), m_backLeft.GetPosition(), m_backRight.GetPosition()});
                 
   // Iterate through each tag, adding it to the pose estimator if it is tracked
-  for (int tag = 1; tag <= 16; tag++) {
-    if (m_frontCameraSensor.TagIsTracked(tag))
+  for (int tag = 1; tag <= 16; tag++ ) {
+    if (m_frontCameraSensor.TagIsTracked(tag) && m_frontCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
       m_poseEstimator.AddVisionMeasurement(m_frontCameraSensor.GetFieldRelativePose(tag), m_frontCameraSensor.GetTimestamp(tag)); // Needs timestamp stuff
   }
 }

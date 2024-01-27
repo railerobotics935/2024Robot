@@ -15,14 +15,16 @@
 
 #define MAX_NUM_TAGS 16
 
-/**
- * ApriltagSensor is ment to be implemnted as any other sensor for the robot
- * but simply takes information from Network tables and oragnizes it for use 
- * in the robot code
- * 
-*/
+
 class ApriltagSensor {
 public:
+    /**
+   * ApriltagSensor is ment to be implemnted as any other sensor for the robot
+   * but simply takes information from Network tables and oragnizes it for use 
+   * in the robot code
+   * 
+   * @param cameraName The camera name from network tables
+  */
   ApriltagSensor (std::string cameraName);
 
   /**
@@ -39,7 +41,7 @@ public:
 
   /**
    * @param tag The ID number for the apriltag wanted to identify
-   * @return The Apriltag Relative transform2d
+   * @return The Apriltag Relative transform2d of the center of the robot
   */
   frc::Transform2d GetApriltagRelativeTransformation(int tag);
 
@@ -63,16 +65,13 @@ public:
 private:
   // Declare Network table entrys for apriltag pos
   nt::NetworkTableEntry nte_status[MAX_NUM_TAGS];
-  nt::NetworkTableEntry nte_depth[MAX_NUM_TAGS];
   nt::NetworkTableEntry nte_pose[MAX_NUM_TAGS];
+  nt::NetworkTableEntry nte_latency;
 
   std::string m_cameraName;
 
   // Create path to deploy directory
   fs::path deployDirectory{frc::filesystem::GetDeployDirectory() + "/2024-crescendo.json"};
-
-  // Specify the apriltag json file
-  // deployDirectory = deployDirectory / "2024-crescendo.json";
 
   // Field layout to get apriltag pose
   frc::AprilTagFieldLayout m_fieldLayout{deployDirectory.string()};

@@ -32,9 +32,9 @@
 namespace RobotConstants {
 
 const units::meter_t kTrackWidth =
-  0.5_m;  // Distance between centers of right and left wheels on robot
+  0.52_m;  // Distance between centers of right and left wheels on robot
 const units::meter_t kWheelBase =
-  0.7_m;  // Distance between centers of front and back wheels on robot
+  0.72_m;  // Distance between centers of front and back wheels on robot
 
 }
 
@@ -90,8 +90,6 @@ constexpr double kDrivePositionEncoderConversionFactor = (2.0 * std::numbers::pi
 constexpr auto kModuleMaxAngularVelocity =  std::numbers::pi * 9_rad_per_s;  // radians per second ?????????
 constexpr auto kModuleMaxAngularAcceleration = std::numbers::pi * 20_rad_per_s / 1_s;  // radians per second^2
 constexpr auto kModuleMaxLinearVelocity = 3.81_mps;
-
-constexpr double kPModuleTurningController = 1;
 
 constexpr double kPModuleDriveController = 1;
 constexpr double kIModuleDriveController = 0.1;

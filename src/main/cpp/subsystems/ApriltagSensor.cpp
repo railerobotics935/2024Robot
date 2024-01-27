@@ -16,21 +16,21 @@ ApriltagSensor::ApriltagSensor(std::string cameraName) {
 	auto nt_inst = nt::NetworkTableInstance::GetDefault();
 	auto nt_table = nt_inst.GetTable("SmartDashboard");
 
-  // Cycle through each tag ID and get entry for each - status, depth and pose
+  // Cycle through each tag ID and get entry for each - status and pose
   char s_tableEntryPath[32]; 
   for (uint8_t i = 0; i < MAX_NUM_TAGS; i++) {
     // Status holds a sting, either "TRACKED" or "LOST"
     sprintf(s_tableEntryPath, "%s/Tag[%d]/Status", m_cameraName.c_str(), i);
     nte_status[i] = nt_table->GetEntry(s_tableEntryPath);
 
-    // Depth holds an array of doubles for the x, y and z 
-    sprintf(s_tableEntryPath, "%s/Tag[%d]/Depth", m_cameraName.c_str(), i);
-    nte_depth[i] = nt_table->GetEntry(s_tableEntryPath);
-
     // Depth holds an array of doubles for the x, y and z, then rotx, roty and rotz
     sprintf(s_tableEntryPath, "%s/Tag[%d]/Pose", m_cameraName.c_str(), i);
     nte_pose[i] = nt_table->GetEntry(s_tableEntryPath);
   }
+
+  // Latency from time camera picks up image to when the pi published the data
+  sprintf(s_tableEntryPath, "%s/Latency/Apriltag", m_cameraName.c_str());
+  nte_latency = nt_table->GetEntry(s_tableEntryPath);
 
 }
 
@@ -110,5 +110,5 @@ bool ApriltagSensor::TagIsTracked(int tag) {
 }
 
 units::second_t ApriltagSensor::GetTimestamp(int tag) {
-  return (units::second_t)(nte_pose[tag].GetLastChange() / 1000000.0);
+  return (units::second_t)(nte_pose[tag].GetLastChange() / 1000000.0) - (units::second_t)nte_latency.GetDouble(360.0);
 }
