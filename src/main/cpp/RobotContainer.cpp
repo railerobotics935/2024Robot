@@ -58,6 +58,8 @@ RobotContainer::RobotContainer() {
   m_autoChooser.AddOption("Figure8", m_figure8);
   m_autoChooser.AddOption("TokyoDrift", m_tokyoDrift);
   m_autoChooser.AddOption("Pietro", m_pietro);
+  m_autoChooser.AddOption("Egg", m_egg);
+  m_autoChooser.AddOption("8", m_8);
 
   frc::Shuffleboard::GetTab("Autonomous").Add(m_autoChooser);
 }
