@@ -127,10 +127,10 @@ public:
   void EstimatePoseWithApriltag();
 
   frc::SwerveDriveKinematics<4> m_driveKinematics{
-    frc::Translation2d{RobotConstants::kWheelBase / 2, RobotConstants::kTrackWidth / 2},
-    frc::Translation2d{RobotConstants::kWheelBase / 2, -RobotConstants::kTrackWidth / 2},
-    frc::Translation2d{-RobotConstants::kWheelBase / 2, RobotConstants::kTrackWidth / 2},
-    frc::Translation2d{-RobotConstants::kWheelBase / 2, -RobotConstants::kTrackWidth / 2}};
+    frc::Translation2d{RobotConstants::kWheelBase / 2, RobotConstants::kIntakeSideWidth / 2},
+    frc::Translation2d{RobotConstants::kWheelBase / 2, -RobotConstants::kIntakeSideWidth / 2},
+    frc::Translation2d{-RobotConstants::kWheelBase / 2, RobotConstants::kShooterSideWidth / 2},
+    frc::Translation2d{-RobotConstants::kWheelBase / 2, -RobotConstants::kShooterSideWidth / 2}};
 
 private:
   // Declaring all of the network table entries
@@ -181,6 +181,6 @@ private:
   frc::SwerveDriveOdometry<4> m_odometry;
 
   // Pose Estimator
-  frc::SwerveDrivePoseEstimator<4> m_poseEstimator;
+  //frc::SwerveDrivePoseEstimator<4> m_poseEstimator;
 
 };

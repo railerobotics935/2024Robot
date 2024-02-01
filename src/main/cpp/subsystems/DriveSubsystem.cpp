@@ -30,39 +30,28 @@ using namespace pathplanner;
 DriveSubsystem::DriveSubsystem()
   : m_frontLeft{kFrontLeftDriveMotorPort,
                 kFrontLeftTurningMotorPort,
-                kFrontLeftTurningEncoderPort,
                 kFrontLeftDriveEncoderOffset},
 
     m_frontRight{
         kFrontRightDriveMotorPort,       
         kFrontRightTurningMotorPort,
-        kFrontRightTurningEncoderPort,
         kFrontRightDriveEncoderOffset},
     
     m_backLeft{
         kBackLeftDriveMotorPort,       
         kBackLeftTurningMotorPort,
-        kBackLeftTurningEncoderPort,
         kBackLeftDriveEncoderOffset},
 
     m_backRight{
         kBackRightDriveMotorPort,       
         kBackRightTurningMotorPort,  
-        kBackRightTurningEncoderPort,
         kBackRightDriveEncoderOffset},
 
     m_odometry{m_driveKinematics,
                 m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw),
                 {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
                 m_backLeft.GetPosition(), m_backRight.GetPosition()},
-                frc::Pose2d{(units::meter_t)0.0, (units::meter_t)0.0,  (units::radian_t)0.0}},
-
-    m_poseEstimator{m_driveKinematics, 
-                    m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw), 
-                    {m_frontLeft.GetPosition(), m_frontRight.GetPosition(), m_backLeft.GetPosition(), m_backRight.GetPosition()}, 
-                    frc::Pose2d((units::meter_t)0.0, (units::meter_t)0.0, (units::radian_t)0.0), 
-                    {0.05, 0.05, 0.05}, 
-                    {0.4, 0.4, 0.4}} 
+                frc::Pose2d{(units::meter_t)3.0, (units::meter_t)3.0, m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw)}} 
 {
   
 // Configure the AutoBuilder last
@@ -265,7 +254,7 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
 }
 
 void DriveSubsystem::EstimatePoseWithApriltag() {
-
+  /*
   m_poseEstimator.Update(m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw), 
                         {m_frontLeft.GetPosition(), m_frontRight.GetPosition(), m_backLeft.GetPosition(), m_backRight.GetPosition()});
                 
@@ -273,5 +262,5 @@ void DriveSubsystem::EstimatePoseWithApriltag() {
   for (int tag = 1; tag <= 16; tag++ ) {
     if (m_frontCameraSensor.TagIsTracked(tag) && m_frontCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
       m_poseEstimator.AddVisionMeasurement(m_frontCameraSensor.GetFieldRelativePose(tag), m_frontCameraSensor.GetTimestamp(tag)); // Needs timestamp stuff
-  }
+  }*/
 }

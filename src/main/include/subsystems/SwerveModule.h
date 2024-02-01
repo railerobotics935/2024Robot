@@ -6,14 +6,18 @@
 
 #include <numbers>
 
-#include <frc/AnalogInput.h>
-#include <frc/controller/PIDController.h>
-#include <frc/controller/SimpleMotorFeedforward.h>
-#include <frc/controller/ProfiledPIDController.h>
+#include <frc/AnalogInput.h>                        // for closed-loop control on RoboRIO
+#include <frc/controller/PIDController.h>           // for closed-loop control on RoboRIO
+#include <frc/controller/ProfiledPIDController.h>   // for closed-loop control on RoboRIO
+#include <frc/controller/SimpleMotorFeedforward.h>  // for closed-loop control on robo
 #include <frc/geometry/Rotation2d.h>
 #include <frc/kinematics/SwerveModulePosition.h>
 #include <frc/kinematics/SwerveModuleState.h>
 #include <frc/trajectory/TrapezoidProfile.h>
+
+#include <rev/SparkAbsoluteEncoder.h>               // for through-hole encoder on Spark MAX
+#include <rev/SparkPIDController.h>                 // for closed-loop control on Spark MAX 
+#include <rev/SparkRelativeEncoder.h>               // for closed-loop control on Spark MAX
 
 #include "rev/CANSparkMax.h"
 #include "rev/SparkMaxAnalogSensor.h"
@@ -22,8 +26,7 @@
 
 class SwerveModule {
  public:
-  SwerveModule(int driveMotorPort, int turningMotorPort,
-                const int turningEncoderPort, const double turningEncoderOffset);
+  SwerveModule(const int drivingCANId, const int turningCANId, const double turingEncoderOffset);
 
   frc::SwerveModuleState GetState();
 
@@ -38,19 +41,16 @@ class SwerveModule {
   // ProfiledPIDController's constraints only take in meters per second and
   // meters per second squared.
   
-  rev::CANSparkMax m_driveMotor;
-  rev::CANSparkMax m_turningMotor;
-  
-  rev::SparkRelativeEncoder m_driveEncoder;
-  frc::AnalogInput m_turningEncoder;
-  
-  double m_kTurningEncoderOffset;
-  
-  frc::PIDController m_drivePIDController{ModuleConstants::kPModuleDriveController, ModuleConstants::kIModuleDriveController, ModuleConstants::kDModuleDriveController};
+  rev::CANSparkMax m_drivingSparkMax;
+  rev::CANSparkMax m_turningSparkMax;
 
-  frc::ProfiledPIDController<units::radians> m_turningPIDController{
-      12.5, 190.0, 0.15,
-      {ModuleConstants::kModuleMaxAngularVelocity, ModuleConstants::kModuleMaxAngularAcceleration}};
-  frc::SimpleMotorFeedforward<units::meters> m_driveFeedforward{1_V, 2_V / 1_mps};
+  rev::SparkRelativeEncoder m_drivingEncoder = m_drivingSparkMax.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor);
+  rev::SparkAbsoluteEncoder m_turningAbsoluteEncoder = m_turningSparkMax.GetAbsoluteEncoder(rev::SparkAbsoluteEncoder::Type::kDutyCycle);
 
+  rev::SparkPIDController m_drivingPIDController = m_drivingSparkMax.GetPIDController();
+  rev::SparkPIDController m_turningPIDController = m_turningSparkMax.GetPIDController();
+
+  double m_turingEncoderOffset = 0.0;
+  frc::SwerveModuleState m_desiredState{units::meters_per_second_t{0.0},
+                                        frc::Rotation2d()};
 };

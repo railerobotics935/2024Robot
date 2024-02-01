@@ -31,6 +31,7 @@
  *      VERIFY: Add timestamp for pose estimator
  *
  * TODO: Add Robot Code
+ *    TODO: Convert to trapazoid robot (honey bee major)
  *    TODO: Split robot into subsystems
  *    TODO: Create commands for each action needed
  *    TODO: Map keybindings for each command
@@ -42,6 +43,7 @@
  *    TODO: Implement rev through bore encoder
  *    TODO: Fix calibration and stability of image for apriltags
  *    BUG: Command Bindings get stuck with controller switches
+ *    TODO: Chooser to deterime if we need to burn the flash on the motorcontrollers
  * 
  * TODO: Clean up code
  *    DONE: Fix indentation size
