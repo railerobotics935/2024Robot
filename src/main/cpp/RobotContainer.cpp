@@ -42,7 +42,7 @@ RobotContainer::RobotContainer() {
     [this] {
       const auto ySpeed = -m_ySpeedLimiter.Calculate(frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveLeftYIndex), 0.15)) * kRobotMaxLinearVelocity;
       const auto xSpeed = -m_xSpeedLimiter.Calculate(frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveLeftXIndex), 0.15)) * kRobotMaxLinearVelocity;
-      const auto rot = -m_rotLimiter.Calculate(frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveRightXIndex), 0.15)) * kRobotMaxAngularVelocity;
+      const auto rot = m_rotLimiter.Calculate(frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveRightXIndex), 0.15)) * kRobotMaxAngularVelocity;
       m_drive.Drive(
         units::meters_per_second_t{ySpeed},
         units::meters_per_second_t{xSpeed},
