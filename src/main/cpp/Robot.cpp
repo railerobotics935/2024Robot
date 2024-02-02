@@ -27,6 +27,7 @@
  *    DONE: Transform apriltag Pose2d to get field relative robot position
  *    DONE: Correct the axis used for the apriltag to get correct pose3d
  *    TODO: Itterate for multiple cameras
+ *    TODO: Fix camera
  *    TODO: Create a poseEstimator for integration of robot
  *      VERIFY: Add timestamp for pose estimator
  *
@@ -39,8 +40,8 @@
  *    TODO: Create Autos using command
  * 
  * TODO: Improvements
- *    TODO: Work on fixing the abolute encoder problem with the swerve
- *    TODO: Implement rev through bore encoder
+ *    DONE: Work on fixing the abolute encoder problem with the swerve
+ *    DONE: Implement rev through bore encoder
  *    TODO: Fix calibration and stability of image for apriltags
  *    BUG: Command Bindings get stuck with controller switches
  *    TODO: Chooser to deterime if we need to burn the flash on the motorcontrollers

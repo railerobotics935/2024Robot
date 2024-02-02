@@ -9,7 +9,7 @@
 #include <frc/geometry/Rotation2d.h>
 #include <frc/ADIS16470_IMU.h>
 #include <frc/interfaces/Gyro.h>
-#include <frc/kinematics/ChassisSpeeds.h>
+#include <frc/filter/SlewRateLimiter.h>
 #include <frc/kinematics/SwerveDriveKinematics.h>
 #include <frc/kinematics/SwerveDriveOdometry.h>
 #include <frc2/command/SubsystemBase.h>
@@ -52,7 +52,7 @@ public:
    */
   void Drive(units::meters_per_second_t xSpeed,
               units::meters_per_second_t ySpeed, units::radians_per_second_t rot,
-              bool fieldRelative);
+              bool fieldRelative, bool rateLimit);
 
   /**
    * Drives the robot given a set of chasis speeds IN ROBOT RELATIVE
@@ -182,5 +182,17 @@ private:
 
   // Pose Estimator
   //frc::SwerveDrivePoseEstimator<4> m_poseEstimator;
+
+  // Slew rate filter variables for controlling lateral acceleration
+  double m_currentRotation = 0.0;
+  double m_currentTranslationDir = 0.0;
+  double m_currentTranslationMag = 0.0;
+
+  frc::SlewRateLimiter<units::scalar> m_magLimiter{
+      DriveConstants::kMagnitudeSlewRate / 1_s};
+  frc::SlewRateLimiter<units::scalar> m_rotLimiter{
+      DriveConstants::kRotationalSlewRate / 1_s};
+  double m_prevTime = wpi::Now() * 1e-6;
+
 
 };

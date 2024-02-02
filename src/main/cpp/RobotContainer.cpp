@@ -40,14 +40,14 @@ RobotContainer::RobotContainer() {
   // Turning is controlled by the X axis of the right stick.
   m_drive.SetDefaultCommand(frc2::RunCommand(
     [this] {
-      const auto ySpeed = -m_ySpeedLimiter.Calculate(frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveLeftYIndex), 0.15)) * kRobotMaxLinearVelocity;
-      const auto xSpeed = -m_xSpeedLimiter.Calculate(frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveLeftXIndex), 0.15)) * kRobotMaxLinearVelocity;
-      const auto rot = m_rotLimiter.Calculate(frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveRightXIndex), 0.15)) * kRobotMaxAngularVelocity;
+      const auto ySpeed = -frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveLeftYIndex), 0.15);
+      const auto xSpeed = -frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveLeftXIndex), 0.15);
+      const auto rot = frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveRightXIndex), 0.15);
       m_drive.Drive(
         units::meters_per_second_t{ySpeed},
         units::meters_per_second_t{xSpeed},
         units::radians_per_second_t{rot}, 
-        m_driveController.GetRawButton(ControllerConstants::kFieldRelativeSwitchIndex));
+        m_driveController.GetRawButton(ControllerConstants::kFieldRelativeSwitchIndex), true);
     },
     {&m_drive}));
 
@@ -74,13 +74,13 @@ void RobotContainer::ConfigureButtonBindings() {
   // I don't exactly know why this works, but the documentation for command based c++ is kinda bad 
   resetButton.OnTrue(frc2::cmd::Run([&] {m_drive.ZeroHeading();}, {&m_drive}));
   slowSwitch.WhileTrue(frc2::cmd::Run([&] {            
-    const auto ySpeed = -m_ySpeedLimiter.Calculate(frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveLeftYIndex), 0.15)) * kRobotMaxLinearVelocity;
-    const auto xSpeed = -m_xSpeedLimiter.Calculate(frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveLeftXIndex), 0.15)) * kRobotMaxLinearVelocity;
-    const auto rot = -m_rotLimiter.Calculate(frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveRightXIndex), 0.15)) * kRobotMaxAngularVelocity;
+    const auto ySpeed = -frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveLeftYIndex), 0.15);
+    const auto xSpeed = -frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveLeftXIndex), 0.15);
+    const auto rot = -frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveRightXIndex), 0.15);
     m_drive.Drive(units::meters_per_second_t{ySpeed * 0.25},
                   units::meters_per_second_t{xSpeed * 0.25},
                   units::radians_per_second_t{rot}, 
-                  m_driveController.GetRawButton(ControllerConstants::kFieldRelativeSwitchIndex));
+                  m_driveController.GetRawButton(ControllerConstants::kFieldRelativeSwitchIndex), true);
   }, 
   {&m_drive}));
 

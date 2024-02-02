@@ -41,6 +41,14 @@ const units::meter_t kWheelBase =
 }
 
 namespace DriveConstants {
+// Driving Parameters - Note that these are not the maximum capable speeds of
+// the robot, rather the allowed maximum speeds
+constexpr units::meters_per_second_t kMaxSpeed = 4.8_mps;
+constexpr units::radians_per_second_t kMaxAngularSpeed{2 * std::numbers::pi};
+
+constexpr double kDirectionSlewRate = 4.0;   // radians per second
+constexpr double kMagnitudeSlewRate = 2.0;   // percent per second (1 = 100%)
+constexpr double kRotationalSlewRate = 4.0;  // percent per second (1 = 100%)
 
 // CAN Sparkmax id numbers
 constexpr int kFrontLeftDriveMotorPort = 1;
@@ -66,9 +74,6 @@ constexpr double kFrontRightDriveEncoderOffset = (3.6538 +  (std::numbers::pi));
 constexpr double kBackLeftDriveEncoderOffset =  (3.2676);
 constexpr double kBackRightDriveEncoderOffset = (1.9249 - (std::numbers::pi / 2));
 
-constexpr auto kRobotMaxLinearVelocity = 5.0_mps; // 4.6
-constexpr auto kRobotMaxAngularVelocity = std::numbers::pi * 3_rad_per_s;
-
 constexpr auto kDriveBaseRadius = 0.46_m;
 
 }  // namespace DriveConstants
@@ -82,7 +87,7 @@ constexpr bool kTurningEncoderInverted = true;
 // The MAXSwerve module can be configured with one of three pinion gears: 12T,
 // 13T, or 14T. This changes the drive speed of the module (a pinion gear with
 // more teeth will result in a robot that drives faster).
-constexpr int kDrivingMotorPinionTeeth = 14;
+constexpr int kDrivingMotorPinionTeeth = 13;
 
 // Calculations required for driving motor conversion factors and feed forward
 constexpr double kDrivingMotorFreeSpeedRps =
@@ -134,24 +139,9 @@ constexpr rev::CANSparkMax::IdleMode kTurningMotorIdleMode = rev::CANSparkMax::I
 constexpr units::ampere_t kDrivingMotorCurrentLimit = 50_A;
 constexpr units::ampere_t kTurningMotorCurrentLimit = 20_A;
 
-// This is something to try and get rid of
-// If feels like there should be something like this built into the systems
-constexpr double ANALOG_TO_RAD_FACTOR = 1.2566;     // 0 to 5.0 volt = 2PI rad
-constexpr double SPARK_MAX_ANALOG_TO_RAD_FACTOR = 1.9040;     // 0 to 3.3 volt = 2PI rad  should come back and revisit this to maybe fix anolog things.
-
-constexpr double kWheelRadiusMeters = 0.0508;
-constexpr int kEncoderResolution = 42;
-constexpr double kGearRatio = 8.14;
-
-//constexpr double kDriveVelocityEncoderConversionFactor = (2.0 * std::numbers::pi * kWheelRadiusMeters 
-//                                                / (kGearRatio * kEncoderResolution));
-
-//constexpr double kDrivePositionEncoderConversionFactor = (2.0 * std::numbers::pi * kWheelRadiusMeters 
-//                                                / (kGearRatio));
-
 constexpr auto kModuleMaxAngularVelocity =  std::numbers::pi * 9_rad_per_s;  // radians per second ?????????
 constexpr auto kModuleMaxAngularAcceleration = std::numbers::pi * 20_rad_per_s / 1_s;  // radians per second^2
-constexpr auto kModuleMaxLinearVelocity = 3.81_mps;
+constexpr auto kModuleMaxLinearVelocity = 4.45_mps;
 
 constexpr double kPModuleDriveController = 1;
 constexpr double kIModuleDriveController = 0.1;

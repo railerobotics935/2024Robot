@@ -17,7 +17,7 @@
 
 #include "Constants.h"
 #include "subsystems/DriveSubsystem.h"
-
+#include "utils/SwerveUtils.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -43,12 +43,6 @@ class RobotContainer {
 
   // The robot's subsystems
   DriveSubsystem m_drive;
-
-  // Slew rate limiters to make joystick inputs more gentle; 1/2 sec from 0
-  // to 1.
-  frc::SlewRateLimiter<units::scalar> m_xSpeedLimiter{8 / 1_s};
-  frc::SlewRateLimiter<units::scalar> m_ySpeedLimiter{8 / 1_s};
-  frc::SlewRateLimiter<units::scalar> m_rotLimiter{8 / 1_s};
 
   void ConfigureButtonBindings();
 
