@@ -148,6 +148,12 @@ constexpr double kIModuleDriveController = 0.1;
 constexpr double kDModuleDriveController = 0.1;
 }  // namespace ModuleConstants
 
+namespace IntakeConstants {
+// Intake motor 
+constexpr int kMotorID = 9;
+constexpr rev::CANSparkMaxLowLevel::MotorType kMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
+} // namespace IntakeConstants
+
 namespace AutoConstants {
 
 // Only Constants here are the PID constants. Look in path planner for max veleocty/acceleration constants

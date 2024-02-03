@@ -7,7 +7,7 @@
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
 
-#include "subsystems/ExampleSubsystem.h"
+#include "subsystems/IntakeSubsystem.h"
 
 /**
  * An example command that uses an example subsystem.
@@ -24,8 +24,8 @@ class ExampleCommand
    *
    * @param subsystem The subsystem used by this command.
    */
-  explicit ExampleCommand(ExampleSubsystem* subsystem);
+  explicit ExampleCommand(IntakeSubsystem* subsystem);
 
  private:
-  ExampleSubsystem* m_subsystem;
+  IntakeSubsystem* m_subsystem;
 };
