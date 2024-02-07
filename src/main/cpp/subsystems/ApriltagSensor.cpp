@@ -8,10 +8,12 @@
 #include "subsystems/ApriltagSensor.h"
 
 
-ApriltagSensor::ApriltagSensor(std::string cameraName) {
+ApriltagSensor::ApriltagSensor(std::string cameraName, frc::Pose3d cameraPose3d) {
 	
 	// Set the camera name to identify whitch camera to look at in NT
 	m_cameraName = cameraName;
+  m_cameraPose3d = cameraPose3d;
+  m_cameraTransform2d = {cameraPose3d.ToPose2d().Translation(), cameraPose3d.ToPose2d().Rotation()};
 
 	auto nt_inst = nt::NetworkTableInstance::GetDefault();
 	auto nt_table = nt_inst.GetTable("SmartDashboard");
@@ -60,7 +62,7 @@ frc::Pose2d ApriltagSensor::GetApriltagRelativePose(int tag) {
     returnPose = GetRawPose3d(tag).ToPose2d().RotateBy((units::radian_t)std::numbers::pi);
 
     // Transform by camera Pose2d
-    returnPose.TransformBy(CameraConstats::kFrontCameraTransform2d);
+    returnPose.TransformBy(m_cameraTransform2d);
   }
 
   return returnPose;
@@ -77,7 +79,7 @@ frc::Transform2d ApriltagSensor::GetApriltagRelativeTransformation(int tag) {
     returnTransformation = frc::Transform2d(GetRawPose3d(tag).ToPose2d().Translation(), GetRawPose3d(tag).ToPose2d().RotateBy((units::radian_t)std::numbers::pi).Rotation());
 
     // Add the transformation from the camera Pose2d together
-    returnTransformation.operator+(CameraConstats::kFrontCameraTransform2d);
+    returnTransformation.operator+(m_cameraTransform2d);
   }
 
   return returnTransformation;

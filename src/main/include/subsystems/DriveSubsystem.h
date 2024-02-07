@@ -27,10 +27,10 @@ class DriveSubsystem : public frc2::SubsystemBase {
 public:
   DriveSubsystem();
   /**
-   * Will return true when the robot is on the red allience. Specificly
+   * Will return true when the robot is on the red alliance. Specificly
    * for the pathplanner path orientaion
    */
-  bool InRedAlience();
+  bool InRedAlliance();
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -174,14 +174,15 @@ private:
   frc::ADIS16470_IMU m_gyro{frc::ADIS16470_IMU::IMUAxis::kZ, frc::ADIS16470_IMU::IMUAxis::kY, frc::ADIS16470_IMU::IMUAxis::kX};
 
   // Apriltag sensor 
-  ApriltagSensor m_frontCameraSensor{"FrontCam"};
+  ApriltagSensor m_frontCameraSensor{"FrontCam", CameraConstats::FrontCamera::kPose3d};
+  ApriltagSensor m_backCameraSensor{"BackCam", CameraConstats::BackCamera::kPose3d};
 
   // Odometry class for tracking robot pose
   // 4 defines the number of modules
   frc::SwerveDriveOdometry<4> m_odometry;
 
   // Pose Estimator
-  //frc::SwerveDrivePoseEstimator<4> m_poseEstimator;
+  frc::SwerveDrivePoseEstimator<4> m_poseEstimator;
 
   // Slew rate filter variables for controlling lateral acceleration
   double m_currentRotation = 0.0;
@@ -193,6 +194,5 @@ private:
   frc::SlewRateLimiter<units::scalar> m_rotLimiter{
       DriveConstants::kRotationalSlewRate / 1_s};
   double m_prevTime = wpi::Now() * 1e-6;
-
 
 };

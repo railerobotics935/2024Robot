@@ -25,7 +25,7 @@ public:
    * 
    * @param cameraName The camera name from network tables
   */
-  ApriltagSensor (std::string cameraName);
+  ApriltagSensor (std::string cameraName, frc::Pose3d cameraPose3d);
 
   /**
    * @param tag The ID number for the apriltag wanted to identify
@@ -69,7 +69,8 @@ private:
   nt::NetworkTableEntry nte_latency;
 
   std::string m_cameraName;
-
+  frc::Pose3d m_cameraPose3d;
+  frc::Transform2d m_cameraTransform2d;
   // Create path to deploy directory
   fs::path deployDirectory{frc::filesystem::GetDeployDirectory() + "/2024-crescendo.json"};
 

@@ -192,12 +192,18 @@ constexpr int kDriverControllerPort = 0;
 }  // namespace OIConstants
 
 namespace CameraConstats {
-
 // Pose3d/transformation2d of the camera relative to the robot
 // X if forward, Y is Left Z is up 
-const frc::Translation3d kFrontCameraTranlation3d{(units::meter_t)0.0, (units::meter_t)RobotConstants::kShooterSideWidth / 2, (units::meter_t)0.4064};
-const frc::Rotation3d kFrontCameraRotation3d{(units::radian_t)0.0, (units::radian_t)0.0, (units::radian_t)0.0};
-const frc::Pose3d kFrontCameraPose3d{kFrontCameraTranlation3d, kFrontCameraRotation3d};
-const frc::Transform2d kFrontCameraTransform2d{kFrontCameraPose3d.ToPose2d().Translation(), kFrontCameraPose3d.ToPose2d().Rotation()};
+namespace FrontCamera {
+    const frc::Translation3d kTranlation3d{(units::meter_t)0.0, (units::meter_t)RobotConstants::kWheelBase / 2, (units::meter_t)0.4064};
+    const frc::Rotation3d kRotation3d{(units::radian_t)0.0, (units::radian_t)0.0, (units::radian_t)0.0};
+    const frc::Pose3d kPose3d{kTranlation3d, kRotation3d};
+} // namespace FrontCamera
+
+namespace BackCamera {
+    const frc::Translation3d kTranlation3d{(units::meter_t)0.0, -(units::meter_t)RobotConstants::kWheelBase / 2, (units::meter_t)0.4064};
+    const frc::Rotation3d kRotation3d{(units::radian_t)0.0, (units::radian_t)0.0, (units::radian_t)std::numbers::pi};
+    const frc::Pose3d kPose3d{kTranlation3d, kRotation3d};
+} // namespace BackCamera
 
 } // namespace CameraConstants
