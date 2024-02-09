@@ -39,8 +39,6 @@ class RobotContainer {
   // Variables 
   bool isFieldRelative = true;
 
-  // The robot's subsystems and commands are defined here...
-
   // The robot's subsystems
   DriveSubsystem m_drive;
 
@@ -58,4 +56,5 @@ class RobotContainer {
   std::string m_pietro = "Pietro";
   std::string m_egg = "Egg";
   std::string m_8 = "8";
+  std::string m_trapazoidTest = "TrapazoidTest";
 };

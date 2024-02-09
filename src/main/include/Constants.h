@@ -151,7 +151,7 @@ constexpr double kDModuleDriveController = 0.1;
 namespace IntakeConstants {
 // Intake motor 
 constexpr int kMotorID = 9;
-constexpr rev::CANSparkMaxLowLevel::MotorType kMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
+constexpr rev::CANSparkLowLevel::MotorType kMotorType = rev::CANSparkLowLevel::MotorType::kBrushless;
 } // namespace IntakeConstants
 
 namespace AutoConstants {

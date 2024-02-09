@@ -52,7 +52,8 @@ RobotContainer::RobotContainer() {
     {&m_drive}));
 
   // Add auto name options
-  m_autoChooser.SetDefaultOption("Forward 1m", m_forward1m);
+  m_autoChooser.SetDefaultOption("Trapazoid Test", m_trapazoidTest);
+  m_autoChooser.AddOption("Forward 1m", m_forward1m);
   m_autoChooser.AddOption("Left 1m", m_left1m);
   m_autoChooser.AddOption("Other Auto", m_circleAuto);
   m_autoChooser.AddOption("Figure8", m_figure8);
@@ -72,7 +73,7 @@ void RobotContainer::ConfigureButtonBindings() {
 
   
   // I don't exactly know why this works, but the documentation for command based c++ is kinda bad 
-  resetButton.OnTrue(frc2::cmd::Run([&] {m_drive.ZeroHeading();}, {&m_drive}));
+  resetButton.WhileTrue(frc2::cmd::Run([&] {m_drive.ZeroHeading();}, {&m_drive}));
   slowSwitch.WhileTrue(frc2::cmd::Run([&] {            
     const auto ySpeed = -frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveLeftYIndex), 0.15);
     const auto xSpeed = -frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveLeftXIndex), 0.15);

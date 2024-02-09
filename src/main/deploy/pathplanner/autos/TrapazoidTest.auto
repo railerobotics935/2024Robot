@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.0,
-      "y": 1.0
+      "x": 1.5928943538798759,
+      "y": 6.805997885500045
     },
     "rotation": 0
   },
@@ -14,12 +14,12 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Forward1m"
+            "pathName": "TrapazoidTest"
           }
         }
       ]
     }
   },
-  "folder": "Practice",
+  "folder": null,
   "choreoAuto": false
 }

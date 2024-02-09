@@ -76,7 +76,7 @@
     "rotateFast": true
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Practice",
   "previewStartingState": null,
   "useDefaultConstraints": true
 }
