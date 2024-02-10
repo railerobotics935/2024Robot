@@ -151,7 +151,7 @@ constexpr double kDModuleDriveController = 0.1;
 namespace IntakeConstants {
 // Intake motor 
 constexpr int kMotorID = 9;
-constexpr rev::CANSparkLowLevel::MotorType kMotorType = rev::CANSparkLowLevel::MotorType::kBrushless;
+constexpr rev::CANSparkMaxLowLevel::MotorType kMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
 } // namespace IntakeConstants
 
 namespace AutoConstants {
@@ -184,11 +184,13 @@ constexpr int kFieldRelativeSwitchIndex = 1;
 constexpr int kParkSwitchIndex = 2;
 constexpr int kSlowStateSwitchIndex = 5;
 constexpr int kResetGyroButtonIndex = 3;
+constexpr int kIntakeButtonIndex = 8;
 
 } // namespace ControllerConstants
 
 namespace OIConstants {
 constexpr int kDriverControllerPort = 0;
+constexpr int kOperatorControllerPort = 1;
 }  // namespace OIConstants
 
 namespace CameraConstats {
