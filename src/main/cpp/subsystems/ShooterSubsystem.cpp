@@ -6,7 +6,9 @@
 #include "Constants.h"
 
 
-ShooterSubsystem::ShooterSubsystem() : m_shooterMotor{IntakeConstants::kMotorID, IntakeConstants::kMotorType} {
+ShooterSubsystem::ShooterSubsystem() : m_shooterMotor{ShooterConstants::kShooterID, ShooterConstants::kShooterMotorType},
+                    m_shooterFollower{ShooterConstants::kFollowerID, ShooterConstants::kFollowerMotorType},
+                    m_pitchMotor{ShooterConstants::kPichID, ShooterConstants::kPichMotorType}{
   // Implementation of subsystem constructor goes here.
 }
 

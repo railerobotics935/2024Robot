@@ -154,6 +154,22 @@ constexpr int kMotorID = 9;
 constexpr rev::CANSparkMaxLowLevel::MotorType kMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
 } // namespace IntakeConstants
 
+namespace ShooterConstants {
+// Intake motor 
+constexpr int kShooterID = 7;
+constexpr int kFollowerID = 8;
+constexpr int kPichID = 6;
+constexpr rev::CANSparkMaxLowLevel::MotorType kShooterMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
+constexpr rev::CANSparkMaxLowLevel::MotorType kFollowerMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
+constexpr rev::CANSparkMaxLowLevel::MotorType kPichMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
+} // namespace IntakeConstants
+
+namespace ElevatorConstants {
+// Intake motor 
+constexpr int kElevatorID = 9;
+constexpr rev::CANSparkMaxLowLevel::MotorType kElevatorMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
+} // namespace IntakeConstants
+
 namespace AutoConstants {
 
 // Only Constants here are the PID constants. Look in path planner for max veleocty/acceleration constants

@@ -41,7 +41,7 @@ class ShooterSubsystem : public frc2::SubsystemBase {
 
   // Motor Controllers
   rev::CANSparkMax m_shooterMotor;
-  //rev::CANSparkMax m_shooterFollower;
-  //rev::CANSparkMax m_pitchMotor;
+  rev::CANSparkMax m_shooterFollower;
+  rev::CANSparkMax m_pitchMotor;
 
 };
