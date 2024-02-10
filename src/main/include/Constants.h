@@ -29,6 +29,9 @@
  * command-specific namespaces within this header, which can then be used where
  * they are needed.
  */
+
+#define BURNSPARKMAX true
+
 namespace RobotConstants {
 
 const units::meter_t kIntakeSideWidth =
@@ -37,7 +40,6 @@ const units::meter_t kShooterSideWidth =
   0.370_m;  // Distance between centers of right and left wheels on robot
 const units::meter_t kWheelBase =
   0.500_m;  // Distance between centers of front and back wheels on robot
-
 }
 
 namespace DriveConstants {
@@ -158,10 +160,46 @@ namespace ShooterConstants {
 // Intake motor 
 constexpr int kShooterID = 7;
 constexpr int kFollowerID = 8;
-constexpr int kPichID = 6;
+constexpr int kPitchID = 6;
 constexpr rev::CANSparkMaxLowLevel::MotorType kShooterMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
 constexpr rev::CANSparkMaxLowLevel::MotorType kFollowerMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
-constexpr rev::CANSparkMaxLowLevel::MotorType kPichMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
+constexpr rev::CANSparkMaxLowLevel::MotorType kPitchMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
+
+// Calculations required for driving motor conversion factors and feed forward
+constexpr double kShooterMotorFreeSpeedRps =
+    5676.0 / 60;  // NEO free speed is 5676 RPM
+
+
+// Setup conversion factor for shooter encoders
+constexpr double kShooterGearboxRatio = 1.0;
+constexpr double kShooterPositionFactor = (std::numbers::pi * 2) / kShooterGearboxRatio; // radians
+constexpr double kShooterEncoderVelocityFactor = kShooterPositionFactor / 60.0;  // radians per second
+
+// Pitch encoder
+constexpr double kPitchGearboxRatio = 15.0;
+constexpr double kPitchPositionFactor = (std::numbers::pi * 2) / kPitchGearboxRatio; // radians
+constexpr double kPitchEncoderVelocityFactor = kPitchPositionFactor / 60.0; // radians per second
+
+// PID Constants for the pitch of the shooter
+constexpr double kShooterP = 1.0; 
+constexpr double kShooterI = 0.0; 
+constexpr double kShooterD = 0.0; 
+constexpr double kShooterFF = 1.0 / kShooterMotorFreeSpeedRps;
+constexpr double kShooterMin = -1.0;
+constexpr double kShooterMax = 1.0;
+
+// PID Constants for the speed of shooter
+constexpr double kPitchP = 1.0;
+constexpr double kPitchI = 0.0;
+constexpr double kPitchD = 0.0;
+constexpr double kPitchFF = 0.0;
+constexpr double kPitchMin = -1.0;
+constexpr double kPitchMax = 1.0;
+
+constexpr units::ampere_t kShooterMotorCurrentLimit = 50_A;
+constexpr units::ampere_t kFollowerMotorCurrentLimit = 50_A;
+constexpr units::ampere_t kPitchMotorCurrentLimit = 20_A;
+
 } // namespace IntakeConstants
 
 namespace ElevatorConstants {

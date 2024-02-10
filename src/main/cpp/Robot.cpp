@@ -31,39 +31,41 @@
  *    TODO: Create a poseEstimator for integration of robot
  *      VERIFY: Add timestamp for pose estimator
  *
- * TODO: Add Robot Code
+ * TODO: Add Robot Code, an overview
  *    DONE: Convert to trapazoid robot (Honeybee)
  *    DONE: Split robot into subsystems
  *    TODO: Create commands for each action needed
- *    TODO: Map keybindings for each command
- *    TODO: Regester Command for auto
- *    TODO: Create Autos using command
+ *    TODO: Map keybindings for actions
  * 
- * TODO: Shooter Subsystem
+ * TODO: Autos
+ *    TODO: Regester Command for auto
+ *    TODO: Create Autos using commands
+ * 
+ * DONE: Shooter Subsystem
+ *    DONE: Create Basic functions
+ *    DONE: Define Sensors
+ *    DONE: Implement PID Controller
+ * 
+ * TODO: Elevator Subsystem
  *    TODO: Create Basic functions
  *    TODO: Define Sensors
  *    TODO: Implement PID Controller
+ * 
+ * TODO: Create custom Command for shooting
  *    TODO: Create Auto aim/shoot command
  *      TODO: Learn how to make a command/what type
  *      TODO: Collect data on shooter to figure out what angle our shooter needs to be at for shooting
  *      TODO: Use data to auto aim
  *      TODO: Use sensor data to determine when to shoot note
- * 
- * TODO: Drive Subsystem
- *    TODO: Create Commmand to go a specific place on the field
- *      TODO: Pathplaner?
- *      TODO: set max range/acceptable shooting zone
- * 
- * TODO: Create custom Command for shooting
- *    TODO: Merge both drive and shooter subsystems/commands/methods
- *    TODO: Do it
+ *    TODO: check location
+ *      TODO: Use Pose/camera to deterime correct position
  * 
  * TODO: Improvements
  *    DONE: Work on fixing the abolute encoder problem with the swerve
  *    DONE: Implement rev through bore encoder
- *    TODO: Fix calibration and stability of image for apriltags
+ *    MAYBE: Fix calibration and stability of image for apriltags
  *    VERIFY: Command Bindings get stuck with controller switches
- *    STARTED: Chooser to deterime if we need to burn the flash on the motorcontrollers
+ *    FIXED: Chooser to deterime if we need to burn the flash on the motorcontrollers
  *    TODO: Fix warning about construction fo motorcontrollers using constant values
  *    TODO: Define the "interruptible" state for commands
  * 
