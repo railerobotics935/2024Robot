@@ -52,7 +52,7 @@ RobotContainer::RobotContainer() {
     {&m_drive}));
 
   // Add auto name options
-  m_autoChooser.SetDefaultOption("Trapazoid Test", m_trapazoidTest);
+  m_autoChooser.SetDefaultOption("Trapezoid Test", m_trapezoidTest);
   m_autoChooser.AddOption("Forward 1m", m_forward1m);
   m_autoChooser.AddOption("Left 1m", m_left1m);
   m_autoChooser.AddOption("Other Auto", m_circleAuto);
@@ -63,6 +63,12 @@ RobotContainer::RobotContainer() {
   m_autoChooser.AddOption("8", m_8);
 
   frc::Shuffleboard::GetTab("Autonomous").Add(m_autoChooser);
+
+  // Add choices for chooser
+  m_configureSparkMaxChooser.SetDefaultOption("Do Not Configure", m_doNotConfigure);
+  m_configureSparkMaxChooser.AddOption("Configure", m_doConfigure);
+
+  frc::Shuffleboard::GetTab("Robot Configuration").Add(m_configureSparkMaxChooser);
 }
 
 void RobotContainer::ConfigureButtonBindings() {

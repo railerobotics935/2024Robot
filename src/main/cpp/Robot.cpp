@@ -63,7 +63,8 @@
  *    DONE: Implement rev through bore encoder
  *    TODO: Fix calibration and stability of image for apriltags
  *    VERIFY: Command Bindings get stuck with controller switches
- *    TODO: Chooser to deterime if we need to burn the flash on the motorcontrollers
+ *    STARTED: Chooser to deterime if we need to burn the flash on the motorcontrollers
+ *    TODO: Fix warning about construction fo motorcontrollers using constant values
  * 
  * TODO: Clean up code
  *    DONE: Fix indentation size

@@ -17,6 +17,15 @@ SwerveModule::SwerveModule(const int drivingCANId, const int turningCANId,
     : m_drivingSparkMax(drivingCANId, rev::CANSparkMax::MotorType::kBrushless),
       m_turningSparkMax(turningCANId, rev::CANSparkMax::MotorType::kBrushless) {
 
+  ConfigureSparkMax();
+  
+  m_turingEncoderOffset = turingEncoderOffset;
+  m_desiredState.angle =
+      frc::Rotation2d(units::radian_t{m_turningAbsoluteEncoder.GetPosition()});
+  m_drivingEncoder.SetPosition(0);
+}
+
+void SwerveModule::ConfigureSparkMax() {
   // Factory reset, so we get the SPARKS MAX to a known state before configuring
   // them. This is useful in case a SPARK MAX is swapped out.
   m_drivingSparkMax.RestoreFactoryDefaults();
@@ -79,11 +88,6 @@ SwerveModule::SwerveModule(const int drivingCANId, const int turningCANId,
   // operation, it will maintain the above configurations.
   m_drivingSparkMax.BurnFlash();
   m_turningSparkMax.BurnFlash();
-
-  m_turingEncoderOffset = turingEncoderOffset;
-  m_desiredState.angle =
-      frc::Rotation2d(units::radian_t{m_turningAbsoluteEncoder.GetPosition()});
-  m_drivingEncoder.SetPosition(0);
 }
 
 frc::SwerveModuleState SwerveModule::GetState() {

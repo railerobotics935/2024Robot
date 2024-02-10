@@ -49,6 +49,7 @@ class RobotContainer {
 
   // Sendable chooser for auto
   frc::SendableChooser<std::string> m_autoChooser;
+  frc::SendableChooser<bool> m_configureSparkMaxChooser;
 
   // Auto options coresponding to the name of the autos                                             
   std::string m_figure8 = "Figure8";
@@ -59,5 +60,9 @@ class RobotContainer {
   std::string m_pietro = "Pietro";
   std::string m_egg = "Egg";
   std::string m_8 = "8";
-  std::string m_trapazoidTest = "TrapazoidTest";
+  std::string m_trapezoidTest = "TrapezoidTest";
+
+  // Options for Spark Max Chooser
+  bool m_doConfigure = true;
+  bool m_doNotConfigure = false;
 };

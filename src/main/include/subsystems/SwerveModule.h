@@ -34,6 +34,11 @@ class SwerveModule {
 
   void SetDesiredState(const frc::SwerveModuleState& state);
 
+  /**
+   * Burn configuration onto sparkmax motorcontrollers
+  */
+  void ConfigureSparkMax();
+
   // void ResetEncoders(); currently using absolute encoders, so you can't reset them digitaly
 
  private:
