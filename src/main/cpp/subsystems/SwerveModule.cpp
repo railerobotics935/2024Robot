@@ -17,8 +17,13 @@ SwerveModule::SwerveModule(const int drivingCANId, const int turningCANId,
     : m_drivingSparkMax(drivingCANId, rev::CANSparkMax::MotorType::kBrushless),
       m_turningSparkMax(turningCANId, rev::CANSparkMax::MotorType::kBrushless) {
 
+  #ifdef BURNSPARKMAX 
   ConfigureSparkMax();
-  
+  printf("Flash Burned on Swerve Module\r\n");
+  #else
+  printf("Flash was not burned on Swerve Module\r\n");
+  #endif
+
   m_turingEncoderOffset = turingEncoderOffset;
   m_desiredState.angle =
       frc::Rotation2d(units::radian_t{m_turningAbsoluteEncoder.GetPosition()});
@@ -82,7 +87,7 @@ void SwerveModule::ConfigureSparkMax() {
   m_drivingSparkMax.SetIdleMode(kDrivingMotorIdleMode);
   m_turningSparkMax.SetIdleMode(kTurningMotorIdleMode);
   m_drivingSparkMax.SetSmartCurrentLimit(kDrivingMotorCurrentLimit.value());
-  m_turningSparkMax.SetSmartCurrentLimit(kDrivingMotorCurrentLimit.value());
+  m_turningSparkMax.SetSmartCurrentLimit(kTurningMotorCurrentLimit.value());
 
   // Save the SPARK MAX configurations. If a SPARK MAX browns out during
   // operation, it will maintain the above configurations.

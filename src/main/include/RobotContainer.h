@@ -18,6 +18,7 @@
 #include "Constants.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/IntakeSubsystem.h"
+#include "subsystems/ShooterSubsystem.h"
 #include "utils/SwerveUtils.h"
 
 /**
@@ -44,6 +45,7 @@ class RobotContainer {
   // The robot's subsystems
   DriveSubsystem m_drive;
   IntakeSubsystem m_intake;
+  ShooterSubsystem m_shooter;
 
   void ConfigureButtonBindings();
 
