@@ -21,29 +21,48 @@
  *    VERIFY: Fix Gear ratios
  *    TODO: Tune PID controller for accurate positioning
  * 
- * TODO: Create Apriltag recongition system
+ * VERIFY: Create Apriltag recongition system
  *    TODO: Finalize camera location/configuatoin
  *    DONE: Create reference list for apriltag positions on fiels / Pull information about apriltag position
  *    DONE: Transform apriltag Pose2d to get field relative robot position
  *    DONE: Correct the axis used for the apriltag to get correct pose3d
- *    TODO: Itterate for multiple cameras
- *    TODO: Fix camera
+ *    DONE: Itterate for multiple cameras
+ *    DONE: Fix camera
  *    TODO: Create a poseEstimator for integration of robot
  *      VERIFY: Add timestamp for pose estimator
  *
  * TODO: Add Robot Code
- *    TODO: Convert to trapazoid robot (honey bee major)
- *    TODO: Split robot into subsystems
+ *    DONE: Convert to trapazoid robot (Honeybee)
+ *    DONE: Split robot into subsystems
  *    TODO: Create commands for each action needed
  *    TODO: Map keybindings for each command
  *    TODO: Regester Command for auto
  *    TODO: Create Autos using command
  * 
+ * TODO: Shooter Subsystem
+ *    TODO: Create Basic functions
+ *    TODO: Define Sensors
+ *    TODO: Implement PID Controller
+ *    TODO: Create Auto aim/shoot command
+ *      TODO: Learn how to make a command/what type
+ *      TODO: Collect data on shooter to figure out what angle our shooter needs to be at for shooting
+ *      TODO: Use data to auto aim
+ *      TODO: Use sensor data to determine when to shoot note
+ * 
+ * TODO: Drive Subsystem
+ *    TODO: Create Commmand to go a specific place on the field
+ *      TODO: Pathplaner?
+ *      TODO: set max range/acceptable shooting zone
+ * 
+ * TODO: Create custom Command for shooting
+ *    TODO: Merge both drive and shooter subsystems/commands/methods
+ *    TODO: Do it
+ * 
  * TODO: Improvements
  *    DONE: Work on fixing the abolute encoder problem with the swerve
  *    DONE: Implement rev through bore encoder
  *    TODO: Fix calibration and stability of image for apriltags
- *    BUG: Command Bindings get stuck with controller switches
+ *    VERIFY: Command Bindings get stuck with controller switches
  *    TODO: Chooser to deterime if we need to burn the flash on the motorcontrollers
  * 
  * TODO: Clean up code

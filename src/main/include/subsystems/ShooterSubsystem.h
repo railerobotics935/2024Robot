@@ -30,14 +30,10 @@ class ShooterSubsystem : public frc2::SubsystemBase {
    */
   void Periodic() override;
 
-  // Turn on shooter
-  void TurnOn();
-
-  //Turn off shooter
-  void TurnOff();
-
   //Sets the motor's power (between -1.0 and 1.0).
   void SetMotorPower(double power);
+
+  void AimAtTarget();
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
@@ -45,4 +41,7 @@ class ShooterSubsystem : public frc2::SubsystemBase {
 
   // Motor Controllers
   rev::CANSparkMax m_shooterMotor;
+  rev::CANSparkMax m_shooterFollower;
+  rev::CANSparkMax m_pitchMotor;
+  
 };
