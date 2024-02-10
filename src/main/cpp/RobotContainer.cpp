@@ -88,8 +88,7 @@ void RobotContainer::ConfigureButtonBindings() {
 
   parkSwitch.WhileTrue(frc2::cmd::Run([&] {m_drive.Park();}, {&m_drive}));
 
-  intakeButton.WhileTrue(frc2::cmd::Run([&] {m_intake.TurnOn();}, {&m_intake}));
-}
+  intakeButton.WhileTrue(frc2::cmd::Run([&] {m_intake.SetMotorPower(1.0);}, {&m_intake}));}
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
   

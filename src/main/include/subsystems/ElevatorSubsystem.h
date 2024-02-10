@@ -8,9 +8,9 @@
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
 
-class IntakeSubsystem : public frc2::SubsystemBase {
+class ElevatorSubsystem : public frc2::SubsystemBase {
  public:
-  IntakeSubsystem();
+  ElevatorSubsystem();
 
   /**
    * Example command factory method.
@@ -30,13 +30,10 @@ class IntakeSubsystem : public frc2::SubsystemBase {
    */
   void Periodic() override;
 
-  //Sets the motor's power (between -1.0 and 1.0).
-  void SetMotorPower(double power);
-
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 
   // Motor Controllers
-  rev::CANSparkMax m_intakeMotor;
+  rev::CANSparkMax m_elevatorMotor;
 };
