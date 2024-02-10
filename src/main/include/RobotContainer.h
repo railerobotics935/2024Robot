@@ -17,6 +17,7 @@
 
 #include "Constants.h"
 #include "subsystems/DriveSubsystem.h"
+#include "subsystems/IntakeSubsystem.h"
 #include "utils/SwerveUtils.h"
 
 /**
@@ -33,14 +34,16 @@ class RobotContainer {
   frc2::CommandPtr GetAutonomousCommand();
 
  private:
-  // The driver's controller
+  // The driver and operator controllers
   frc::XboxController m_driveController{OIConstants::kDriverControllerPort};
+  frc::XboxController m_operatorController{OIConstants::kOperatorControllerPort};
 
   // Variables 
   bool isFieldRelative = true;
 
   // The robot's subsystems
   DriveSubsystem m_drive;
+  IntakeSubsystem m_intake;
 
   void ConfigureButtonBindings();
 

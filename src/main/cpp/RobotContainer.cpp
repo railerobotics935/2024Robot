@@ -69,7 +69,8 @@ void RobotContainer::ConfigureButtonBindings() {
   
   frc2::JoystickButton resetButton(&m_driveController, ControllerConstants::kResetGyroButtonIndex); // Creates a new JoystickButton object for the "reset" button on Drive Controller    
   frc2::JoystickButton slowSwitch(&m_driveController, ControllerConstants::kSlowStateSwitchIndex); // Creates a new JoystickButton object for the slow switch on Drive Controller    
-  frc2::JoystickButton parkSwitch(&m_driveController, ControllerConstants::kParkSwitchIndex); // Creates a new JoystickButton object for the brake switch on Drive Controller    
+  frc2::JoystickButton parkSwitch(&m_driveController, ControllerConstants::kParkSwitchIndex); // Creates a new JoystickButton object for the brake switch on Drive Controller
+  frc2::JoystickButton intakeButton(&m_operatorController, ControllerConstants::kIntakeButtonIndex); // Creates a new JoystickButton object for the intake button on Operator Controller  
 
   
   // I don't exactly know why this works, but the documentation for command based c++ is kinda bad 
@@ -86,6 +87,8 @@ void RobotContainer::ConfigureButtonBindings() {
   {&m_drive}));
 
   parkSwitch.WhileTrue(frc2::cmd::Run([&] {m_drive.Park();}, {&m_drive}));
+
+  intakeButton.WhileTrue(frc2::cmd::Run([&] {m_intake.TurnOn();}, {&m_intake}));
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
