@@ -2,30 +2,26 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-#include "subsystems/IntakeSubsystem.h"
+#include "subsystems/ElevatorSubsystem.h"
 #include "Constants.h"
 
 
-IntakeSubsystem::IntakeSubsystem() : m_intakeMotor{IntakeConstants::kMotorID, IntakeConstants::kMotorType} {
+ElevatorSubsystem::ElevatorSubsystem() : m_elevatorMotor{ElevatorConstants::kMotorID, ElevatorConstants::kMotorType} {
   // Implementation of subsystem constructor goes here.
 }
 
-frc2::CommandPtr IntakeSubsystem::ExampleMethodCommand() {
+frc2::CommandPtr ElevatorSubsystem::ExampleMethodCommand() {
   // Inline construction of command goes here.
   // Subsystem::RunOnce implicitly requires `this` subsystem.
   return RunOnce([/* this */] { /* one-time action goes here */ });
 }
 
-bool IntakeSubsystem::ExampleCondition() {
+bool ElevatorSubsystem::ExampleCondition() {
   // Query some boolean state, such as a digital sensor.
   return false;
 }
 
-void IntakeSubsystem::Periodic() {
+void ElevatorSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
 }
 
-void IntakeSubsystem::SetMotorPower(double power) {
-  // Sets the motor's power (between -1.0 and 1.0). 
-  m_intakeMotor.Set(power);
-}
