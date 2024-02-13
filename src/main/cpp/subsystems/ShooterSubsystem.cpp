@@ -76,9 +76,7 @@ void ShooterSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
   nte_shooterSpeed.SetDouble((double)m_shooterEncoder.GetVelocity());
   nte_followerSpeed.SetDouble((double)m_followerEncoder.GetVelocity());
-  nte_shooterSetpoint.SetDouble(m_shooterSetpoint);
   nte_pitchAngle.SetDouble((double)m_pitchAbsoluteEncoder.GetPosition());
-  nte_pitchSetpoint.SetDouble(m_pitchSetpoint);
 }
 
 void ShooterSubsystem::SetMotorPower(double power) {
@@ -89,11 +87,11 @@ void ShooterSubsystem::SetMotorPower(double power) {
 void ShooterSubsystem::SetShooterAngle(units::radian_t angle) {
   // Set the setpoint as the input angle
   m_pitchPIDController.SetReference((double)angle, rev::CANSparkMax::ControlType::kPosition);
-  m_pitchSetpoint = (double)angle;
+  nte_pitchSetpoint.SetDouble((double)angle);
 }
 
 void ShooterSubsystem::SetShooterSpeed(units::radians_per_second_t speed) {
   // Set the setpoint as the input angle
   m_shooterPIDController.SetReference((double)speed, rev::CANSparkMax::ControlType::kVelocity);
-  m_shooterSetpoint = (double)speed;
+  nte_shooterSetpoint.SetDouble((double)speed);
 }

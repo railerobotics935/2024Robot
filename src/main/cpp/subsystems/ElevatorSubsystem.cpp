@@ -4,6 +4,7 @@
 
 #include "subsystems/ElevatorSubsystem.h"
 #include "Constants.h"
+#include <networktables/NetworkTableInstance.h>
 
 using namespace ElevatorConstants;
 
@@ -43,6 +44,13 @@ ElevatorSubsystem::ElevatorSubsystem() : m_elevatorMotor{kElevatorID, kElevatorM
   // Set folower motor
   m_followerMotor.Follow(m_elevatorMotor, false); // check inversion for follower
 
+   // Initialize shuffleboard communication
+  auto nt_inst = nt::NetworkTableInstance::GetDefault();
+  auto nt_table = nt_inst.GetTable("Elevator");  
+
+  nte_elevatorPosition = nt_table->GetEntry("Elevator Position");
+  nte_elevatorVelocity = nt_table->GetEntry("Elevator Velocity");
+  nte_elevatorSetpoint = nt_table->GetEntry("Elevator Setpoint");
 }
 
 frc2::CommandPtr ElevatorSubsystem::ExampleMethodCommand() {
@@ -58,5 +66,13 @@ bool ElevatorSubsystem::ExampleCondition() {
 
 void ElevatorSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
+  nte_elevatorPosition.SetDouble(m_elevatorEncoder.GetPosition());
+  nte_elevatorVelocity.SetDouble(m_elevatorEncoder.GetVelocity());
+}
+
+void ElevatorSubsystem::SetElevatorPosition(units::meter_t extentionDistance) {
+  // Set setpoint for PID controller
+  m_elevatorPIDController.SetReference((double)extentionDistance, rev::CANSparkMax::ControlType::kPosition);
+  nte_elevatorSetpoint.SetDouble((double)extentionDistance);
 }
 

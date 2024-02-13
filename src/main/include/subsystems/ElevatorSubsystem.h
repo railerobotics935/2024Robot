@@ -7,6 +7,8 @@
 #include <frc2/command/CommandPtr.h>
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
+#include <units/length.h>
+#include <networktables/NetworkTableEntry.h>
 
 class ElevatorSubsystem : public frc2::SubsystemBase {
  public:
@@ -30,7 +32,18 @@ class ElevatorSubsystem : public frc2::SubsystemBase {
    */
   void Periodic() override;
 
+  /**
+   * Set the elevator to a specific extention distance
+   * 
+   * @param extentionDistance The setpoint of the PID controller controlling the height of the elevator
+  */
+  void SetElevatorPosition(units::meter_t extentionDistance);
+
  private:
+
+  nt::NetworkTableEntry nte_elevatorPosition;
+  nt::NetworkTableEntry nte_elevatorVelocity;
+  nt::NetworkTableEntry nte_elevatorSetpoint;
 
   // Motor Controllers
   rev::CANSparkMax m_elevatorMotor;

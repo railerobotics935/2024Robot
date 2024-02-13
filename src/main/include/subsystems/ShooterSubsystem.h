@@ -66,8 +66,5 @@ class ShooterSubsystem : public frc2::SubsystemBase {
   // PID Contollers for
   rev::SparkPIDController m_shooterPIDController = m_shooterMotor.GetPIDController();
   rev::SparkPIDController m_pitchPIDController = m_pitchMotor.GetPIDController();
-
-  // Setpoints to keep track of for NT
-  double m_shooterSetpoint = 0.0;
-  double m_pitchSetpoint = 0.0;
+  
 };
