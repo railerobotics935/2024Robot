@@ -54,15 +54,15 @@ constexpr double kMagnitudeSlewRate = 2.0;   // percent per second (1 = 100%)
 constexpr double kRotationalSlewRate = 4.0;  // percent per second (1 = 100%)
 
 // CAN Sparkmax id numbers
-constexpr int kFrontLeftDriveMotorPort = 1;
-constexpr int kFrontRightDriveMotorPort = 3;
-constexpr int kBackLeftDriveMotorPort = 5;
-constexpr int kBackRightDriveMotorPort = 7;
+constexpr int kFrontLeftDriveMotorPort = 22;
+constexpr int kFrontRightDriveMotorPort = 17;
+constexpr int kBackLeftDriveMotorPort = 21;
+constexpr int kBackRightDriveMotorPort = 18;
 
-constexpr int kFrontLeftTurningMotorPort = 2;
-constexpr int kFrontRightTurningMotorPort = 4;
-constexpr int kBackLeftTurningMotorPort = 6;
-constexpr int kBackRightTurningMotorPort = 8;
+constexpr int kFrontLeftTurningMotorPort = 23;
+constexpr int kFrontRightTurningMotorPort = 16;
+constexpr int kBackLeftTurningMotorPort = 20;
+constexpr int kBackRightTurningMotorPort = 19;
 
 // Anolog input ports on roborio
 constexpr int kFrontLeftTurningEncoderPort = kFrontLeftTurningMotorPort;
@@ -149,7 +149,7 @@ constexpr auto kModuleMaxLinearVelocity = 4.45_mps;
 
 namespace IntakeConstants {
 // Intake motor 
-constexpr int kMotorID = 9;
+constexpr int kMotorID = 24;
 constexpr rev::CANSparkMaxLowLevel::MotorType kMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
 } // namespace IntakeConstants
 
