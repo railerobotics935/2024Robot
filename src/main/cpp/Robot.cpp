@@ -48,8 +48,9 @@
  * 
  * TODO: Elevator Subsystem
  *    TODO: Create Basic functions
- *    TODO: Define Sensors
+ *    DONE: Define Sensors
  *    TODO: Implement PID Controller
+ *    TODO: Check inversion for follower moter
  * 
  * TODO: Create custom Command for shooting
  *    TODO: Create Auto aim/shoot command

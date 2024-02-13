@@ -21,6 +21,9 @@
 
 #pragma once
 
+// Turn this off when there is no new constants need to be burned onto motorcontrollers
+#define BURNSPARKMAX true
+
 /**
  * The Constants header provides a convenient place for teams to hold robot-wide
  * numerical or bool constants.  This should not be used for any other purpose.
@@ -29,8 +32,6 @@
  * command-specific namespaces within this header, which can then be used where
  * they are needed.
  */
-
-#define BURNSPARKMAX true
 
 namespace RobotConstants {
 
@@ -144,10 +145,6 @@ constexpr units::ampere_t kTurningMotorCurrentLimit = 20_A;
 constexpr auto kModuleMaxAngularVelocity =  std::numbers::pi * 9_rad_per_s;  // radians per second ?????????
 constexpr auto kModuleMaxAngularAcceleration = std::numbers::pi * 20_rad_per_s / 1_s;  // radians per second^2
 constexpr auto kModuleMaxLinearVelocity = 4.45_mps;
-
-constexpr double kPModuleDriveController = 1;
-constexpr double kIModuleDriveController = 0.1;
-constexpr double kDModuleDriveController = 0.1;
 }  // namespace ModuleConstants
 
 namespace IntakeConstants {
@@ -168,7 +165,6 @@ constexpr rev::CANSparkMaxLowLevel::MotorType kPitchMotorType = rev::CANSparkMax
 // Calculations required for driving motor conversion factors and feed forward
 constexpr double kShooterMotorFreeSpeedRps =
     5676.0 / 60;  // NEO free speed is 5676 RPM
-
 
 // Setup conversion factor for shooter encoders
 constexpr double kShooterGearboxRatio = 1.0;
@@ -203,9 +199,33 @@ constexpr units::ampere_t kPitchMotorCurrentLimit = 20_A;
 } // namespace IntakeConstants
 
 namespace ElevatorConstants {
-// Intake motor 
-constexpr int kElevatorID = 9;
+// Elevator motor 
+constexpr int kElevatorID = 6;
+constexpr int kFollowerID = 5;
 constexpr rev::CANSparkMaxLowLevel::MotorType kElevatorMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
+constexpr rev::CANSparkMaxLowLevel::MotorType kFollowerMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
+
+// Calculations required for driving motor conversion factors and feed forward
+constexpr double kElevatorMotorFreeSpeedRps =
+    5676.0 / 60;  // NEO free speed is 5676 RPM
+
+// Setup conversion factor for Elevator encoders
+constexpr double kElevatorGearboxRatio = 4.0;
+constexpr double kSpoolDiameter = 7.62; // meters
+constexpr double kElevatorPositionFactor = (std::numbers::pi * kSpoolDiameter) / kElevatorGearboxRatio; // meters
+constexpr double kElevatorEncoderVelocityFactor = kElevatorPositionFactor / 60.0;  // meters per second
+
+// PID Constants for the pitch of the Elevator
+constexpr double kElevatorP = 1.0; 
+constexpr double kElevatorI = 0.0; 
+constexpr double kElevatorD = 0.0; 
+constexpr double kElevatorFF = 0.0;
+constexpr double kElevatorMin = -1.0;
+constexpr double kElevatorMax = 1.0;
+
+constexpr units::ampere_t kElevatorMotorCurrentLimit = 50_A;
+constexpr units::ampere_t kFollowerMotorCurrentLimit = 50_A;
+
 } // namespace IntakeConstants
 
 namespace AutoConstants {

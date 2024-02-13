@@ -31,9 +31,15 @@ class ElevatorSubsystem : public frc2::SubsystemBase {
   void Periodic() override;
 
  private:
-  // Components (e.g. motor controllers and sensors) should generally be
-  // declared private and exposed only through public methods.
 
   // Motor Controllers
   rev::CANSparkMax m_elevatorMotor;
+  rev::CANSparkMax m_followerMotor;
+  
+  // Encoders motor controllers
+  rev::SparkRelativeEncoder m_elevatorEncoder = m_elevatorMotor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor);
+  rev::SparkRelativeEncoder m_followerEncoder = m_followerMotor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor);
+
+  // PID Contollers for
+  rev::SparkPIDController m_elevatorPIDController = m_elevatorMotor.GetPIDController();
 };
