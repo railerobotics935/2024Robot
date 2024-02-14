@@ -62,7 +62,7 @@ class RobotContainer {
   std::string m_pietro = "Pietro";
   std::string m_egg = "Egg";
   std::string m_8 = "8";
-  std::string m_trapezoidTest = "TrapezoidTest";
+  std::string m_trapezoidTest = "TrapazoidTest";
 
   // Options for Spark Max Chooser
   bool m_doConfigure = true;

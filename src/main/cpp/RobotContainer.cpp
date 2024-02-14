@@ -40,14 +40,14 @@ RobotContainer::RobotContainer() {
   // Turning is controlled by the X axis of the right stick.
   m_drive.SetDefaultCommand(frc2::RunCommand(
     [this] {
-      const auto ySpeed = -frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveLeftYIndex), 0.15);
-      const auto xSpeed = -frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveLeftXIndex), 0.15);
-      const auto rot = frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveRightXIndex), 0.15);
+      const auto xSpeed = -frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveLeftYIndex), 0.15);
+      const auto ySpeed = -frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveLeftXIndex), 0.15);
+      const auto rot = -frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveRightXIndex), 0.15);
       m_drive.Drive(
-        units::meters_per_second_t{ySpeed},
         units::meters_per_second_t{xSpeed},
+        units::meters_per_second_t{ySpeed},
         units::radians_per_second_t{rot}, 
-        m_driveController.GetRawButton(ControllerConstants::kFieldRelativeSwitchIndex), true);
+        m_driveController.GetRawButton(ControllerConstants::kFieldRelativeSwitchIndex), false);
     },
     {&m_drive}));
 

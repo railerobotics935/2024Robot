@@ -72,10 +72,10 @@ constexpr int kBackRightTurningEncoderPort = kBackRightTurningMotorPort;
 
 // Offsets in radians for the encoders. the first number to to make zero forward, after that we
 // subtract an additional pi to make the full range -pi to pi instead of 0 to 2pi
-constexpr double kFrontLeftDriveEncoderOffset = (3.8499 + (std::numbers::pi / 2));
-constexpr double kFrontRightDriveEncoderOffset = (3.6538 +  (std::numbers::pi));
-constexpr double kBackLeftDriveEncoderOffset =  (3.2676);
-constexpr double kBackRightDriveEncoderOffset = (1.9249 - (std::numbers::pi / 2));
+constexpr double kFrontLeftDriveEncoderOffset = (1.9249 - (std::numbers::pi / 2));
+constexpr double kFrontRightDriveEncoderOffset = (3.2676); 
+constexpr double kBackLeftDriveEncoderOffset =  (2.0477 + std::numbers::pi); //(0.6988 + (std::numbers::pi / 2)); 
+constexpr double kBackRightDriveEncoderOffset = (3.8439 + (std::numbers::pi / 2)); //(2.0472 + (std::numbers::pi)); 
 
 constexpr auto kDriveBaseRadius = 0.46_m;
 

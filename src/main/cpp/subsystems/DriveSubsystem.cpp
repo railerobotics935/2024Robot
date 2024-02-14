@@ -49,16 +49,16 @@ DriveSubsystem::DriveSubsystem()
         kBackRightDriveEncoderOffset},
 
     m_odometry{m_driveKinematics,
-                m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw),
+                -m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw),
                 {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
                 m_backLeft.GetPosition(), m_backRight.GetPosition()},
-                frc::Pose2d{(units::meter_t)3.0, (units::meter_t)3.0, m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw)}},
+                frc::Pose2d{(units::meter_t)3.0, (units::meter_t)3.0, -m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw)}},
 
     m_poseEstimator{m_driveKinematics,
-                m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw),
+                -m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw),
                 {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
                 m_backLeft.GetPosition(), m_backRight.GetPosition()},
-                frc::Pose2d{(units::meter_t)3.0, (units::meter_t)3.0, m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw)},
+                frc::Pose2d{(units::meter_t)3.0, (units::meter_t)3.0, -m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw)},
                 {0.05, 0.05, 0.05}, // Standard Deviation of the encoder position value
                 {0.1, 0.1, 0.1}} // Standard Deviation of vision pose esitmation
 {
@@ -128,7 +128,7 @@ bool DriveSubsystem::InRedAlliance() {
 
 void DriveSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
-  m_odometry.Update(m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw),
+  m_odometry.Update(-m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw),
                     {m_frontLeft.GetPosition(), m_frontRight.GetPosition(), 
                     m_backLeft.GetPosition(), m_backRight.GetPosition()});
 
@@ -236,7 +236,7 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
           ? frc::ChassisSpeeds::FromFieldRelativeSpeeds(
                 xSpeedDelivered, ySpeedDelivered, rotDelivered,
                 frc::Rotation2d(units::radian_t{
-                    m_gyro.GetAngle(frc::ADIS16470_IMU::IMUAxis::kZ)}))
+                    -m_gyro.GetAngle(frc::ADIS16470_IMU::IMUAxis::kZ)}))
           : frc::ChassisSpeeds{xSpeedDelivered, ySpeedDelivered, rotDelivered});
 
   m_driveKinematics.DesaturateWheelSpeeds(&states, DriveConstants::kMaxSpeed);
@@ -303,7 +303,7 @@ void DriveSubsystem::Park()
 }
 
 units::degree_t DriveSubsystem::GetHeading() const {
-  return m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw);
+  return -m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw);
 }
 
 void DriveSubsystem::ZeroHeading() {
@@ -336,7 +336,7 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
 
 void DriveSubsystem::EstimatePoseWithApriltag() {
   
-  m_poseEstimator.Update(m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw), 
+  m_poseEstimator.Update(-m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw), 
                         {m_frontLeft.GetPosition(), m_frontRight.GetPosition(), m_backLeft.GetPosition(), m_backRight.GetPosition()});
                 
   // Iterate through each tag, adding it to the pose estimator if it is tracked

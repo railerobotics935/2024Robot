@@ -69,6 +69,7 @@
  *    FIXED: Chooser to deterime if we need to burn the flash on the motorcontrollers
  *    TODO: Fix warning about construction fo motorcontrollers using constant values
  *    TODO: Define the "interruptible" state for commands
+ *    TODO: Make gyro inverstion clener and safe
  * 
  * TODO: Clean up code
  *    DONE: Fix indentation size

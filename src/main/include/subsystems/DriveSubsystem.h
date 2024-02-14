@@ -129,10 +129,10 @@ public:
   frc2::CommandPtr ConfigureModuleControllers();
 
   frc::SwerveDriveKinematics<4> m_driveKinematics{
-    frc::Translation2d{RobotConstants::kWheelBase / 2, RobotConstants::kIntakeSideWidth / 2},
-    frc::Translation2d{RobotConstants::kWheelBase / 2, -RobotConstants::kIntakeSideWidth / 2},
-    frc::Translation2d{-RobotConstants::kWheelBase / 2, RobotConstants::kShooterSideWidth / 2},
-    frc::Translation2d{-RobotConstants::kWheelBase / 2, -RobotConstants::kShooterSideWidth / 2}};
+    frc::Translation2d{RobotConstants::kWheelBase / 2, RobotConstants::kShooterSideWidth / 2},
+    frc::Translation2d{RobotConstants::kWheelBase / 2, -RobotConstants::kShooterSideWidth / 2},
+    frc::Translation2d{-RobotConstants::kWheelBase / 2, RobotConstants::kIntakeSideWidth / 2},
+    frc::Translation2d{-RobotConstants::kWheelBase / 2, -RobotConstants::kIntakeSideWidth / 2}};
 
 private:
   // Declaring all of the network table entries
