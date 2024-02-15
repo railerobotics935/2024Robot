@@ -51,6 +51,9 @@ RobotContainer::RobotContainer() {
     },
     {&m_drive}));
 
+  m_intake.SetDefaultCommand(frc2::RunCommand([this] {m_intake.SetMotorPower(0.0);}, {&m_intake}));
+
+
   // Add auto name options
   m_autoChooser.SetDefaultOption("Trapezoid Test", m_trapezoidTest);
   m_autoChooser.AddOption("Forward 1m", m_forward1m);
@@ -77,6 +80,7 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton slowSwitch(&m_driveController, ControllerConstants::kSlowStateSwitchIndex); // Creates a new JoystickButton object for the slow switch on Drive Controller    
   frc2::JoystickButton parkSwitch(&m_driveController, ControllerConstants::kParkSwitchIndex); // Creates a new JoystickButton object for the brake switch on Drive Controller
   frc2::JoystickButton intakeButton(&m_operatorController, ControllerConstants::kIntakeButtonIndex); // Creates a new JoystickButton object for the intake button on Operator Controller  
+  frc2::JoystickButton outtakeButton(&m_operatorController, ControllerConstants::kOuttakeButtonIndex); // Creates a new JoystickButton object for the intake button on Operator Controller  
 
   
   // I don't exactly know why this works, but the documentation for command based c++ is kinda bad 
@@ -94,7 +98,8 @@ void RobotContainer::ConfigureButtonBindings() {
 
   parkSwitch.WhileTrue(frc2::cmd::Run([&] {m_drive.Park();}, {&m_drive}));
 
-  intakeButton.WhileTrue(frc2::cmd::Run([&] {m_intake.SetMotorPower(1.0);}, {&m_intake}));}
+  intakeButton.WhileTrue(frc2::cmd::Run([&] {m_intake.SetMotorPower(1.0);}, {&m_intake}));
+  outtakeButton.WhileTrue(frc2::cmd::Run([&] {m_intake.SetMotorPower(-1.0);}, {&m_intake}));}
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
   
