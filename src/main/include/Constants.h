@@ -260,7 +260,6 @@ constexpr int kSlowStateSwitchIndex = 5;
 constexpr int kResetGyroButtonIndex = 3;
 constexpr int kIntakeButtonIndex = 8;
 constexpr int kOuttakeButtonIndex = 7;
-
 } // namespace ControllerConstants
 
 namespace OIConstants {
