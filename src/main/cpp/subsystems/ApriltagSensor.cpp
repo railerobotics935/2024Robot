@@ -3,7 +3,7 @@
 
 #include <frc/apriltag/AprilTagFieldLayout.h>
 #include <Constants.h>
-
+#include <frc/geometry/CoordinateSystem.h>
 
 #include "subsystems/ApriltagSensor.h"
 
@@ -39,20 +39,29 @@ ApriltagSensor::ApriltagSensor(std::string cameraName, frc::Pose3d cameraPose3d)
 frc::Pose3d ApriltagSensor::GetRawPose3d(int tag) {
   // Grab Pose3d values in an vector
   std::vector<double> poseArr = nte_pose[tag].GetDoubleArray(std::vector<double>());
+  frc::Translation3d rawTranslation{(units::meter_t)poseArr[0], (units::meter_t)poseArr[1], (units::meter_t)poseArr[2]};
+  frc::Rotation3d rawRotation{(units::radian_t)poseArr[3], (units::radian_t)poseArr[4], (units::radian_t)poseArr[5]};
+  frc::Transform3d rawPose{rawTranslation, rawRotation};
   
-  // Put array into translation3d and rotation3d
-  frc::Translation3d tagTranslation{(units::meter_t)poseArr[2], -(units::meter_t)poseArr[0], -(units::meter_t)poseArr[1]};
-  frc::Rotation3d tagRotation{(units::radian_t)poseArr[5], (units::radian_t)poseArr[3], (units::radian_t)poseArr[4]};
+  frc::Rotation3d correctedRotation{(units::radian_t)poseArr[5], (units::radian_t)poseArr[3], (units::radian_t)(poseArr[4] + std::numbers::pi)}; // correct axis manualy and add pi to the rotation axis to face tag instead
+
+  frc::Translation3d convertedTranslation = frc::CoordinateSystem::Convert(rawPose.Translation().RotateBy(rawPose.Inverse().Rotation()), 
+                                frc::CoordinateSystem::EDN(), 
+                                frc::CoordinateSystem::NWU());
+
+  //// Put array into translation3d and rotation3d
+  //frc::Translation3d tagTranslation{(units::meter_t)poseArr[2], -(units::meter_t)poseArr[0], -(units::meter_t)poseArr[1]};
+  //frc::Rotation3d tagRotation{(units::radian_t)poseArr[5], (units::radian_t)poseArr[3], (units::radian_t)poseArr[4]};
 
   // Combine Translation3d and Rotation3d to make a Pose3d
-  frc::Pose3d returnPose{tagTranslation, tagRotation};
-
-  return returnPose;
+  //frc::Pose3d returnPose{tagTranslation, tagRotation};
+  
+  frc::Pose3d tagPoseOnField = m_fieldLayout.GetTagPose(tag).value();
+  tagPoseOnField = (tagPoseOnField.TransformBy(frc::Transform3d{convertedTranslation, correctedRotation}).TransformBy(frc::Transform3d{m_cameraPose3d.Translation(), m_cameraPose3d.Rotation()}));
+  return tagPoseOnField;
 }
 
-
 frc::Pose2d ApriltagSensor::GetApriltagRelativePose(int tag) {
-
   // Default to zeros
   frc::Pose2d returnPose = frc::Pose2d((units::meter_t)0.0, (units::meter_t)0.0, (units::radian_t)0.0);
 
@@ -76,10 +85,10 @@ frc::Transform2d ApriltagSensor::GetApriltagRelativeTransformation(int tag) {
   // If tracked, return NT values
   if (nte_status[tag].GetString("LOST") == "TRACKED") {
     // Grab Translation2d and Rotation2d componets of the Pose to make the transformation from the tag
-    returnTransformation = frc::Transform2d(GetRawPose3d(tag).ToPose2d().Translation(), GetRawPose3d(tag).ToPose2d().RotateBy((units::radian_t)std::numbers::pi).Rotation());
+    returnTransformation = frc::Transform2d(GetRawPose3d(tag).ToPose2d().Translation(), GetRawPose3d(tag).ToPose2d().Rotation());
 
     // Add the transformation from the camera Pose2d together
-    returnTransformation.operator+(m_cameraTransform2d);
+    //returnTransformation.operator+(m_cameraTransform2d);
   }
 
   return returnTransformation;
@@ -97,7 +106,7 @@ frc::Pose2d ApriltagSensor::GetFieldRelativePose(int tag) {
     frc::Pose2d tagPoseOnField = m_fieldLayout.GetTagPose(tag).value().ToPose2d();
 
     // Transform the field pose by the robot relative pose
-    returnPose = tagPoseOnField.TransformBy(GetApriltagRelativeTransformation(tag));
+    returnPose = tagPoseOnField.TransformBy(GetApriltagRelativeTransformation(tag)).TransformBy(m_cameraTransform2d);
   }
 
   return returnPose;
