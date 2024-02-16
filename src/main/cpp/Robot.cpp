@@ -70,6 +70,7 @@
  *    TODO: Fix warning about construction fo motorcontrollers using constant values
  *    TODO: Define the "interruptible" state for commands
  *    TODO: Make gyro inverstion clener and safe
+ *    TODO: Scale the vision X and Y standard deviation by distance from the tag 
  * 
  * TODO: Clean up code
  *    DONE: Fix indentation size

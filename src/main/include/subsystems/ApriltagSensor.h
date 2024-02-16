@@ -19,7 +19,7 @@
 class ApriltagSensor {
 public:
     /**
-   * ApriltagSensor is ment to be implemnted as any other sensor for the robot
+   * ApriltagSensor is meant to be implemnted as any other sensor for the robot
    * but simply takes information from Network tables and oragnizes it for use 
    * in the robot code
    * 

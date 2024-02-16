@@ -133,7 +133,7 @@ void DriveSubsystem::Periodic() {
                     m_backLeft.GetPosition(), m_backRight.GetPosition()});
 
   // set odometry relative to the apriltag
-  //EstimatePoseWithApriltag();
+  EstimatePoseWithApriltag();
                     
   nte_fl_real_angle.SetDouble((double)m_frontLeft.GetState().angle.Radians());
   nte_fr_real_angle.SetDouble((double)m_frontRight.GetState().angle.Radians());
@@ -154,7 +154,7 @@ void DriveSubsystem::Periodic() {
   //nte_br_raw_encoder_voltage.SetDouble(m_backRight.GetEncoderVoltage());
 
   // Set robot possition wto shuffleboard field
-  m_field.SetRobotPose(m_odometry.GetPose());
+  m_field.SetRobotPose(m_poseEstimator.GetEstimatedPosition());
 
 }
 
