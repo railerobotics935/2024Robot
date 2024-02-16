@@ -270,17 +270,18 @@ constexpr int kOperatorControllerPort = 1;
 namespace CameraConstats {
 
 // Pose3d/transformation2d of the camera relative to the robot
-// X if forward, Y is Left Z is up 
+// X if forward, Y is Left, Z is up 
 namespace FrontCamera {
-    const frc::Translation3d kTranlation3d{(units::meter_t)0.0, (units::meter_t)0.0, (units::meter_t)0.0};
+    const frc::Translation3d kTranlation3d{(units::meter_t)0.2286, (units::meter_t)0.0, (units::meter_t)0.1651};
     const frc::Rotation3d kRotation3d{(units::radian_t)0.0, (units::radian_t)0.0, (units::radian_t)0.0};
     const frc::Pose3d kPose3d{kTranlation3d, kRotation3d};
 } // namespace FrontCamera
 
 namespace BackCamera {
-    const frc::Translation3d kTranlation3d{(units::meter_t)0.0, -(units::meter_t)0.0, (units::meter_t)0.0};
-    const frc::Rotation3d kRotation3d{(units::radian_t)0.0, (units::radian_t)0.0, (units::radian_t)0.0};
+    const frc::Translation3d kTranlation3d{(units::meter_t)-0.2667, -(units::meter_t)0.0, (units::meter_t)0.0635};
+    const frc::Rotation3d kRotation3d{(units::radian_t)0.0, (units::radian_t)0.0, (units::radian_t)3.14};
     const frc::Pose3d kPose3d{kTranlation3d, kRotation3d};
 } // namespace BackCamera
+
 
 } // namespace CameraConstants
