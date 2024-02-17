@@ -254,13 +254,14 @@ constexpr int kDriveRightYIndex = 5; // An imput UP creates a NEGATIVE output
 constexpr int kDriveRightXIndex = 4; // An imput RIGHT creates a NEGATIVE output
 
 // Button/Switch indexes
-constexpr int kFieldRelativeButtonIndex = 7;
-constexpr int kRobotRelativeButtonIndex = 8;
-constexpr int kParkSwitchIndex = 3;
-constexpr int kSlowStateSwitchIndex = 4;
-constexpr int kResetGyroButtonIndex = 2;
-constexpr int kIntakeButtonIndex = 8;
-constexpr int kOuttakeButtonIndex = 7;
+constexpr int kFieldRelativeButtonIndex = 7; // CL
+constexpr int kRobotRelativeButtonIndex = 8; // CR
+constexpr int kParkSwitchIndex = 3; // X
+constexpr int kSlowStateButtonIndex = 4; // Y
+constexpr int kFastStateButtonIndex = 1; // A
+constexpr int kResetGyroButtonIndex = 2; // B
+constexpr int kIntakeButtonIndex = 8; // RT
+constexpr int kOuttakeButtonIndex = 7; // LT
 } // namespace ControllerConstants
 
 namespace OIConstants {

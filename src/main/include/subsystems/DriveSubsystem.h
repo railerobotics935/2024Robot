@@ -90,6 +90,10 @@ public:
 
   void SetFieldRelative();
 
+  void SetSlowMode();
+
+  void SetFastMode();
+
   /**
    * Returns the turn rate of the robot.
    *
@@ -202,4 +206,5 @@ private:
   double m_prevTime = wpi::Now() * 1e-6;
 
   bool b_fieldRelative = true;
+  bool b_slowMode = false;
 };

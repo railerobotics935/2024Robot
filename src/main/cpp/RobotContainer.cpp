@@ -77,7 +77,8 @@ RobotContainer::RobotContainer() {
 void RobotContainer::ConfigureButtonBindings() {
   
   frc2::JoystickButton resetButton(&m_driveController, ControllerConstants::kResetGyroButtonIndex); // Creates a new JoystickButton object for the "reset" button on Drive Controller    
-  frc2::JoystickButton slowSwitch(&m_driveController, ControllerConstants::kSlowStateSwitchIndex); // Creates a new JoystickButton object for the slow switch on Drive Controller    
+  frc2::JoystickButton slowButton(&m_driveController, ControllerConstants::kSlowStateButtonIndex); // Creates a new JoystickButton object for the slow button on Drive Controller    
+  frc2::JoystickButton fastButton(&m_driveController, ControllerConstants::kFastStateButtonIndex); // Creates a new JoystickButton object fot the fast button on Drive Controller
   frc2::JoystickButton parkSwitch(&m_driveController, ControllerConstants::kParkSwitchIndex); // Creates a new JoystickButton object for the brake switch on Drive Controller
   frc2::JoystickButton robotRelativeButton(&m_driveController, ControllerConstants::kRobotRelativeButtonIndex); // Creates a new JoystickButton object for the Robot Relative Button
   frc2::JoystickButton fieldRelativeButton(&m_driveController, ControllerConstants::kFieldRelativeButtonIndex); // Creates a new JoystickButton object for the Field Relative Button
@@ -88,17 +89,8 @@ void RobotContainer::ConfigureButtonBindings() {
   resetButton.WhileTrue(frc2::cmd::Run([&] {m_drive.ZeroHeading();}, {&m_drive}));
   robotRelativeButton.WhileTrue(frc2::cmd::Run([&] {m_drive.SetRobotRelative();}, {&m_drive}));
   fieldRelativeButton.WhileTrue(frc2::cmd::Run([&] {m_drive.SetFieldRelative();}, {&m_drive}));
-  slowSwitch.WhileTrue(frc2::cmd::Run([&] {            
-    const auto ySpeed = -frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveLeftYIndex), 0.15);
-    const auto xSpeed = -frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveLeftXIndex), 0.15);
-    const auto rot = -frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveRightXIndex), 0.15);
-    m_drive.Drive(units::meters_per_second_t{ySpeed * 0.25},
-                  units::meters_per_second_t{xSpeed * 0.25},
-                  units::radians_per_second_t{rot}, 
-                  true);
-  }, 
-  {&m_drive}));
-
+  slowButton.WhileTrue(frc2::cmd::Run([&] {m_drive.SetSlowMode();}, {&m_drive}));
+  fastButton.WhileTrue(frc2::cmd::Run([&] {m_drive.SetFastMode();}, {&m_drive}));
   parkSwitch.WhileTrue(frc2::cmd::Run([&] {m_drive.Park();}, {&m_drive}));
 
   intakeButton.WhileTrue(frc2::cmd::Run([&] {m_intake.SetMotorPower(1.0);}, {&m_intake}));

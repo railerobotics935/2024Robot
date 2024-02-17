@@ -166,6 +166,11 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
   double xSpeedCommanded;
   double ySpeedCommanded;
 
+  if (b_slowMode) {
+    xSpeed = xSpeed * 0.25;
+    ySpeed = ySpeed * 0.25;
+  }
+
   if (rateLimit) {
     // Convert XY to polar for rate limiting
     double inputTranslationDir = atan2(ySpeed.value(), xSpeed.value());
@@ -316,6 +321,14 @@ void DriveSubsystem::SetRobotRelative() {
 
 void DriveSubsystem::SetFieldRelative() {
   b_fieldRelative = true;
+}
+
+void DriveSubsystem::SetSlowMode() {
+  b_slowMode = true;
+}
+
+void DriveSubsystem::SetFastMode() {
+  b_slowMode = false;
 }
 
 double DriveSubsystem::GetTurnRate() {
