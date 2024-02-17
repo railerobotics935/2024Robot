@@ -155,9 +155,9 @@ constexpr rev::CANSparkMaxLowLevel::MotorType kMotorType = rev::CANSparkMaxLowLe
 
 namespace ShooterConstants {
 // Intake motor 
-constexpr int kShooterID = 7;
-constexpr int kFollowerID = 8;
-constexpr int kPitchID = 6;
+constexpr int kShooterID = 27;
+constexpr int kFollowerID = 28;
+constexpr int kPitchID = 29;
 constexpr rev::CANSparkMaxLowLevel::MotorType kShooterMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
 constexpr rev::CANSparkMaxLowLevel::MotorType kFollowerMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
 constexpr rev::CANSparkMaxLowLevel::MotorType kPitchMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
@@ -248,10 +248,12 @@ namespace ControllerConstants {
 // Controller Constants for the flight elite drive controller
 
 // Axis indexes
-constexpr int kDriveLeftYIndex = 1; // An imput UP creates a NEGATIVE output
-constexpr int kDriveLeftXIndex = 0; // An imput RIGHT creates a NEGATIVE output
-constexpr int kDriveRightYIndex = 5; // An imput UP creates a NEGATIVE output
-constexpr int kDriveRightXIndex = 4; // An imput RIGHT creates a NEGATIVE output
+constexpr int kDriveLeftYIndex = 1; // An input UP creates a NEGATIVE output
+constexpr int kDriveLeftXIndex = 0; // An input RIGHT creates a NEGATIVE output
+constexpr int kDriveRightYIndex = 5; // An input UP creates a NEGATIVE output
+constexpr int kDriveRightXIndex = 4; // An input RIGHT creates a NEGATIVE output
+
+constexpr int kOperatorLeftYIndex = 1; // An input UP creates a NEGATIVE output
 
 // Button/Switch indexes
 constexpr int kFieldRelativeButtonIndex = 7; // CL
@@ -262,6 +264,7 @@ constexpr int kFastStateButtonIndex = 1; // A
 constexpr int kResetGyroButtonIndex = 2; // B
 constexpr int kIntakeButtonIndex = 8; // RT
 constexpr int kOuttakeButtonIndex = 7; // LT
+constexpr int kShooterButtonIndex = 5; // LB
 } // namespace ControllerConstants
 
 namespace OIConstants {

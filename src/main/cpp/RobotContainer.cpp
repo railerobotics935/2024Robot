@@ -53,6 +53,14 @@ RobotContainer::RobotContainer() {
 
   m_intake.SetDefaultCommand(frc2::RunCommand([this] {m_intake.SetMotorPower(0.0);}, {&m_intake}));
 
+  m_shooter.SetDefaultCommand(frc2::RunCommand(
+    [this] {
+      const auto ySpeed = -frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kOperatorLeftYIndex), 0.15);
+      m_shooter.SetShooterAngle(
+        units::angle::radian_t{ySpeed}
+      );
+    }
+  ));
 
   // Add auto name options
   m_autoChooser.SetDefaultOption("Trapezoid Test", m_trapezoidTest);
@@ -83,7 +91,8 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton robotRelativeButton(&m_driveController, ControllerConstants::kRobotRelativeButtonIndex); // Creates a new JoystickButton object for the Robot Relative Button
   frc2::JoystickButton fieldRelativeButton(&m_driveController, ControllerConstants::kFieldRelativeButtonIndex); // Creates a new JoystickButton object for the Field Relative Button
   frc2::JoystickButton intakeButton(&m_operatorController, ControllerConstants::kIntakeButtonIndex); // Creates a new JoystickButton object for the intake button on Operator Controller 
-  frc2::JoystickButton outtakeButton(&m_operatorController, ControllerConstants::kOuttakeButtonIndex); //Creates a new JoystickButton object for the outtake button on Operator Controller
+  frc2::JoystickButton outtakeButton(&m_operatorController, ControllerConstants::kOuttakeButtonIndex); // Creates a new JoystickButton object for the outtake button on Operator Controller
+  frc2::JoystickButton shooterButton(&m_operatorController, ControllerConstants::kShooterButtonIndex); // Creates a new JoystickButton object for the shoot button on Operator Controller 
   
   // I don't exactly know why this works, but the documentation for command based c++ is kind of bad 
   resetButton.WhileTrue(frc2::cmd::Run([&] {m_drive.ZeroHeading();}, {&m_drive}));
@@ -95,6 +104,7 @@ void RobotContainer::ConfigureButtonBindings() {
 
   intakeButton.WhileTrue(frc2::cmd::Run([&] {m_intake.SetMotorPower(1.0);}, {&m_intake}));
   outtakeButton.WhileTrue(frc2::cmd::Run([&] {m_intake.SetMotorPower(-1.0);}, {&m_intake}));
+  shooterButton.WhileTrue(frc2::cmd::Run([&] {m_shooter.SetMotorPower(1.0);}, {&m_shooter}));
   }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
