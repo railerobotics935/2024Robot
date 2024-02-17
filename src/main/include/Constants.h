@@ -248,16 +248,17 @@ namespace ControllerConstants {
 // Controller Constants for the flight elite drive controller
 
 // Axis indexes
-constexpr int kDriveLeftYIndex = 2; // An imput UP creates a NEGATIVE output
-constexpr int kDriveLeftXIndex = 4; // An imput RIGHT creates a NEGATIVE output
-constexpr int kDriveRightYIndex = 1; // An imput UP creates a NEGATIVE output
-constexpr int kDriveRightXIndex = 0; // An imput RIGHT creates a NEGATIVE output
+constexpr int kDriveLeftYIndex = 1; // An imput UP creates a NEGATIVE output
+constexpr int kDriveLeftXIndex = 0; // An imput RIGHT creates a NEGATIVE output
+constexpr int kDriveRightYIndex = 5; // An imput UP creates a NEGATIVE output
+constexpr int kDriveRightXIndex = 4; // An imput RIGHT creates a NEGATIVE output
 
 // Button/Switch indexes
-constexpr int kFieldRelativeSwitchIndex = 1;
-constexpr int kParkSwitchIndex = 2;
-constexpr int kSlowStateSwitchIndex = 5;
-constexpr int kResetGyroButtonIndex = 3;
+constexpr int kFieldRelativeButtonIndex = 7;
+constexpr int kRobotRelativeButtonIndex = 8;
+constexpr int kParkSwitchIndex = 3;
+constexpr int kSlowStateSwitchIndex = 4;
+constexpr int kResetGyroButtonIndex = 2;
 constexpr int kIntakeButtonIndex = 8;
 constexpr int kOuttakeButtonIndex = 7;
 } // namespace ControllerConstants

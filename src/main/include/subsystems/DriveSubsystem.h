@@ -52,7 +52,7 @@ public:
    */
   void Drive(units::meters_per_second_t xSpeed,
               units::meters_per_second_t ySpeed, units::radians_per_second_t rot,
-              bool fieldRelative, bool rateLimit);
+              bool rateLimit);
 
   /**
    * Drives the robot given a set of chasis speeds IN ROBOT RELATIVE
@@ -85,6 +85,10 @@ public:
    * Zeroes the heading of the robot.
    */
   void ZeroHeading();
+
+  void SetRobotRelative();
+
+  void SetFieldRelative();
 
   /**
    * Returns the turn rate of the robot.
@@ -197,4 +201,5 @@ private:
       DriveConstants::kRotationalSlewRate / 1_s};
   double m_prevTime = wpi::Now() * 1e-6;
 
+  bool b_fieldRelative = true;
 };

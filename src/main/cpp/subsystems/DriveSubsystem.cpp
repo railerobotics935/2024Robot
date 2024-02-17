@@ -161,7 +161,7 @@ void DriveSubsystem::Periodic() {
 void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
                            units::meters_per_second_t ySpeed,
                            units::radians_per_second_t rot,
-                           bool fieldRelative, bool rateLimit) {
+                           bool rateLimit) {
                              
   double xSpeedCommanded;
   double ySpeedCommanded;
@@ -232,7 +232,7 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
       m_currentRotation * DriveConstants::kMaxAngularSpeed;
 
   auto states = m_driveKinematics.ToSwerveModuleStates(
-      fieldRelative
+      b_fieldRelative
           ? frc::ChassisSpeeds::FromFieldRelativeSpeeds(
                 xSpeedDelivered, ySpeedDelivered, rotDelivered,
                 frc::Rotation2d(units::radian_t{
@@ -308,6 +308,14 @@ units::degree_t DriveSubsystem::GetHeading() const {
 
 void DriveSubsystem::ZeroHeading() {
   m_gyro.Reset();
+}
+
+void DriveSubsystem::SetRobotRelative() {
+  b_fieldRelative = false;
+}
+
+void DriveSubsystem::SetFieldRelative() {
+  b_fieldRelative = true;
 }
 
 double DriveSubsystem::GetTurnRate() {

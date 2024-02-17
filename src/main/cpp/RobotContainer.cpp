@@ -47,7 +47,7 @@ RobotContainer::RobotContainer() {
         units::meters_per_second_t{xSpeed},
         units::meters_per_second_t{ySpeed},
         units::radians_per_second_t{rot}, 
-        m_driveController.GetRawButton(ControllerConstants::kFieldRelativeSwitchIndex), false);
+        false);
     },
     {&m_drive}));
 
@@ -79,11 +79,15 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton resetButton(&m_driveController, ControllerConstants::kResetGyroButtonIndex); // Creates a new JoystickButton object for the "reset" button on Drive Controller    
   frc2::JoystickButton slowSwitch(&m_driveController, ControllerConstants::kSlowStateSwitchIndex); // Creates a new JoystickButton object for the slow switch on Drive Controller    
   frc2::JoystickButton parkSwitch(&m_driveController, ControllerConstants::kParkSwitchIndex); // Creates a new JoystickButton object for the brake switch on Drive Controller
+  frc2::JoystickButton robotRelativeButton(&m_driveController, ControllerConstants::kRobotRelativeButtonIndex); // Creates a new JoystickButton object for the Robot Relative Button
+  frc2::JoystickButton fieldRelativeButton(&m_driveController, ControllerConstants::kFieldRelativeButtonIndex); // Creates a new JoystickButton object for the Field Relative Button
   frc2::JoystickButton intakeButton(&m_operatorController, ControllerConstants::kIntakeButtonIndex); // Creates a new JoystickButton object for the intake button on Operator Controller 
   frc2::JoystickButton outtakeButton(&m_operatorController, ControllerConstants::kOuttakeButtonIndex); //Creates a new JoystickButton object for the outtake button on Operator Controller
   
   // I don't exactly know why this works, but the documentation for command based c++ is kind of bad 
   resetButton.WhileTrue(frc2::cmd::Run([&] {m_drive.ZeroHeading();}, {&m_drive}));
+  robotRelativeButton.WhileTrue(frc2::cmd::Run([&] {m_drive.SetRobotRelative();}, {&m_drive}));
+  fieldRelativeButton.WhileTrue(frc2::cmd::Run([&] {m_drive.SetFieldRelative();}, {&m_drive}));
   slowSwitch.WhileTrue(frc2::cmd::Run([&] {            
     const auto ySpeed = -frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveLeftYIndex), 0.15);
     const auto xSpeed = -frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveLeftXIndex), 0.15);
@@ -91,7 +95,7 @@ void RobotContainer::ConfigureButtonBindings() {
     m_drive.Drive(units::meters_per_second_t{ySpeed * 0.25},
                   units::meters_per_second_t{xSpeed * 0.25},
                   units::radians_per_second_t{rot}, 
-                  m_driveController.GetRawButton(ControllerConstants::kFieldRelativeSwitchIndex), true);
+                  true);
   }, 
   {&m_drive}));
 
