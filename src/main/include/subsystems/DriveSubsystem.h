@@ -63,13 +63,6 @@ public:
   void DriveWithChassisSpeeds(frc::ChassisSpeeds speeds);
 
   /**
-   * Resets the drive encoders to currently read a position of 0.
-   * 
-   * IMPORTAND: Currently using ablosute encoders, so you can't reset them.
-   */
-  void ResetEncoders();
-
-  /**
    * Sets the drive MotorControllers to a power from -1 to 1.
    */
   void SetModuleStates(wpi::array<frc::SwerveModuleState, 4> desiredStates);
@@ -205,6 +198,7 @@ private:
       DriveConstants::kRotationalSlewRate / 1_s};
   double m_prevTime = wpi::Now() * 1e-6;
 
+  // Variables to internialy keep track of drive state
   bool b_fieldRelative = true;
   bool b_slowMode = false;
 };

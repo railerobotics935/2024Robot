@@ -38,19 +38,8 @@ RobotContainer::RobotContainer() {
   // Set up default drive command
   // The left stick controls translation of the robot.
   // Turning is controlled by the X axis of the right stick.
-  m_drive.SetDefaultCommand(frc2::RunCommand(
-    [this] {
-      const auto xSpeed = -frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveLeftYIndex), 0.15);
-      const auto ySpeed = -frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveLeftXIndex), 0.15);
-      const auto rot = -frc::ApplyDeadband(m_driveController.GetRawAxis(ControllerConstants::kDriveRightXIndex), 0.15);
-      m_drive.Drive(
-        units::meters_per_second_t{xSpeed},
-        units::meters_per_second_t{ySpeed},
-        units::radians_per_second_t{rot}, 
-        false);
-    },
-    {&m_drive}));
-
+  m_drive.SetDefaultCommand(DriveWithController{&m_drive, &m_driveController}.ToPtr());
+  
   m_intake.SetDefaultCommand(frc2::RunCommand([this] {m_intake.SetMotorPower(0.0);}, {&m_intake}));
 
   m_shooter.SetDefaultCommand(frc2::RunCommand(
@@ -75,11 +64,6 @@ RobotContainer::RobotContainer() {
 
   frc::Shuffleboard::GetTab("Autonomous").Add(m_autoChooser);
 
-  // Add choices for chooser
-  m_configureSparkMaxChooser.SetDefaultOption("Do Not Configure", m_doNotConfigure);
-  m_configureSparkMaxChooser.AddOption("Configure", m_doConfigure);
-
-  frc::Shuffleboard::GetTab("Robot Configuration").Add(m_configureSparkMaxChooser);
 }
 
 void RobotContainer::ConfigureButtonBindings() {
@@ -95,6 +79,7 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton shooterButton(&m_operatorController, ControllerConstants::kShooterButtonIndex); // Creates a new JoystickButton object for the shoot button on Operator Controller 
   
   // I don't exactly know why this works, but the documentation for command based c++ is kind of bad 
+  //resetButton.WhileTrue(frc2::cmd::Run([&] {m_drive.ZeroHeading();}, {&m_drive}));
   resetButton.WhileTrue(frc2::cmd::Run([&] {m_drive.ZeroHeading();}, {&m_drive}));
   robotRelativeButton.WhileTrue(frc2::cmd::Run([&] {m_drive.SetRobotRelative();}, {&m_drive}));
   fieldRelativeButton.WhileTrue(frc2::cmd::Run([&] {m_drive.SetFieldRelative();}, {&m_drive}));

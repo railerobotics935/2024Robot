@@ -15,20 +15,26 @@
  * List of items need to be compleated, list may change or be amended as 
  * we decide on adding new features
  * 
- * Last clear of done tasks 1/20
+ * TODO: Shortlist
+ *    TODO: Scale the vision X and Y standard deviation by distance from the tag 
+ *    TODO: Convert command facorys to custom commands
+ *    VERIFY: Create a poseEstimator for integration of robot
+ *    TODO: Simplify the drivetrain triggers
  * 
  * TODO: Create Pathplanner Auto
  *    VERIFY: Fix Gear ratios
  *    TODO: Tune PID controller for accurate positioning
+ *    TODO: Regester Command for auto
+ *    TODO: Create Autos using commands
  * 
  * VERIFY: Create Apriltag recongition system
- *    TODO: Finalize camera location/configuatoin
+ *    DONE: Finalize camera location/configuatoin
  *    DONE: Create reference list for apriltag positions on fiels / Pull information about apriltag position
  *    DONE: Transform apriltag Pose2d to get field relative robot position
  *    DONE: Correct the axis used for the apriltag to get correct pose3d
  *    DONE: Itterate for multiple cameras
  *    DONE: Fix camera
- *    TODO: Create a poseEstimator for integration of robot
+ *    VERIFY: Create a poseEstimator for integration of robot
  *      VERIFY: Add timestamp for pose estimator
  *
  * TODO: Add Robot Code, an overview
@@ -37,20 +43,18 @@
  *    TODO: Create commands for each action needed
  *    TODO: Map keybindings for actions
  * 
- * TODO: Autos
- *    TODO: Regester Command for auto
- *    TODO: Create Autos using commands
- * 
- * DONE: Shooter Subsystem
- *    DONE: Create Basic functions
- *    DONE: Define Sensors
- *    DONE: Implement PID Controller
- * 
  * TODO: Elevator Subsystem
  *    TODO: Create Basic functions
  *    DONE: Define Sensors
  *    TODO: Implement PID Controller
  *    TODO: Check inversion for follower moter
+ * 
+ * TODO: Commands
+ *    TODO: Convert command facorys to custom commands
+ *      TODO: Intake command
+ *      TODO: Shooting command
+ *      TODO: Drive command
+ *    TODO: Create joystick buttons to trigger commands
  * 
  * TODO: Create custom Command for shooting
  *    TODO: Create Auto aim/shoot command
@@ -65,16 +69,19 @@
  *    DONE: Work on fixing the abolute encoder problem with the swerve
  *    DONE: Implement rev through bore encoder
  *    MAYBE: Fix calibration and stability of image for apriltags
- *    VERIFY: Command Bindings get stuck with controller switches
+ *    DONE: Command Bindings get stuck with controller switches
  *    FIXED: Chooser to deterime if we need to burn the flash on the motorcontrollers
  *    TODO: Fix warning about construction fo motorcontrollers using constant values
- *    TODO: Define the "interruptible" state for commands
  *    TODO: Make gyro inverstion clener and safe
  *    TODO: Scale the vision X and Y standard deviation by distance from the tag 
+ *    TODO: Convert shooter units to rpm from radians per second
  * 
  * TODO: Clean up code
  *    DONE: Fix indentation size
  *    TODO: Thoroughly comment code
+ * 
+ * List of Fully implemented sections of the code
+ * DONE: Shooter Subsystem
  * 
  *  Team 935
 */

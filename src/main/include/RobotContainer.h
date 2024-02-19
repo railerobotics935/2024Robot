@@ -16,10 +16,11 @@
 #include <frc/filter/SlewRateLimiter.h>
 
 #include "Constants.h"
+#include "utils/SwerveUtils.h"
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/IntakeSubsystem.h"
 #include "subsystems/ShooterSubsystem.h"
-#include "utils/SwerveUtils.h"
+#include "commands/DriveWithController.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -35,6 +36,11 @@ class RobotContainer {
   frc2::CommandPtr GetAutonomousCommand();
 
  private:
+  /**
+   * Convigures button bindings for commands
+  */
+  void ConfigureButtonBindings();
+
   // The driver and operator controllers
   frc::XboxController m_driveController{OIConstants::kDriverControllerPort};
   frc::XboxController m_operatorController{OIConstants::kOperatorControllerPort};
@@ -47,11 +53,8 @@ class RobotContainer {
   IntakeSubsystem m_intake;
   ShooterSubsystem m_shooter;
 
-  void ConfigureButtonBindings();
-
   // Sendable chooser for auto
   frc::SendableChooser<std::string> m_autoChooser;
-  frc::SendableChooser<bool> m_configureSparkMaxChooser;
 
   // Auto options coresponding to the name of the autos                                             
   std::string m_figure8 = "Figure8";
@@ -64,7 +67,4 @@ class RobotContainer {
   std::string m_8 = "8";
   std::string m_trapezoidTest = "TrapazoidTest";
 
-  // Options for Spark Max Chooser
-  bool m_doConfigure = true;
-  bool m_doNotConfigure = false;
 };
