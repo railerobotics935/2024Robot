@@ -22,7 +22,7 @@
 #pragma once
 
 // Turn this off when there is no new constants need to be burned onto motorcontrollers
-#define BURNSPARKMAX true
+#define BURNSPARKMAX false
 
 /**
  * The Constants header provides a convenient place for teams to hold robot-wide
@@ -46,8 +46,8 @@ const units::meter_t kWheelBase =
 namespace DriveConstants {
 // Driving Parameters - Note that these are not the maximum capable speeds of
 // the robot, rather the allowed maximum speeds
-constexpr units::meters_per_second_t kMaxSpeed = 4.8_mps;
-constexpr units::radians_per_second_t kMaxAngularSpeed{2 * std::numbers::pi};
+constexpr units::meters_per_second_t kMaxSpeed = 4.0_mps;
+constexpr units::radians_per_second_t kMaxAngularSpeed{1.25 * std::numbers::pi};
 
 constexpr double kDirectionSlewRate = 4.0;   // radians per second
 constexpr double kMagnitudeSlewRate = 2.0;   // percent per second (1 = 100%)
@@ -284,7 +284,7 @@ namespace FrontCamera {
 
 namespace BackCamera {
     const frc::Translation3d kTranlation3d{(units::meter_t)-0.2667, -(units::meter_t)0.0, (units::meter_t)0.0635};
-    const frc::Rotation3d kRotation3d{(units::radian_t)0.0, (units::radian_t)0.0, (units::radian_t)3.14};
+    const frc::Rotation3d kRotation3d{(units::radian_t)0.0, (units::radian_t)0.0, (units::radian_t)std::numbers::pi};
     const frc::Pose3d kPose3d{kTranlation3d, kRotation3d};
 } // namespace BackCamera
 

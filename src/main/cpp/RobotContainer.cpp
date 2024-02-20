@@ -44,10 +44,8 @@ RobotContainer::RobotContainer() {
 
   m_shooter.SetDefaultCommand(frc2::RunCommand(
     [this] {
-      const auto ySpeed = -frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kOperatorLeftYIndex), 0.15);
-      m_shooter.SetShooterAngle(
-        units::angle::radian_t{ySpeed}
-      );
+      m_shooter.SetShooterAngle((units::radian_t)1.0);
+      m_shooter.SetShooterSpeed((units::radians_per_second_t)frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kOperatorLeftYIndex), 0.15) * ShooterConstants::kShooterMotorFreeSpeedRps * 60 * std::numbers::pi);
     }
   ));
 

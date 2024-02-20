@@ -199,6 +199,6 @@ private:
   double m_prevTime = wpi::Now() * 1e-6;
 
   // Variables to internialy keep track of drive state
-  bool b_fieldRelative = true;
-  bool b_slowMode = false;
+  bool m_fieldRelative = true;
+  bool m_slowMode = false;
 };

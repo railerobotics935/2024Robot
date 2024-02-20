@@ -166,7 +166,7 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
   double xSpeedCommanded;
   double ySpeedCommanded;
 
-  if (b_slowMode) {
+  if (m_slowMode) {
     xSpeed = xSpeed * 0.25;
     ySpeed = ySpeed * 0.25;
   }
@@ -237,7 +237,7 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
       m_currentRotation * DriveConstants::kMaxAngularSpeed;
 
   auto states = m_driveKinematics.ToSwerveModuleStates(
-      b_fieldRelative
+      m_fieldRelative
           ? frc::ChassisSpeeds::FromFieldRelativeSpeeds(
                 xSpeedDelivered, ySpeedDelivered, rotDelivered,
                 frc::Rotation2d(units::radian_t{
@@ -316,19 +316,19 @@ void DriveSubsystem::ZeroHeading() {
 }
 
 void DriveSubsystem::SetRobotRelative() {
-  b_fieldRelative = false;
+  m_fieldRelative = false;
 }
 
 void DriveSubsystem::SetFieldRelative() {
-  b_fieldRelative = true;
+  m_fieldRelative = true;
 }
 
 void DriveSubsystem::SetSlowMode() {
-  b_slowMode = true;
+  m_slowMode = true;
 }
 
 void DriveSubsystem::SetFastMode() {
-  b_slowMode = false;
+  m_slowMode = false;
 }
 
 double DriveSubsystem::GetTurnRate() {

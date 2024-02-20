@@ -18,14 +18,16 @@ void DriveWithController::Initialize() {
 
 void DriveWithController::Execute() {
   // Main execute loop that runs during the command
-  const auto xSpeed = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveLeftYIndex), 0.15);
-  const auto ySpeed = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveLeftXIndex), 0.15);
-  const auto rot = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveRightXIndex), 0.15);
+  const auto xSpeed = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveLeftYIndex), 0.05);
+  const auto ySpeed = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveLeftXIndex), 0.05);
+  const auto rot = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveRightXIndex), 0.05);
 
+  m_drive->SetFastMode();
+  
   m_drive->Drive(units::meters_per_second_t{MathUtils::SignedSquare(xSpeed)},
     units::meters_per_second_t{MathUtils::SignedSquare(ySpeed)},
     units::radians_per_second_t{MathUtils::SignedSquare(rot)}, 
-    false);
+    true);
 }
 
 bool DriveWithController::IsFinished() {

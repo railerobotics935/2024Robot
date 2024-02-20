@@ -1,5 +1,5 @@
-// Utilites to acomplilsh specific mathamatical funtions 
-// Based off of team 1720 2022 robot code - https://github.com/rr1706/2022-Main/tree/main
+// Utilites to accomplish specific mathamatical funtions 
+// Based off of team 1706 2022 robot code - https://github.com/rr1706/2022-Main/tree/main
 
 // Different than the frc MathUtil
 
