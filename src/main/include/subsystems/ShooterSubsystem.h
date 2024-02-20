@@ -40,7 +40,7 @@ class ShooterSubsystem : public frc2::SubsystemBase {
    * 
    * @param speed The desired speed in radians per second
   */
-  void SetShooterSpeed(units::radians_per_second_t speed);
+  void SetShooterSpeed(units::revolutions_per_minute_t speed);
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be

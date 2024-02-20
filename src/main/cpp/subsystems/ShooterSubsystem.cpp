@@ -90,7 +90,7 @@ void ShooterSubsystem::SetShooterAngle(units::radian_t angle) {
   nte_pitchSetpoint.SetDouble((double)angle);
 }
 
-void ShooterSubsystem::SetShooterSpeed(units::radians_per_second_t speed) {
+void ShooterSubsystem::SetShooterSpeed(units::revolutions_per_minute_t speed) {
   // Set the setpoint as the input angle
   m_shooterPIDController.SetReference((double)speed, rev::CANSparkMax::ControlType::kVelocity);
   nte_shooterSetpoint.SetDouble((double)speed);
