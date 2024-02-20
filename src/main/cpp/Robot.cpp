@@ -36,7 +36,7 @@
  *
  * TODO: Add Robot Code, an overview
  *    DONE: Convert to trapazoid robot (Honeybee)
- *    DONE: Split robot into subsystems
+ *    DONE: Split robot into subsystemsc
  *    TODO: Create commands for each action needed
  *    TODO: Map keybindings for actions
  * 

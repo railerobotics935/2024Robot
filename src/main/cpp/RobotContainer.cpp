@@ -69,14 +69,15 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton resetButton(&m_driveController, ControllerConstants::kResetGyroButtonIndex); // Creates a new JoystickButton object for the "reset" button on Drive Controller    
   frc2::JoystickButton robotRelativeButton(&m_driveController, ControllerConstants::kRobotRelativeButtonIndex); // Creates a new JoystickButton object for the Robot Relative Button
   frc2::JoystickButton fieldRelativeButton(&m_driveController, ControllerConstants::kFieldRelativeButtonIndex); // Creates a new JoystickButton object for the Field Relative Button
+  frc2::JoystickButton slowButton(&m_driveController, ControllerConstants::kSlowStateButtonIndex); 
   frc2::JoystickButton intakeButton(&m_operatorController, ControllerConstants::kIntakeButtonIndex); // Creates a new JoystickButton object for the intake button on Operator Controller 
   frc2::JoystickButton shooterButton(&m_operatorController, ControllerConstants::kShooterButtonIndex); // Creates a new JoystickButton object for the shoot button on Operator Controller 
   
   // I don't exactly know why this works, but the documentation for command based c++ is kind of bad 
-  resetButton.WhileTrue(frc2::cmd::Run([&] {m_drive.ZeroHeading();}, {&m_drive}));
-  robotRelativeButton.WhileTrue(frc2::cmd::Run([&] {m_drive.SetRobotRelative();}, {&m_drive}));
-  fieldRelativeButton.WhileTrue(frc2::cmd::Run([&] {m_drive.SetFieldRelative();}, {&m_drive}));
-
+  resetButton.OnTrue(frc2::cmd::Run([&] {m_drive.ZeroHeading();}, {&m_drive}));
+  robotRelativeButton.OnTrue(frc2::cmd::Run([&] {m_drive.SetRobotRelative();}, {&m_drive}));
+  fieldRelativeButton.OnTrue(frc2::cmd::Run([&] {m_drive.SetFieldRelative();}, {&m_drive}));
+  slowButton.ToggleOnTrue(SlowDrive{&m_drive, &m_driveController}.ToPtr());
   intakeButton.WhileTrue(SimpleIntake{&m_intake}.ToPtr());
   shooterButton.WhileTrue(frc2::cmd::Run([&] {m_shooter.SetMotorPower(1.0);}, {&m_shooter}));
   }
