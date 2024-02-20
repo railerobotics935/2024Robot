@@ -16,10 +16,7 @@
  * we decide on adding new features
  * 
  * TODO: Shortlist
- *    TODO: Scale the vision X and Y standard deviation by distance from the tag 
  *    TODO: Convert command facorys to custom commands
- *    VERIFY: Create a poseEstimator for integration of robot
- *    TODO: Simplify the drivetrain triggers
  * 
  * TODO: Create Pathplanner Auto
  *    VERIFY: Fix Gear ratios

@@ -255,13 +255,14 @@ constexpr int kDriveRightXIndex = 4; // An input RIGHT creates a NEGATIVE output
 
 constexpr int kOperatorLeftYIndex = 1; // An input UP creates a NEGATIVE output
 
-// Button/Switch indexes
+// Drive Controller
 constexpr int kFieldRelativeButtonIndex = 7; // CL
 constexpr int kRobotRelativeButtonIndex = 8; // CR
-constexpr int kParkSwitchIndex = 3; // X
 constexpr int kSlowStateButtonIndex = 4; // Y
 constexpr int kFastStateButtonIndex = 1; // A
 constexpr int kResetGyroButtonIndex = 2; // B
+
+// Operator controller 
 constexpr int kIntakeButtonIndex = 8; // RT
 constexpr int kOuttakeButtonIndex = 7; // LT
 constexpr int kShooterButtonIndex = 5; // LB

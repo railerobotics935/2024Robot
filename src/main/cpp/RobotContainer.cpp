@@ -46,7 +46,7 @@ RobotContainer::RobotContainer() {
     [this] {
       m_shooter.SetShooterAngle((units::radian_t)1.0);
       m_shooter.SetShooterSpeed((units::radians_per_second_t)frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kOperatorLeftYIndex), 0.15) * ShooterConstants::kShooterMotorFreeSpeedRps * 60 * std::numbers::pi);
-    }
+    }, {&m_shooter}
   ));
 
   // Add auto name options
@@ -67,26 +67,17 @@ RobotContainer::RobotContainer() {
 void RobotContainer::ConfigureButtonBindings() {
   
   frc2::JoystickButton resetButton(&m_driveController, ControllerConstants::kResetGyroButtonIndex); // Creates a new JoystickButton object for the "reset" button on Drive Controller    
-  frc2::JoystickButton slowButton(&m_driveController, ControllerConstants::kSlowStateButtonIndex); // Creates a new JoystickButton object for the slow button on Drive Controller    
-  frc2::JoystickButton fastButton(&m_driveController, ControllerConstants::kFastStateButtonIndex); // Creates a new JoystickButton object fot the fast button on Drive Controller
-  frc2::JoystickButton parkSwitch(&m_driveController, ControllerConstants::kParkSwitchIndex); // Creates a new JoystickButton object for the brake switch on Drive Controller
   frc2::JoystickButton robotRelativeButton(&m_driveController, ControllerConstants::kRobotRelativeButtonIndex); // Creates a new JoystickButton object for the Robot Relative Button
   frc2::JoystickButton fieldRelativeButton(&m_driveController, ControllerConstants::kFieldRelativeButtonIndex); // Creates a new JoystickButton object for the Field Relative Button
   frc2::JoystickButton intakeButton(&m_operatorController, ControllerConstants::kIntakeButtonIndex); // Creates a new JoystickButton object for the intake button on Operator Controller 
-  frc2::JoystickButton outtakeButton(&m_operatorController, ControllerConstants::kOuttakeButtonIndex); // Creates a new JoystickButton object for the outtake button on Operator Controller
   frc2::JoystickButton shooterButton(&m_operatorController, ControllerConstants::kShooterButtonIndex); // Creates a new JoystickButton object for the shoot button on Operator Controller 
   
   // I don't exactly know why this works, but the documentation for command based c++ is kind of bad 
-  //resetButton.WhileTrue(frc2::cmd::Run([&] {m_drive.ZeroHeading();}, {&m_drive}));
   resetButton.WhileTrue(frc2::cmd::Run([&] {m_drive.ZeroHeading();}, {&m_drive}));
   robotRelativeButton.WhileTrue(frc2::cmd::Run([&] {m_drive.SetRobotRelative();}, {&m_drive}));
   fieldRelativeButton.WhileTrue(frc2::cmd::Run([&] {m_drive.SetFieldRelative();}, {&m_drive}));
-  slowButton.WhileTrue(frc2::cmd::Run([&] {m_drive.SetSlowMode();}, {&m_drive}));
-  fastButton.WhileTrue(frc2::cmd::Run([&] {m_drive.SetFastMode();}, {&m_drive}));
-  parkSwitch.WhileTrue(frc2::cmd::Run([&] {m_drive.Park();}, {&m_drive}));
 
-  intakeButton.WhileTrue(frc2::cmd::Run([&] {m_intake.SetMotorPower(1.0);}, {&m_intake}));
-  outtakeButton.WhileTrue(frc2::cmd::Run([&] {m_intake.SetMotorPower(-1.0);}, {&m_intake}));
+  intakeButton.WhileTrue(SimpleIntake{&m_intake}.ToPtr());
   shooterButton.WhileTrue(frc2::cmd::Run([&] {m_shooter.SetMotorPower(1.0);}, {&m_shooter}));
   }
 

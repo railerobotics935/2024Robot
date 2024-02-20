@@ -166,11 +166,6 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
   double xSpeedCommanded;
   double ySpeedCommanded;
 
-  if (m_slowMode) {
-    xSpeed = xSpeed * 0.25;
-    ySpeed = ySpeed * 0.25;
-  }
-
   if (rateLimit) {
     // Convert XY to polar for rate limiting
     double inputTranslationDir = atan2(ySpeed.value(), xSpeed.value());

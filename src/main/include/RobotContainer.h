@@ -21,6 +21,7 @@
 #include "subsystems/IntakeSubsystem.h"
 #include "subsystems/ShooterSubsystem.h"
 #include "commands/DriveWithController.h"
+#include "commands/intake/SimpleIntake.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
