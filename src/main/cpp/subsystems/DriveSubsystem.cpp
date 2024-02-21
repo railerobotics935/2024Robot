@@ -23,6 +23,7 @@
 
 #include "Constants.h"
 #include "utils/SwerveUtils.h"
+#include "utils/MathUtils.h"
 
 using namespace DriveConstants;
 
@@ -153,9 +154,11 @@ void DriveSubsystem::Periodic() {
   //nte_bl_raw_encoder_voltage.SetDouble(m_backLeft.GetEncoderVoltage());
   //nte_br_raw_encoder_voltage.SetDouble(m_backRight.GetEncoderVoltage());
 
-  // Set robot possition wto shuffleboard field
+  // Set robot position to shuffleboard field
   m_field.SetRobotPose(m_poseEstimator.GetEstimatedPosition());
 
+  // Update robot distance from goal
+  nte_robot_distance_to_goal.SetDouble((double)MathUtils::TranslationToGoal(m_poseEstimator.GetEstimatedPosition()));
 }
 
 void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,

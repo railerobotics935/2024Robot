@@ -22,7 +22,7 @@
 #pragma once
 
 // Turn this off when there is no new constants need to be burned onto motorcontrollers
-#define BURNSPARKMAX false
+#define BURNSPARKMAX 
 
 /**
  * The Constants header provides a convenient place for teams to hold robot-wide
@@ -168,15 +168,15 @@ constexpr double kShooterMotorFreeSpeedRps =
 
 // Setup conversion factor for shooter encoders
 constexpr double kShooterGearboxRatio = 1.0;
-constexpr double kShooterPositionFactor = (std::numbers::pi * 2) / kShooterGearboxRatio; // radians
-constexpr double kShooterEncoderVelocityFactor = kShooterPositionFactor / 60.0;  // radians per second
+constexpr double kShooterPositionFactor = 1 / kShooterGearboxRatio; // revolutions
+constexpr double kShooterEncoderVelocityFactor = kShooterPositionFactor;  // revolutions per minute
 
 // Pitch encoder
 constexpr double kPitchGearboxRatio = 15.0;
 constexpr double kPitchPositionFactor = (std::numbers::pi * 2) / kPitchGearboxRatio; // radians
 constexpr double kPitchEncoderVelocityFactor = kPitchPositionFactor / 60.0; // radians per second
 
-// PID Constants for the pitch of the shooter
+// PID Constants for the speed of the shooter
 constexpr double kShooterP = 1.0; 
 constexpr double kShooterI = 0.0; 
 constexpr double kShooterD = 0.0; 
@@ -184,7 +184,7 @@ constexpr double kShooterFF = 1.0 / kShooterMotorFreeSpeedRps;
 constexpr double kShooterMin = -1.0;
 constexpr double kShooterMax = 1.0;
 
-// PID Constants for the speed of shooter
+// PID Constants for the pitch of shooter
 constexpr double kPitchP = 1.0;
 constexpr double kPitchI = 0.0;
 constexpr double kPitchD = 0.0;

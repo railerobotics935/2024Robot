@@ -164,6 +164,8 @@ private:
   nt::NetworkTableEntry nte_robot_x;
   nt::NetworkTableEntry nte_robot_y;
 
+  nt::NetworkTableEntry nte_robot_distance_to_goal;
+
   frc::Field2d m_field;
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
