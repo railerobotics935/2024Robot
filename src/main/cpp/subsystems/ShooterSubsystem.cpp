@@ -95,3 +95,17 @@ void ShooterSubsystem::SetShooterSpeed(units::radians_per_second_t speed) {
   m_shooterPIDController.SetReference((double)speed, rev::CANSparkMax::ControlType::kVelocity);
   nte_shooterSetpoint.SetDouble((double)speed);
 }
+
+bool ShooterSubsystem::AtAngleSetpoint() {
+  if (abs(nte_pitchSetpoint.GetDouble(1.0) - m_pitchAbsoluteEncoder.GetPosition()) < 0.1)
+    return true;
+  else
+    return false;
+}
+
+bool ShooterSubsystem::AtSpeedSetpoint() {
+  if (abs(nte_shooterSetpoint.GetDouble(0.0) - m_shooterEncoder.GetVelocity()) < 10.0)
+    return true;
+  else
+    return false;
+}

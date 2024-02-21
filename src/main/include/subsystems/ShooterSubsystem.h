@@ -13,7 +13,7 @@
 #include <rev/SparkPIDController.h>                 // for closed-loop control on Spark MAX 
 #include <rev/SparkRelativeEncoder.h>               // for closed-loop control on Spark MAX
 #include <units/angle.h>
-
+#include <frc/controller/PIDController.h>
 #include "Constants.h"
 
 class ShooterSubsystem : public frc2::SubsystemBase {
@@ -42,6 +42,20 @@ class ShooterSubsystem : public frc2::SubsystemBase {
   */
   void SetShooterSpeed(units::radians_per_second_t speed);
 
+  /**
+   * Gets if the PID Controller is at the setpoint
+   * 
+   * @return True if at the Angle setpoint
+  */
+  bool AtAngleSetpoint();
+
+  /**
+   * Gets if the PID Controller is at the setpoint
+   * 
+   * @return True if at the Speed setpoint
+  */
+  bool AtSpeedSetpoint();
+
  private:
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
@@ -66,5 +80,4 @@ class ShooterSubsystem : public frc2::SubsystemBase {
   // PID Contollers for
   rev::SparkPIDController m_shooterPIDController = m_shooterMotor.GetPIDController();
   rev::SparkPIDController m_pitchPIDController = m_pitchMotor.GetPIDController();
-  
 };
