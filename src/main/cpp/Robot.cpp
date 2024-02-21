@@ -7,7 +7,6 @@
 
 #include "Robot.h"
 
-
 /**
  * Bassed on an offseason commmand robot project for the 2023 season,
  * this code is the for our Robot in the 2024 frc season
@@ -40,18 +39,18 @@
  *    TODO: Create commands for each action needed
  *    TODO: Map keybindings for actions
  * 
- * TODO: Elevator Subsystem
+ * TODO: Elevator Subsystem CANCLED
  *    TODO: Create Basic functions
  *    DONE: Define Sensors
  *    TODO: Implement PID Controller
  *    TODO: Check inversion for follower moter
  * 
- * TODO: Commands
- *    TODO: Convert command facorys to custom commands
- *      TODO: Intake command
- *      TODO: Shooting command
- *      TODO: Drive command
- *    TODO: Create joystick buttons to trigger commands
+ * DONE: Basic Commands
+ *    DONE: Convert command facorys to custom commands
+ *      DONE: Intake command
+ *      DONE: Shooting command
+ *      DONE: Drive command
+ *    DONE: Create joystick buttons to trigger commands
  * 
  * TODO: Create custom Command for shooting
  *    TODO: Create Auto aim/shoot command
@@ -71,7 +70,8 @@
  *    TODO: Fix warning about construction fo motorcontrollers using constant values
  *    TODO: Make gyro inverstion clener and safe
  *    TODO: Scale the vision X and Y standard deviation by distance from the tag 
- *    TODO: Convert shooter units to rpm from radians per second
+ *    DONE: Convert shooter units to rpm from radians per second
+ *    TODO: Fix Apriltag Sensor method names
  * 
  * TODO: Clean up code
  *    DONE: Fix indentation size

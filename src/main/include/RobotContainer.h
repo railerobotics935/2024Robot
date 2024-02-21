@@ -20,9 +20,9 @@
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/IntakeSubsystem.h"
 #include "subsystems/ShooterSubsystem.h"
-#include "commands/DriveWithController.h"
+#include "commands/drive/DriveWithController.h"
 #include "commands/intake/SimpleIntake.h"
-#include "commands/SlowDrive.h"
+#include "commands/drive/SlowDrive.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since

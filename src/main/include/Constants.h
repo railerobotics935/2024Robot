@@ -172,9 +172,8 @@ constexpr double kShooterPositionFactor = 1 / kShooterGearboxRatio; // revolutio
 constexpr double kShooterEncoderVelocityFactor = kShooterPositionFactor;  // revolutions per minute
 
 // Pitch encoder
-constexpr double kPitchGearboxRatio = 15.0;
-constexpr double kPitchPositionFactor = (std::numbers::pi * 2) / kPitchGearboxRatio; // radians
-constexpr double kPitchEncoderVelocityFactor = kPitchPositionFactor / 60.0; // radians per second
+constexpr double kPitchPositionFactor = (std::numbers::pi * 2); // radians
+constexpr double kPitchEncoderVelocityFactor = (2 * std::numbers::pi) / 60.0; // radians per second
 
 // PID Constants for the speed of the shooter
 constexpr double kShooterP = 1.0; 

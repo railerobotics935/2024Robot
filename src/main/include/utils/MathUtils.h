@@ -23,6 +23,4 @@ namespace MathUtils {
   */
   double TranslationToGoal(frc::Pose2d robotPose);
 
-  
 };
-

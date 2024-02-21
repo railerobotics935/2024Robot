@@ -3,24 +3,24 @@
 // the WPILib BSD license file in the root directory of this project.
 #include "utils/MathUtils.h"
 #include "Constants.h"
-#include "commands/SlowDrive.h"
+#include "commands/drive/DriveWithController.h"
 
-SlowDrive::SlowDrive(DriveSubsystem* drive, frc::XboxController* driveController)
+DriveWithController::DriveWithController(DriveSubsystem* drive, frc::XboxController* driveController)
     : m_drive{drive}, m_driveController{driveController} {
   // Register that this command requires the subsystem.
   AddRequirements(m_drive);
 }
 
-void SlowDrive::Initialize() {
+void DriveWithController::Initialize() {
   // Run once when command is scheduled
-  printf("SlowDrive Initialized\r\n");
+  printf("DriveWithController Initialized\r\n");
 }
 
-void SlowDrive::Execute() {
+void DriveWithController::Execute() {
   // Main execute loop that runs during the command
-  const auto xSpeed = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveLeftYIndex), 0.05) * 0.25;
-  const auto ySpeed = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveLeftXIndex), 0.05) * 0.25;
-  const auto rot = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveRightXIndex), 0.05) * 0.25;
+  const auto xSpeed = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveLeftYIndex), 0.05);
+  const auto ySpeed = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveLeftXIndex), 0.05);
+  const auto rot = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveRightXIndex), 0.05);
   
   m_drive->Drive(units::meters_per_second_t{MathUtils::SignedSquare(xSpeed)},
     units::meters_per_second_t{MathUtils::SignedSquare(ySpeed)},
@@ -28,12 +28,12 @@ void SlowDrive::Execute() {
     true);
 }
 
-bool SlowDrive::IsFinished() {
+bool DriveWithController::IsFinished() {
   // You can make a custom state to end the command and then return true
   return false;
 }
 
-void SlowDrive::End(bool interupted) {
+void DriveWithController::End(bool interupted) {
   // Runs once when the command is removed from the command scheduler
-  printf("SlowDrive ended\r\n");
+  printf("DriveWithController ended\r\n");
 }
