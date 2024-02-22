@@ -26,9 +26,9 @@ public:
 
   /**
    * @param object The ID number for the object wanted to identify
-   * @return The Field Relative Pose3d
+   * @return The Field Relative Translation 2d
   */
-  frc::Pose3d GetFieldRelativePose(int object);
+  frc::Translation2d GetFieldRelativeTranslation(int object);
 
   /**
    * @return True if the object is tracked

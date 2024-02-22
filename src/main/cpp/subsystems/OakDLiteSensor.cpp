@@ -14,7 +14,6 @@ OakDLiteSensor::OakDLiteSensor(std::string cameraName, frc::Pose3d cameraPose3d,
 	m_cameraName = cameraName;
   m_cameraPose3d = cameraPose3d;
   m_poseEstimator = poseEstimator;
-  m_cameraTransform2d = {cameraPose3d.ToPose2d().Translation(), cameraPose3d.ToPose2d().Rotation()};
 
 	auto nt_inst = nt::NetworkTableInstance::GetDefault();
 	auto nt_table = nt_inst.GetTable("SmartDashboard");
@@ -41,27 +40,20 @@ OakDLiteSensor::OakDLiteSensor(std::string cameraName, frc::Pose3d cameraPose3d,
 
 }
 
-frc::Pose3d OakDLiteSensor::GetFieldRelativePose(int object) {
-  // Grab Pose3d values in an vector
-  std::vector<double> poseArr = nte_location[object].GetDoubleArray(std::vector<double>());
+frc::Translation2d OakDLiteSensor::GetFieldRelativeTranslation(int object) {
+  // Grab Translation3d values in an vector
+  std::vector<double> translationArr = nte_location[object].GetDoubleArray(std::vector<double>());
 
-  // Create Transform3d object for tag position relative to robot
-  frc::Translation3d rawTranslation{(units::meter_t)poseArr[0], (units::meter_t)poseArr[1], (units::meter_t)poseArr[2]};
-  frc::Rotation3d rawRotation{(units::radian_t)poseArr[3], (units::radian_t)poseArr[4], (units::radian_t)poseArr[5]};
-  frc::Transform3d rawPose{rawTranslation, rawRotation};
+  // Create Transform3d object for object position relative to robot
+  frc::Translation3d rawTranslation{(units::meter_t)translationArr[0], (units::meter_t)translationArr[1], (units::meter_t)translationArr[2]};
   
-  // Correct rotation so the robot is rotated, not the apriltag
-  frc::Rotation3d correctedRotation{(units::radian_t)poseArr[5], (units::radian_t)poseArr[3], (units::radian_t)(poseArr[4] + std::numbers::pi)}; // correct axis manualy and add pi to the rotation axis to face tag instead
-
   // Convert translation into standard for the robot
-  frc::Translation3d convertedTranslation = frc::CoordinateSystem::Convert(rawPose.Translation().RotateBy(rawPose.Inverse().Rotation()), 
+  frc::Translation3d convertedTranslation = frc::CoordinateSystem::Convert(rawTranslation, 
                                 frc::CoordinateSystem::EDN(), 
                                 frc::CoordinateSystem::NWU());
   
-  // transform by the tag position on the field and the camera location on the robot
-  frc::Pose3d tagPoseOnField{rawTranslation, rawRotation}; //m_fieldLayout.GetTagPose(object).value();
-  tagPoseOnField = (tagPoseOnField.TransformBy(frc::Transform3d{convertedTranslation, correctedRotation}).TransformBy(frc::Transform3d{m_cameraPose3d.Translation(), m_cameraPose3d.Rotation()}));
-  return tagPoseOnField;
+  // Correcting and adding translations to get final translation of the object 
+  return convertedTranslation.ToTranslation2d().operator+(m_cameraPose3d.ToPose2d().Translation()).RotateBy(-m_poseEstimator->GetEstimatedPosition().Rotation()).operator+(m_poseEstimator->GetEstimatedPosition().Translation());
 }
 
 bool OakDLiteSensor::ObjectIsTracked(int object) {
