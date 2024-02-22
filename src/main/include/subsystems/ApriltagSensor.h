@@ -24,32 +24,15 @@ public:
    * in the robot code
    * 
    * @param cameraName The camera name from network tables
+   * @param cameraPose3d The 3d position of the camera 
   */
   ApriltagSensor (std::string cameraName, frc::Pose3d cameraPose3d);
 
   /**
    * @param tag The ID number for the apriltag wanted to identify
-   * @return The raw Pose3d from the camera
+   * @return The Field Relative Pose3d
   */
-  frc::Pose3d GetRawPose3d(int tag);
-
-  /**
-   * @param tag The ID number for the apriltag wanted to identify
-   * @return The Apriltag Relative Pose2d of the center of the robot
-  */
-  frc::Pose2d GetApriltagRelativePose(int tag);
-
-  /**
-   * @param tag The ID number for the apriltag wanted to identify
-   * @return The Apriltag Relative transform2d of the center of the robot
-  */
-  frc::Transform2d GetApriltagRelativeTransformation(int tag);
-
-  /**
-   * @param tag The ID number for the apriltag wanted to identify
-   * @return The Field Relative Pose2d
-  */
-  frc::Pose2d GetFieldRelativePose(int tag);
+  frc::Pose3d GetFieldRelativePose(int tag);
 
   /**
    * @return If the tag is tracked

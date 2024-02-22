@@ -79,13 +79,15 @@ public:
    */
   void ZeroHeading();
 
+  /**
+   * Sets the robot to Robot relative mode
+  */
   void SetRobotRelative();
 
+  /**
+   * Sets the robot to Field relative mode
+  */
   void SetFieldRelative();
-
-  void SetSlowMode();
-
-  void SetFastMode();
 
   /**
    * Returns the turn rate of the robot.

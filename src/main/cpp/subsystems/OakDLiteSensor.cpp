@@ -5,14 +5,15 @@
 #include <Constants.h>
 #include <frc/geometry/CoordinateSystem.h>
 
-#include "subsystems/ApriltagSensor.h"
+#include "subsystems/OakDLiteSensor.h"
 
 
-ApriltagSensor::ApriltagSensor(std::string cameraName, frc::Pose3d cameraPose3d) {
+OakDLiteSensor::OakDLiteSensor(std::string cameraName, frc::Pose3d cameraPose3d, frc::SwerveDrivePoseEstimator<4>* poseEstimator) {
 	
 	// Set the camera name to identify whitch camera to look at in NT
 	m_cameraName = cameraName;
   m_cameraPose3d = cameraPose3d;
+  m_poseEstimator = poseEstimator;
   m_cameraTransform2d = {cameraPose3d.ToPose2d().Translation(), cameraPose3d.ToPose2d().Rotation()};
 
 	auto nt_inst = nt::NetworkTableInstance::GetDefault();
@@ -20,25 +21,29 @@ ApriltagSensor::ApriltagSensor(std::string cameraName, frc::Pose3d cameraPose3d)
 
   // Cycle through each tag ID and get entry for each - status and pose
   char s_tableEntryPath[32]; 
-  for (uint8_t i = 0; i < MAX_NUM_TAGS; i++) {
-    // Status holds a sting, either "TRACKED" or "LOST"
-    sprintf(s_tableEntryPath, "%s/Tag[%d]/Status", m_cameraName.c_str(), i);
+  for (uint8_t i = 0; i < MAX_NUM_OBJECTS; i++) {
+    // Status holds a string, either "TRACKED" or "LOST"
+    sprintf(s_tableEntryPath, "%s/Object[%d]/Status", m_cameraName.c_str(), i);
     nte_status[i] = nt_table->GetEntry(s_tableEntryPath);
 
-    // Depth holds an array of doubles for the x, y and z, then rotx, roty and rotz
-    sprintf(s_tableEntryPath, "%s/Tag[%d]/Pose", m_cameraName.c_str(), i);
-    nte_pose[i] = nt_table->GetEntry(s_tableEntryPath);
+    // Location holds an array of doubles for the x, y, and z of the object
+    sprintf(s_tableEntryPath, "%s/Object[%d]/Location", m_cameraName.c_str(), i);
+    nte_location[i] = nt_table->GetEntry(s_tableEntryPath);
+
+    // Type holds a string, either "robot" or "note"
+    sprintf(s_tableEntryPath, "%s/Object[%d]/Type", m_cameraName.c_str(), i);
+    nte_type[i] = nt_table->GetEntry(s_tableEntryPath);
   }
 
   // Latency from time camera picks up image to when the pi published the data
-  sprintf(s_tableEntryPath, "%s/Latency/Apriltag", m_cameraName.c_str());
+  sprintf(s_tableEntryPath, "%s/Latency/ObjectDetect", m_cameraName.c_str());
   nte_latency = nt_table->GetEntry(s_tableEntryPath);
 
 }
 
-frc::Pose3d ApriltagSensor::GetFieldRelativePose(int tag) {
+frc::Pose3d OakDLiteSensor::GetFieldRelativePose(int object) {
   // Grab Pose3d values in an vector
-  std::vector<double> poseArr = nte_pose[tag].GetDoubleArray(std::vector<double>());
+  std::vector<double> poseArr = nte_location[object].GetDoubleArray(std::vector<double>());
 
   // Create Transform3d object for tag position relative to robot
   frc::Translation3d rawTranslation{(units::meter_t)poseArr[0], (units::meter_t)poseArr[1], (units::meter_t)poseArr[2]};
@@ -54,19 +59,27 @@ frc::Pose3d ApriltagSensor::GetFieldRelativePose(int tag) {
                                 frc::CoordinateSystem::NWU());
   
   // transform by the tag position on the field and the camera location on the robot
-  frc::Pose3d tagPoseOnField = m_fieldLayout.GetTagPose(tag).value();
+  frc::Pose3d tagPoseOnField{rawTranslation, rawRotation}; //m_fieldLayout.GetTagPose(object).value();
   tagPoseOnField = (tagPoseOnField.TransformBy(frc::Transform3d{convertedTranslation, correctedRotation}).TransformBy(frc::Transform3d{m_cameraPose3d.Translation(), m_cameraPose3d.Rotation()}));
   return tagPoseOnField;
 }
 
-bool ApriltagSensor::TagIsTracked(int tag) {
-  // If tag is traked, return true, else return false
-  if (nte_status[tag].GetString("LOST") == "TRACKED")
+bool OakDLiteSensor::ObjectIsTracked(int object) {
+  // If object is tracked, return true, else return false
+  if (nte_status[object].GetString("LOST") == "TRACKED")
     return true;
   else
     return false;
 }
 
-units::second_t ApriltagSensor::GetTimestamp(int tag) {
-  return (units::second_t)(nte_pose[tag].GetLastChange() / 1000000.0) - (units::second_t)nte_latency.GetDouble(360.0);
+bool OakDLiteSensor::ObjectIsNote(int object) {
+  // If object is note, return true, else return false
+  if (nte_status[object].GetString("robot") == "note")
+    return true;
+  else
+    return false;
+}
+
+units::second_t OakDLiteSensor::GetTimestamp(int object) {
+  return (units::second_t)(nte_location[object].GetLastChange() / 1000000.0) - (units::second_t)nte_latency.GetDouble(360.0);
 }

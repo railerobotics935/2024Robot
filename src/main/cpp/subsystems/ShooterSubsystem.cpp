@@ -97,14 +97,14 @@ void ShooterSubsystem::SetShooterSpeed(units::revolutions_per_minute_t speed) {
 }
 
 bool ShooterSubsystem::AtAngleSetpoint() {
-  if (abs(nte_pitchSetpoint.GetDouble(1.0) - m_pitchAbsoluteEncoder.GetPosition()) < 0.1)
+  if (abs(nte_pitchSetpoint.GetDouble(1.0) - m_pitchAbsoluteEncoder.GetPosition()) < 0.1) // in radians
     return true;
   else
     return false;
 }
 
 bool ShooterSubsystem::AtSpeedSetpoint() {
-  if (abs(nte_shooterSetpoint.GetDouble(0.0) - m_shooterEncoder.GetVelocity()) < 10.0)
+  if (abs(nte_shooterSetpoint.GetDouble(0.0) - m_shooterEncoder.GetVelocity()) < 10.0) // in RPM
     return true;
   else
     return false;

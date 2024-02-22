@@ -321,14 +321,6 @@ void DriveSubsystem::SetFieldRelative() {
   m_fieldRelative = true;
 }
 
-void DriveSubsystem::SetSlowMode() {
-  m_slowMode = true;
-}
-
-void DriveSubsystem::SetFastMode() {
-  m_slowMode = false;
-}
-
 double DriveSubsystem::GetTurnRate() {
   return (double)-m_gyro.GetRate(frc::ADIS16470_IMU::kYaw);
 }
@@ -361,8 +353,8 @@ void DriveSubsystem::EstimatePoseWithApriltag() {
   // Iterate through each tag, adding it to the pose estimator if it is tracked
   for (int tag = 1; tag <= 16; tag++ ) { // Check each tag for each camera
     if (m_frontCameraSensor.TagIsTracked(tag) && m_frontCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
-      m_poseEstimator.AddVisionMeasurement(m_frontCameraSensor.GetRawPose3d(tag).ToPose2d(), m_frontCameraSensor.GetTimestamp(tag));
+      m_poseEstimator.AddVisionMeasurement(m_frontCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_frontCameraSensor.GetTimestamp(tag));
     if (m_backCameraSensor.TagIsTracked(tag) && m_backCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
-      m_poseEstimator.AddVisionMeasurement(m_backCameraSensor.GetRawPose3d(tag).ToPose2d(), m_backCameraSensor.GetTimestamp(tag));
+      m_poseEstimator.AddVisionMeasurement(m_backCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backCameraSensor.GetTimestamp(tag));
   }
 } 
