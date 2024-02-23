@@ -60,6 +60,16 @@
  *      TODO: Use sensor data to determine when to shoot note
  *    TODO: check location
  *      TODO: Use Pose/camera to deterime correct position
+ *    TODO: Shoot While moveing
+ *      TODO: Math util to get robot velocity and acceleration (maybe)
+ *      TODO: Look up time based on speed of shooter (we want as high of a speed as possible)
+ *      TODO: use time to calculate translation of robot based on velocity and acceleration
+ *      TODO: Add translation of robot in the future to current translation of the goal
+ *        TODO: add method to get translation, not only distance, from goal
+ *      TODO: With new distnace, re-calculate process until within an accepted error - iffy, only really works with short difference in shoot time.
+ *      TODO: With final distance, grab angle/speed of shooter and set it to subsystems
+ *      TODO: Rumble/automaticly shoot when good
+ *      TODO: Able to set speed and angle early, but only rotate robot when almost ready to shoot to keep our options open
  * 
  * TODO: Improvements
  *    DONE: Work on fixing the abolute encoder problem with the swerve

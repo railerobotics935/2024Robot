@@ -22,6 +22,7 @@
 #include <frc2/command/button/JoystickButton.h>
 
 #include <pathplanner/lib/commands/PathPlannerAuto.h>
+#include <pathplanner/lib/auto/NamedCommands.h>
 
 #include "Constants.h"
 #include "subsystems/DriveSubsystem.h"
@@ -32,6 +33,9 @@ using namespace pathplanner;
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
 
+  // Configuring command bindings for pathplanner
+  NamedCommands::registerCommand("SimpleIntake", SimpleIntake{&m_intake}.ToPtr());
+  
   // Configure the button bindings
   ConfigureButtonBindings();
 
