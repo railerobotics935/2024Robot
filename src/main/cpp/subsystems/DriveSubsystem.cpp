@@ -337,6 +337,16 @@ frc::ChassisSpeeds DriveSubsystem::GetRobotRelativeSpeeds()
                                            m_backRight.GetState());
 }
 
+// This needs to be changed
+frc::ChassisSpeeds DriveSubsystem::GetFieldRelativeSpeeds()
+{
+  return m_driveKinematics.ToChassisSpeeds(m_frontLeft.GetState(), 
+                                           m_frontRight.GetState(),
+                                           m_backLeft.GetState(),
+                                           m_backRight.GetState());
+}
+
+
 void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
   m_odometry.ResetPosition(
       GetHeading(),

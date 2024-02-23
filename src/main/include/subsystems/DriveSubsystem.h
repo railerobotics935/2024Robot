@@ -111,6 +111,14 @@ public:
   frc::ChassisSpeeds GetRobotRelativeSpeeds();
 
   /**
+   * Returns the chassis speeds of the robot IN FIELD RELATIVE
+   * 
+   * @return Robot chassis speeds
+  */
+  frc::ChassisSpeeds GetFieldRelativeSpeeds();
+
+
+  /**
    * Resets the odometry to the specified pose.
    *
    * @param pose The pose to which to set the odometry.

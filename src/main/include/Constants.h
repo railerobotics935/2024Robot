@@ -19,6 +19,7 @@
 #include <frc/apriltag/AprilTagFields.h>
 #include <rev/CANSparkMax.h>
 
+
 #pragma once
 
 // Turn this off when there is no new constants need to be burned onto motorcontrollers
@@ -290,3 +291,26 @@ namespace BackCamera {
 
 
 } // namespace CameraConstants
+
+namespace DataCurve {
+  /**
+   * @param distance The distance from the goal to the robot
+   * 
+   * @return The angle in radians based off of the curve calculations
+  */
+  double GetAngleFromDistance(double distance);
+
+  /**
+   * @param distance The distance from the goal to the robot
+   * 
+   * @return The speed in RPM based off of the curve calculations
+  */
+  double GetSpeedFromDistance(double distance);
+
+  /**
+   * @param distance The distance from the goal to the robot
+   * 
+   * @return The time in seconds based off of the curve calculations
+  */
+  double GetTimeFromDistnace(double Angle);
+}
