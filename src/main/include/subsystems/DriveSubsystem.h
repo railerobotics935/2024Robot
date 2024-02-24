@@ -18,6 +18,7 @@
 #include <frc/smartdashboard/Field2d.h>
 #include <frc/apriltag/AprilTagFieldLayout.h>
 #include <frc/estimator/SwerveDrivePoseEstimator.h>
+#include <frc/controller/PIDController.h>
 
 #include "Constants.h"
 #include "SwerveModule.h"
@@ -47,8 +48,7 @@ public:
    *                      (forward/backwards).
    * @param ySpeed        Speed of the robot in the y direction (sideways).
    * @param rot           Angular rate of the robot.
-   * @param fieldRelative Whether the provided x and y speeds are relative to
-   *                      the field.
+   * @param rateLimit     Whether to limit the rate of the robot (Recomended)
    */
   void Drive(units::meters_per_second_t xSpeed,
               units::meters_per_second_t ySpeed, units::radians_per_second_t rot,
@@ -60,13 +60,19 @@ public:
    * @param xSpeed        Speed of the robot in the x direction
    *                      (forward/backwards).
    * @param ySpeed        Speed of the robot in the y direction (sideways).
-   * @param rot           Angular rate of the robot.
-   * @param fieldRelative Whether the provided x and y speeds are relative to
-   *                      the field.
+   * @param rotation           Angular rate of the robot.
+   * @param rateLimit     Whether to limit the rate of the robot (Recomended)
   */
   void DriveFacingGoal(units::meters_per_second_t xSpeed,
-                        units::meters_per_second_t ySpeed, frc::Rotation2d rot,
+                        units::meters_per_second_t ySpeed, frc::Rotation2d rotation,
                         bool rateLimit);
+  
+  /**
+   * Gets if the PID Controller is at the setpoint
+   * 
+   * @return True if the robot is at the correct angle setpoint 
+  */
+  bool AtAngleSetpoint();
 
   /**
    * Drives the robot given a set of chasis speeds IN ROBOT RELATIVE
@@ -224,7 +230,9 @@ private:
       DriveConstants::kRotationalSlewRate / 1_s};
   double m_prevTime = wpi::Now() * 1e-6;
 
+  // PID controller for robot angle
+  frc::PIDController m_robotAngleController{AutoConstants::kPRotationController, AutoConstants::kIRotationController, AutoConstants::kDRotationController};
+
   // Variables to internialy keep track of drive state
   bool m_fieldRelative = true;
-  bool m_slowMode = false;
 };
