@@ -158,7 +158,7 @@ void DriveSubsystem::Periodic() {
   m_field.SetRobotPose(m_poseEstimator.GetEstimatedPosition());
 
   // Update robot distance from goal
-  nte_robot_distance_to_goal.SetDouble((double)MathUtils::TranslationToGoal(m_poseEstimator.GetEstimatedPosition()));
+  nte_robot_distance_to_goal.SetDouble((double)MathUtils::RobotDistanceToGoal(m_poseEstimator.GetEstimatedPosition()));
 }
 
 void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
@@ -262,6 +262,14 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
   nte_br_set_speed.SetDouble((double)br.speed);
   
 }
+
+void DriveSubsystem::DriveFacingGoal(units::meters_per_second_t xSpeed,
+                                      units::meters_per_second_t ySpeed, 
+                                      frc::Rotation2d rot, 
+                                      bool rateLimit) {
+
+                                    
+ }
 
 void DriveSubsystem::DriveWithChassisSpeeds(frc::ChassisSpeeds speeds) {
   auto states = m_driveKinematics.ToSwerveModuleStates(speeds);

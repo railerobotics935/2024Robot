@@ -55,6 +55,20 @@ public:
               bool rateLimit);
 
   /**
+   * Drives the robot at given x and y, and faces the angle given.  
+   *
+   * @param xSpeed        Speed of the robot in the x direction
+   *                      (forward/backwards).
+   * @param ySpeed        Speed of the robot in the y direction (sideways).
+   * @param rot           Angular rate of the robot.
+   * @param fieldRelative Whether the provided x and y speeds are relative to
+   *                      the field.
+  */
+  void DriveFacingGoal(units::meters_per_second_t xSpeed,
+                        units::meters_per_second_t ySpeed, frc::Rotation2d rot,
+                        bool rateLimit);
+
+  /**
    * Drives the robot given a set of chasis speeds IN ROBOT RELATIVE
    * 
    * @param speeds        the Chasis speed of the robot 
@@ -116,7 +130,6 @@ public:
    * @return Robot chassis speeds
   */
   frc::ChassisSpeeds GetFieldRelativeSpeeds();
-
 
   /**
    * Resets the odometry to the specified pose.

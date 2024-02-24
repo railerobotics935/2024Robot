@@ -16,11 +16,20 @@ namespace MathUtils {
   double SignedSquare(double input);
 
   /**
-   * Finds distance between goal of the alliance you're on and the robot. 
+   * Finds transformation of robot in relation to the boal. 
    * 
    * @param robotPose is the position of the robot on the field
-   * @return the distance from the goal in meters
+   * @return the transformation of the robot
   */
-  double TranslationToGoal(frc::Pose2d robotPose);
+  frc::Translation2d TranslationToGoal(frc::Pose2d robotPose);
+
+  /**
+   * Turns translation2d given by TranslationToGoal to distance between the robot and 
+   * goal in meters.
+   * 
+   * @param robotTransformation is the transformation given by TranslationToGoal
+   * @return the distance to the goal in meters
+  */
+  double RobotDistanceToGoal(frc::Pose2d robotPose);
 
 };
