@@ -8,12 +8,12 @@
 #include <frc2/command/SubsystemBase.h>
 #include <rev/CANSparkMax.h>
 
-class IntakeSubsystem : public frc2::SubsystemBase {
+class StagerSubsystem : public frc2::SubsystemBase {
  public:
   /**
-   * Picks up game pieces
+   * Controls movement of game piece between intake and shooter
   */
-  IntakeSubsystem();
+  StagerSubsystem();
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -28,5 +28,5 @@ class IntakeSubsystem : public frc2::SubsystemBase {
   // declared private and exposed only through public methods.
 
   // Motor Controllers
-  rev::CANSparkMax m_intakeMotor;
+  rev::CANSparkMax m_stagerMotor;
 };

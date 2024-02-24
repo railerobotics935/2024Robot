@@ -154,6 +154,12 @@ constexpr int kMotorID = 24;
 constexpr rev::CANSparkMaxLowLevel::MotorType kMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
 } // namespace IntakeConstants
 
+namespace StagerConstants {
+// Stager motor
+constexpr int kMotorID = 9;
+constexpr rev::CANSparkMaxLowLevel::MotorType kMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
+} // namespace StagerConstants
+
 namespace ShooterConstants {
 // Intake motor 
 constexpr int kShooterID = 27;
