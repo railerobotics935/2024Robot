@@ -17,11 +17,12 @@ void ShootWhileMoving::Initialize() {};
 void ShootWhileMoving::Execute() {
 
   // Get the distance and translation from the robot to the goal
-  double robotToGoalDistance = MathUtils::TranslationToGoal(m_drive->GetPose());
-  frc::Translation2d GoalTranslation{}; // = MathUtils::TranslationToGoal(m_drive->GetPose());
+  double robotToGoalDistance = MathUtils::RobotDistanceToGoal(m_drive->GetPose());
+  frc::Translation2d GoalTranslation{MathUtils::TranslationToGoal(m_drive->GetPose())}; // = MathUtils::TranslationToGoal(m_drive->GetPose());
 
   // New empty translation to hold our calculations
   frc::Translation2d movingGoalTranslation{};
+  double movingGoalDistance = 0.0;
 
   // Robot Velocity and Acceleration
   double robot_vx = 0.0;
@@ -37,38 +38,36 @@ void ShootWhileMoving::Execute() {
   {
     // Calculate the moving goal x and y
     // Right now it is not using acceleration becasue there is no limit on max velocity
-    double movingGoalX = GoalTranslation.X() - (robot_vx * shootingTime);
-    double movingGoalY = GoalTranslation.Y() - (robot_vy * shootingTime);
+    double movingGoalX = (double)GoalTranslation.X() - (robot_vx * shootingTime);
+    double movingGoalY = (double)GoalTranslation.Y() - (robot_vy * shootingTime);
 
     // Create location of the field of moving goal
-    frc::Translation2d movingGoalTranslation{(units::meter_t)movingGoalX, (units::meter_t)movingGoalY};
+    movingGoalTranslation = frc::Translation2d{(units::meter_t)movingGoalX, (units::meter_t)movingGoalY};
 
     // Deterime the tranlsation of the robot based on where the robot will be when we shoot the note
     frc::Translation2d robotToMovingGoalTranslation = movingGoalTranslation.operator-(m_drive->GetPose().Translation());
 
     // Get the new shot time based on the distance of the new 
-    double newShootingTime = DataCurve::GetTimeFromDistnace(MathUtils::TranslationToGoal({robotToMovingGoalTranslation, frc::Rotation2d{}}));
+    movingGoalDistance = MathUtils::RobotDistanceToGoal({robotToMovingGoalTranslation, frc::Rotation2d{}});
+    double newShootingTime = DataCurve::GetTimeFromDistnace(movingGoalDistance);
 
+    // If the difference in shoot times is close enough, end the iterations
+    if (fabs(newShootingTime - shootingTime) <= 0.010) {
+      i = 4; // This will end the iterations
+    }
     
-    /**
+    // Set the shooting time to the new shooting time for the next iteration.
+    shootingTime = newShootingTime;
 
+  } // for loop
 
-            double newShotTime = m_timeTable.getOutput(toTestGoal.getDistance(new Translation2d()) * 39.37);
-
-            if(Math.abs(newShotTime-shotTime) <= 0.010){
-                i=4;
-            }
-            
-            if(i == 4){
-                movingGoalLocation = testGoalLocation;
-                SmartDashboard.putNumber("NewShotTime", newShotTime);
-            }
-            else{
-                shotTime = newShotTime;
-            }
-    */
-  }
-
+  // Set subsystems to location
+  m_shooter->SetShooterAngle((units::radian_t)DataCurve::GetAngleFromDistance(movingGoalDistance));
+  m_shooter->SetShooterSpeed((units::revolutions_per_minute_t)DataCurve::GetSpeedFromDistance(movingGoalDistance));
+  // Set drivetrain to angle of goal
+  
+  // Rumble controllers if at the setpoints
+  
 }
 
 void ShootWhileMoving::End(bool interrupted) {

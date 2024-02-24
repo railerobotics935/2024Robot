@@ -318,5 +318,5 @@ namespace DataCurve {
    * 
    * @return The time in seconds based off of the curve calculations
   */
-  double GetTimeFromDistnace(double Angle);
+  double GetTimeFromDistnace(double distance);
 }

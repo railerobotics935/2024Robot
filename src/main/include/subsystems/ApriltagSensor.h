@@ -6,7 +6,6 @@
 #include <networktables/networkTableInstance.h>
 #include <frc/geometry/Pose3d.h>
 #include <frc/geometry/Transform2d.h>
-#include <frc/geometry/Pose3d.h>
 #include <frc/apriltag/AprilTagFieldLayout.h>
 #include <frc/Filesystem.h>
 #include <wpi/fs.h>

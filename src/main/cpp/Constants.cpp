@@ -12,7 +12,7 @@ namespace DataCurve {
     return 0.0; // in RPM
   }  
   
-  double GetTimeFromDistance(double distance) {
+  double GetTimeFromDistnace(double distance) {
     return 0.0; // in Seconds
   }
 }
