@@ -26,7 +26,7 @@ class ShooterSubsystem : public frc2::SubsystemBase {
   void Periodic() override;
 
   //Sets the motor's power (between -1.0 and 1.0).
-  void SetMotorPower(double power);
+  void SetShooterMotorPower(double power);
 
   /**
    * Sets the Shooter angle using closed loop control on the SparkMax

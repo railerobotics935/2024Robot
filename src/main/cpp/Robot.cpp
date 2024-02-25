@@ -60,7 +60,7 @@
  *      TODO: Use sensor data to determine when to shoot note
  *    TODO: check location
  *      TODO: Use Pose/camera to deterime correct position
- *    TODO: Shoot While moveing
+ *    TODO: Shoot While moving
  *      TODO: Math util to get robot velocity and acceleration (maybe)
  *      DONE: Look up time based on speed of shooter (we want as high of a speed as possible)
  *      TODO: use time to calculate translation of robot based on velocity and acceleration

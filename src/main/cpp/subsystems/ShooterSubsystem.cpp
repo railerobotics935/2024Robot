@@ -79,7 +79,7 @@ void ShooterSubsystem::Periodic() {
   nte_pitchAngle.SetDouble((double)m_pitchAbsoluteEncoder.GetPosition());
 }
 
-void ShooterSubsystem::SetMotorPower(double power) {
+void ShooterSubsystem::SetShooterMotorPower(double power) {
   // Sets the motor's power (between -1.0 and 1.0). 
   m_shooterMotor.Set(power);
 }

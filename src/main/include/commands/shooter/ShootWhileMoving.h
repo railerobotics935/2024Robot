@@ -25,8 +25,9 @@ public:
    * @param shooter Pointer to the shooter subsytem
    * @param drive Pointer to the drive subsystem
    * @param opController Pointer to the operator controller
+   * @param driveController Pointer to the driver controller
   */
-  explicit ShootWhileMoving(ShooterSubsystem* shooter, DriveSubsystem* drive, frc::XboxController* opController);
+  explicit ShootWhileMoving(ShooterSubsystem* shooter, DriveSubsystem* drive, frc::XboxController* opController, frc::XboxController* driveController);
 
   void Initialize() override;
   void Execute() override;
@@ -37,5 +38,6 @@ private:
   ShooterSubsystem* m_shooter;
   DriveSubsystem* m_drive;
   frc::XboxController* m_opController;
+  frc::XboxController* m_driveController;
 
 };

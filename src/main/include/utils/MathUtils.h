@@ -16,7 +16,7 @@ namespace MathUtils {
   double SignedSquare(double input);
 
   /**
-   * Finds transformation of robot in relation to the boal. 
+   * Finds transformation of robot in relation to the goal. 
    * 
    * @param robotPose is the position of the robot on the field
    * @return the transformation of the robot
@@ -32,4 +32,11 @@ namespace MathUtils {
   */
   double RobotDistanceToGoal(frc::Pose2d robotPose);
 
+  /**
+   * Finds the angle of the robot in relation to the goal. 
+   * 
+   * @param robotTranslation is the position of the robot on the field
+   * @return the rotation of the robot
+  */
+  frc::Rotation2d AngleToGoal(frc::Translation2d targetTranslation);
 };

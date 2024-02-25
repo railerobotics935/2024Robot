@@ -49,7 +49,8 @@ RobotContainer::RobotContainer() {
   m_shooter.SetDefaultCommand(frc2::RunCommand(
     [this] {
       m_shooter.SetShooterAngle((units::radian_t)1.0);
-      m_shooter.SetShooterSpeed((units::radians_per_second_t)frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kOperatorLeftYIndex), 0.15) * ShooterConstants::kShooterMotorFreeSpeedRps * 60 * std::numbers::pi);
+      //m_shooter.SetShooterSpeed((units::radians_per_second_t)frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kOperatorLeftYIndex), 0.15) * ShooterConstants::kShooterMotorFreeSpeedRps * 60 * std::numbers::pi);
+      m_shooter.SetShooterMotorPower(frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kOperatorLeftYIndex), 0.15));
     }, {&m_shooter}
   ));
 
@@ -83,8 +84,7 @@ void RobotContainer::ConfigureButtonBindings() {
   fieldRelativeButton.OnTrue(frc2::cmd::Run([&] {m_drive.SetFieldRelative();}, {&m_drive}));
   slowButton.ToggleOnTrue(SlowDrive{&m_drive, &m_driveController}.ToPtr());
   intakeButton.WhileTrue(SimpleIntake{&m_intake}.ToPtr());
-  shooterButton.WhileTrue(frc2::cmd::Run([&] {m_shooter.SetMotorPower(1.0);}, {&m_shooter}));
-  }
+}
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
   
