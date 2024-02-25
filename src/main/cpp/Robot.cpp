@@ -15,7 +15,7 @@
  * we decide on adding new features
  * 
  * TODO: Shortlist
- *    TODO: Convert command facorys to custom commands
+ *    DONE: Convert command facorys to custom commands
  * 
  * TODO: Create Pathplanner Auto
  *    VERIFY: Fix Gear ratios
@@ -54,7 +54,7 @@
  * 
  * TODO: Create custom Command for shooting
  *    TODO: Create Auto aim/shoot command
- *      TODO: Learn how to make a command/what type
+ *      DONE: Learn how to make a command/what type
  *      TODO: Collect data on shooter to figure out what angle our shooter needs to be at for shooting
  *      TODO: Use data to auto aim
  *      TODO: Use sensor data to determine when to shoot note
@@ -68,10 +68,10 @@
  *        DONE: add method to get translation, not only distance, from goal
  *      DONE: With new distnace, re-calculate process until within an accepted error - iffy, only really works with short difference in shoot time.
  *      STARTED: With final distance, grab angle/speed of shooter and set it to subsystems
- *      TODO: Rumble/automaticly shoot when good
+ *      DONE: Rumble/automaticly shoot when good
  *      TODO: Able to set speed and angle early, but only rotate robot when almost ready to shoot to keep our options open
- *      TODO: Add M2etond to DriveSubsystem to still move using controller inputs, but stay at a commanded angle
- *      TODO: Add method to see if the pid controlle for the rotation of the robot is at the correct location
+ *      DONE: Add M2etond to DriveSubsystem to still move using controller inputs, but stay at a commanded angle
+ *      DONE: Add method to see if the pid controlle for the rotation of the robot is at the correct location
  * 
  * TODO: Improvements
  *    DONE: Work on fixing the abolute encoder problem with the swerve
