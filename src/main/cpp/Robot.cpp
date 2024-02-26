@@ -14,16 +14,13 @@
  * List of items need to be compleated, list may change or be amended as 
  * we decide on adding new features
  * 
- * TODO: Shortlist
- *    DONE: Convert command facorys to custom commands
- * 
  * TODO: Create Pathplanner Auto
  *    VERIFY: Fix Gear ratios
  *    TODO: Tune PID controller for accurate positioning
  *    TODO: Regester Command for auto
  *    TODO: Create Autos using commands
  * 
- * VERIFY: Create Apriltag recongition system
+ * VERIFY: Create Apriltag recongition system 
  *    DONE: Finalize camera location/configuatoin
  *    DONE: Create reference list for apriltag positions on fiels / Pull information about apriltag position
  *    DONE: Transform apriltag Pose2d to get field relative robot position
@@ -52,6 +49,17 @@
  *      DONE: Drive command
  *    DONE: Create joystick buttons to trigger commands
  * 
+ * TODO: Other Commands
+ *    TODO: Standard Shoot
+ *    TODO: Pathfind to Pose
+ *    TODO: Shoot into Amp
+ * 
+ * TODO: Add Saftey Feautres
+ *    TODO: linear Acturator
+ *      TODO: Limit Switches?
+ *      TODO: position limit?
+ *      TODO: amp draw?
+ * 
  * TODO: Create custom Command for shooting
  *    TODO: Create Auto aim/shoot command
  *      DONE: Learn how to make a command/what type
@@ -72,6 +80,7 @@
  *      TODO: Able to set speed and angle early, but only rotate robot when almost ready to shoot to keep our options open
  *      DONE: Add M2etond to DriveSubsystem to still move using controller inputs, but stay at a commanded angle
  *      DONE: Add method to see if the pid controlle for the rotation of the robot is at the correct location
+ *      TODO: Convert from time to acceptiable distance, so it is based on speed
  * 
  * TODO: Improvements
  *    DONE: Work on fixing the abolute encoder problem with the swerve

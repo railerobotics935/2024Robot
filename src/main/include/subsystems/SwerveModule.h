@@ -20,7 +20,7 @@
 #include <rev/SparkRelativeEncoder.h>               // for closed-loop control on Spark MAX
 
 #include "rev/CANSparkMax.h"
-#include "rev/SparkMaxAnalogSensor.h"
+#include "rev/SparkAnalogSensor.h"
 
 #include "Constants.h"
 

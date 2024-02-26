@@ -18,9 +18,9 @@ void SlowDrive::Initialize() {
 
 void SlowDrive::Execute() {
   // Main execute loop that runs during the command
-  const auto xSpeed = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveLeftYIndex), 0.05) * 0.25;
-  const auto ySpeed = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveLeftXIndex), 0.05) * 0.25;
-  const auto rot = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveRightXIndex), 0.05) * 0.25;
+  const auto xSpeed = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveLeftYIndex), 0.05) * 0.50;
+  const auto ySpeed = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveLeftXIndex), 0.05) * 0.50;
+  const auto rot = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveRightXIndex), 0.05) * 0.50;
   
   m_drive->Drive(units::meters_per_second_t{MathUtils::SignedSquare(xSpeed)},
     units::meters_per_second_t{MathUtils::SignedSquare(ySpeed)},

@@ -2,6 +2,8 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+#pragma once
+
 #include <numbers>
 
 #include <frc/geometry/Translation2d.h>
@@ -18,9 +20,6 @@
 #include <frc/geometry/Pose3d.h>
 #include <frc/apriltag/AprilTagFields.h>
 #include <rev/CANSparkMax.h>
-
-
-#pragma once
 
 // Turn this off when there is no new constants need to be burned onto motorcontrollers
 #define BURNSPARKMAX 
@@ -151,13 +150,13 @@ constexpr auto kModuleMaxLinearVelocity = 4.45_mps;
 namespace IntakeConstants {
 // Intake motor 
 constexpr int kMotorID = 24;
-constexpr rev::CANSparkMaxLowLevel::MotorType kMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
+constexpr rev::CANSparkLowLevel::MotorType kMotorType = rev::CANSparkLowLevel::MotorType::kBrushless;
 } // namespace IntakeConstants
 
 namespace StagerConstants {
 // Stager motor
 constexpr int kMotorID = 9;
-constexpr rev::CANSparkMaxLowLevel::MotorType kMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
+constexpr rev::CANSparkLowLevel::MotorType kMotorType = rev::CANSparkLowLevel::MotorType::kBrushless;
 } // namespace StagerConstants
 
 namespace ShooterConstants {
@@ -165,9 +164,9 @@ namespace ShooterConstants {
 constexpr int kShooterID = 27;
 constexpr int kFollowerID = 28;
 constexpr int kPitchID = 29;
-constexpr rev::CANSparkMaxLowLevel::MotorType kShooterMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
-constexpr rev::CANSparkMaxLowLevel::MotorType kFollowerMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
-constexpr rev::CANSparkMaxLowLevel::MotorType kPitchMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
+constexpr rev::CANSparkLowLevel::MotorType kShooterMotorType = rev::CANSparkLowLevel::MotorType::kBrushless;
+constexpr rev::CANSparkLowLevel::MotorType kFollowerMotorType = rev::CANSparkLowLevel::MotorType::kBrushless;
+constexpr rev::CANSparkLowLevel::MotorType kPitchMotorType = rev::CANSparkLowLevel::MotorType::kBrushless;
 
 // Calculations required for driving motor conversion factors and feed forward
 constexpr double kShooterMotorFreeSpeedRps =
@@ -208,8 +207,8 @@ namespace ElevatorConstants {
 // Elevator motor 
 constexpr int kElevatorID = 6;
 constexpr int kFollowerID = 5;
-constexpr rev::CANSparkMaxLowLevel::MotorType kElevatorMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
-constexpr rev::CANSparkMaxLowLevel::MotorType kFollowerMotorType = rev::CANSparkMaxLowLevel::MotorType::kBrushless;
+constexpr rev::CANSparkLowLevel::MotorType kElevatorMotorType = rev::CANSparkLowLevel::MotorType::kBrushless;
+constexpr rev::CANSparkLowLevel::MotorType kFollowerMotorType = rev::CANSparkLowLevel::MotorType::kBrushless;
 
 // Calculations required for driving motor conversion factors and feed forward
 constexpr double kElevatorMotorFreeSpeedRps =
@@ -251,7 +250,7 @@ constexpr double kDRotationController = 0.0; // 0.0
 
 namespace ControllerConstants {
 
-// Controller Constants for the flight elite drive controller
+// Controller Constants for X Box Controllers
 
 // Axis indexes
 constexpr int kDriveLeftYIndex = 1; // An input UP creates a NEGATIVE output
@@ -298,7 +297,7 @@ namespace BackCamera {
 
 } // namespace CameraConstants
 
-namespace DataCurve {
+namespace ShootingCalculations {
   /**
    * @param distance The distance from the goal to the robot
    * 

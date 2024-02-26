@@ -28,16 +28,14 @@ void ShootWhileMoving::Execute() {
   double dynamicTargetDistance = 0.0;
 
   // Robot Velocity and Acceleration
-  double robot_vx = 0.0;
-  double robot_vy = 0.0;
-  double robot_ax = 0.0;
-  double robot_ay = 0.0;
+  double robot_vx = m_drive->GetFieldRelativeSpeeds().vx();
+  double robot_vy = m_drive->GetFieldRelativeSpeeds().vy();
 
   // Robot Time
-  double shootingTime = DataCurve::GetTimeFromDistnace(robotToGoalDistance);
+  double shootingTime = ShootingCalculations::GetTimeFromDistnace(robotToGoalDistance);
 
   // For loop for iterations and getting more accurate mesurements
-  for (int i = 0; i < 5; i++) {
+  for (int i = 0; i < 3; i++) {
     
     // Calculate the moving goal x and y
     // Right now it is not using acceleration becasue there is no limit on max velocity
@@ -52,9 +50,10 @@ void ShootWhileMoving::Execute() {
 
     // Get the new shot time based on the distance of the new 
     dynamicTargetDistance = MathUtils::RobotDistanceToGoal({robotToDynamicTargetTranslation, frc::Rotation2d{}});
-    double newShootingTime = DataCurve::GetTimeFromDistnace(dynamicTargetDistance);
+    double newShootingTime = ShootingCalculations::GetTimeFromDistnace(dynamicTargetDistance);
 
     // If the difference in shoot times is close enough, end the iterations
+    // TODO: Convert from time to acceptiable distance, so it is based on speed
     if (fabs(newShootingTime - shootingTime) <= 0.010) {
       i = 4; // This will end the iterations
     }
@@ -65,8 +64,8 @@ void ShootWhileMoving::Execute() {
   } // for loop
 
   // Set subsystems to location
-  m_shooter->SetShooterAngle((units::radian_t)DataCurve::GetAngleFromDistance(dynamicTargetDistance));
-  m_shooter->SetShooterSpeed((units::revolutions_per_minute_t)DataCurve::GetSpeedFromDistance(dynamicTargetDistance));
+  m_shooter->SetShooterAngle((units::radian_t)ShootingCalculations::GetAngleFromDistance(dynamicTargetDistance));
+  m_shooter->SetShooterSpeed((units::revolutions_per_minute_t)ShootingCalculations::GetSpeedFromDistance(dynamicTargetDistance));
 
   // Get x and y speed from controller
   const auto xSpeed = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveLeftYIndex), 0.05);

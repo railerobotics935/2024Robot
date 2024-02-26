@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <vector>
+#include <cmath>
 #include <frc/geometry/Rotation2d.h>
 #include <units/angle.h>
 #include <units/angular_velocity.h>
@@ -442,13 +443,15 @@ frc::ChassisSpeeds DriveSubsystem::GetRobotRelativeSpeeds()
                                            m_backRight.GetState());
 }
 
-// This needs to be changed
 frc::ChassisSpeeds DriveSubsystem::GetFieldRelativeSpeeds()
 {
-  return m_driveKinematics.ToChassisSpeeds(m_frontLeft.GetState(), 
-                                           m_frontRight.GetState(),
-                                           m_backLeft.GetState(),
-                                           m_backRight.GetState());
+  return frc::ChassisSpeeds{(units::meters_per_second_t)((GetRobotRelativeSpeeds().vx() * std::cos((double)GetPose().Rotation().Radians())) + // Vx componet from the robot X velocity
+                                                         (GetRobotRelativeSpeeds().vy() * std::cos((double)GetPose().Rotation().Radians() + (std::numbers::pi/2)))), // Vx componet from the robot Y velocity
+
+                            (units::meters_per_second_t)((GetRobotRelativeSpeeds().vy() * std::sin((double)GetPose().Rotation().Radians() + (std::numbers::pi/2))) + // Vx componet from the robot X velocity
+                                                         (GetRobotRelativeSpeeds().vx() * std::sin((double)GetPose().Rotation().Radians()))), // Vx componet from the robot Y velocity
+
+                            (units::radians_per_second_t)GetRobotRelativeSpeeds().omega()}; // Rotational Velocity stays the same
 }
 
 

@@ -1,7 +1,7 @@
 
 #include "Constants.h"
 
-namespace DataCurve {
+namespace ShootingCalculations {
   
   // Pute equations for each here
   double GetAngleFromDistance(double distance) {
