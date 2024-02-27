@@ -69,18 +69,18 @@
  *    TODO: check location
  *      TODO: Use Pose/camera to deterime correct position
  *    TODO: Shoot While moving
- *      TODO: Math util to get robot velocity and acceleration (maybe)
+ *      DONE: Math util to get robot velocity and acceleration (maybe)
  *      DONE: Look up time based on speed of shooter (we want as high of a speed as possible)
- *      TODO: use time to calculate translation of robot based on velocity and acceleration
+ *      DONE: use time to calculate translation of robot based on velocity and acceleration
  *      DONE: Add translation of robot in the future to current translation of the goal
  *        DONE: add method to get translation, not only distance, from goal
  *      DONE: With new distnace, re-calculate process until within an accepted error - iffy, only really works with short difference in shoot time.
- *      STARTED: With final distance, grab angle/speed of shooter and set it to subsystems
+ *      DONE: With final distance, grab angle/speed of shooter and set it to subsystems
  *      DONE: Rumble/automaticly shoot when good
  *      TODO: Able to set speed and angle early, but only rotate robot when almost ready to shoot to keep our options open
  *      DONE: Add M2etond to DriveSubsystem to still move using controller inputs, but stay at a commanded angle
  *      DONE: Add method to see if the pid controlle for the rotation of the robot is at the correct location
- *      TODO: Convert from time to acceptiable distance, so it is based on speed
+ *      DONE: Convert from time to acceptiable distance, so it is based on speed
  * 
  * TODO: Improvements
  *    DONE: Work on fixing the abolute encoder problem with the swerve

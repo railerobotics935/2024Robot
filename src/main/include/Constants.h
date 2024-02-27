@@ -33,6 +33,12 @@
  * they are needed.
  */
 
+namespace GameConstants {
+  // Constants to hold game peices constatns or 
+  constexpr units::meter_t kSpeakerGoalWidth = 1.051052_m; // in meters
+  constexpr units::meter_t kNoteOutsideDiameter = 0.3556_m; // in meters
+}
+
 namespace RobotConstants {
 
 const units::meter_t kIntakeSideWidth =

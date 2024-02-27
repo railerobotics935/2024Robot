@@ -55,7 +55,7 @@ void ShootWhileMoving::Execute() {
     // If the difference in shoot times is close enough, end the iterations
     // TODO: Convert from time to acceptiable distance, so it is based on speed
     if (fabs(newShootingTime - shootingTime) <= 0.010) {
-      i = 4; // This will end the iterations
+      i = 2; // This will end the iterations
     }
     
     // Set the shooting time to the new shooting time for the next iteration.
