@@ -77,10 +77,10 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton intakeButton(&m_operatorController, ControllerConstants::kIntakeButtonIndex); // Creates a new JoystickButton object for the intake button on Operator Controller 
   frc2::JoystickButton shooterButton(&m_operatorController, ControllerConstants::kShooterButtonIndex); // Creates a new JoystickButton object for the shoot button on Operator Controller 
   
-  // I don't exactly know why this works, but the documentation for command based c++ is kind of bad 
-  resetButton.OnTrue(frc2::cmd::Run([&] {m_drive.ZeroHeading();}, {&m_drive}));
-  robotRelativeButton.OnTrue(frc2::cmd::Run([&] {m_drive.SetRobotRelative();}, {&m_drive}));
-  fieldRelativeButton.OnTrue(frc2::cmd::Run([&] {m_drive.SetFieldRelative();}, {&m_drive}));
+  // I don't exactly know why this works, but the documentation for command based c++ is kind of b-ad 
+  resetButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.ZeroHeading();}, {}));
+  robotRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetRobotRelative();}, {}));
+  fieldRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetFieldRelative();}, {}));
   slowButton.ToggleOnTrue(SlowDrive{&m_drive, &m_driveController}.ToPtr());
   intakeButton.WhileTrue(SimpleIntake{&m_intake}.ToPtr());
 }

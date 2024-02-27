@@ -99,4 +99,5 @@ void ShootWhileMoving::End(bool interrupted) {
   m_shooter->SetShooterSpeed((units::revolutions_per_minute_t)0.0);
   m_opController->SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
   m_driveController->SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
+  m_drive->Drive((units::meters_per_second_t)0.0, (units::meters_per_second_t)0.0, (units::radians_per_second_t)0.0, true);
 }

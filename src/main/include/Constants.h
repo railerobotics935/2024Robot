@@ -49,8 +49,8 @@ namespace DriveConstants {
 constexpr units::meters_per_second_t kMaxSpeed = 4.0_mps;
 constexpr units::radians_per_second_t kMaxAngularSpeed{1.25 * std::numbers::pi};
 
-constexpr double kDirectionSlewRate = 4.0;   // radians per second
-constexpr double kMagnitudeSlewRate = 2.0;   // percent per second (1 = 100%)
+constexpr double kDirectionSlewRate = 6.0;   // radians per second
+constexpr double kMagnitudeSlewRate = 3.0;   // percent per second (1 = 100%)
 constexpr double kRotationalSlewRate = 4.0;  // percent per second (1 = 100%)
 
 // CAN Sparkmax id numbers
@@ -251,6 +251,26 @@ constexpr double kDRotationController = 0.0; // 0.0
 namespace ControllerConstants {
 
 // Controller Constants for X Box Controllers
+/**
+ * BUTTONS
+ * A button - 1
+ * B button - 2
+ * X button - 3
+ * Y button - 4
+ * Left Bumper - 5
+ * Right Bumper - 6
+ * Center Left Button - 7
+ * Center Right Button - 8
+ * Left Joystick Button - 9
+ * Right Joystick Button - 10
+ * AXES
+ * Left x-axis - 0, input right creates a positive output
+ * Left y-axis - 1, input down creates a positive output
+ * Left Trigger - 2, input in creates a positive output
+ * Right Trigger - 3, input in creates a positive output
+ * Right x-axis - 4, input right creates a positive output
+ * Right y-axis - 5, input down creates a positive output
+*/
 
 // Axis indexes
 constexpr int kDriveLeftYIndex = 1; // An input UP creates a NEGATIVE output
@@ -268,9 +288,9 @@ constexpr int kFastStateButtonIndex = 1; // A
 constexpr int kResetGyroButtonIndex = 2; // B
 
 // Operator controller 
-constexpr int kIntakeButtonIndex = 8; // RT
-constexpr int kOuttakeButtonIndex = 7; // LT
-constexpr int kShooterButtonIndex = 5; // LB
+constexpr int kIntakeButtonIndex = 6; // RB
+constexpr int kOuttakeButtonIndex = 5; // LB
+constexpr int kShooterButtonIndex = 4; // Y
 } // namespace ControllerConstants
 
 namespace OIConstants {

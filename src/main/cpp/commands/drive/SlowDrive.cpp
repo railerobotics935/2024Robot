@@ -36,4 +36,5 @@ bool SlowDrive::IsFinished() {
 void SlowDrive::End(bool interupted) {
   // Runs once when the command is removed from the command scheduler
   printf("SlowDrive ended\r\n");
+  m_drive->Drive((units::meters_per_second_t)0.0, (units::meters_per_second_t)0.0, (units::radians_per_second_t)0.0, true);
 }
