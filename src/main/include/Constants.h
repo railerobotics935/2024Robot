@@ -37,6 +37,10 @@ namespace GameConstants {
   // Constants to hold game peices constatns or 
   constexpr units::meter_t kSpeakerGoalWidth = 1.051052_m; // in meters
   constexpr units::meter_t kNoteOutsideDiameter = 0.3556_m; // in meters
+
+  constexpr frc::Pose2d kRobotPoseForBlueAmp = {(units::meter_t)1.8415, (units::meter_t)8.2042, (units::radian_t)1.5 * std::numbers::pi}; // tag 6
+  constexpr frc::Pose2d kRobotPoseForRedAmp = {(units::meter_t)14.700758, (units::meter_t)8.2042, (units::radian_t)1.5 * std::numbers::pi}; // tag 5
+  
 }
 
 namespace RobotConstants {
