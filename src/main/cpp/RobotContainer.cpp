@@ -57,15 +57,9 @@ RobotContainer::RobotContainer() {
   m_autoChooser.SetDefaultOption("Trapezoid Test", m_trapezoidTest);
   m_autoChooser.AddOption("Forward 1m", m_forward1m);
   m_autoChooser.AddOption("Left 1m", m_left1m);
-  m_autoChooser.AddOption("Other Auto", m_circleAuto);
-  m_autoChooser.AddOption("Figure8", m_figure8);
-  m_autoChooser.AddOption("TokyoDrift", m_tokyoDrift);
-  m_autoChooser.AddOption("Pietro", m_pietro);
-  m_autoChooser.AddOption("Egg", m_egg);
-  m_autoChooser.AddOption("8", m_8);
+  m_autoChooser.AddOption("Test Intake", m_testIntake);
 
   frc::Shuffleboard::GetTab("Autonomous").Add(m_autoChooser);
-
 }
 
 void RobotContainer::ConfigureButtonBindings() {
