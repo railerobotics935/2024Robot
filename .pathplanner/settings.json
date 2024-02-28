@@ -1,6 +1,6 @@
 {
-  "robotWidth": 1.085,
-  "robotLength": 0.775,
+  "robotWidth": 0.83,
+  "robotLength": 0.5,
   "holonomicMode": true,
   "pathFolders": [
     "Practice"

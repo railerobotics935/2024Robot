@@ -59,14 +59,9 @@ class RobotContainer {
   frc::SendableChooser<std::string> m_autoChooser;
 
   // Auto options coresponding to the name of the autos                                             
-  std::string m_figure8 = "Figure8";
-  std::string m_circleAuto = "OtherAuto";
   std::string m_forward1m = "Forward1m";
   std::string m_left1m = "Left1m";
-  std::string m_tokyoDrift = "TokyoDrift";
-  std::string m_pietro = "Pietro";
-  std::string m_egg = "Egg";
-  std::string m_8 = "8";
   std::string m_trapezoidTest = "TrapazoidTest";
+  std::string m_testIntake = "TestIntake";
 
 };
