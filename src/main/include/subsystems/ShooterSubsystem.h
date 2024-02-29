@@ -18,7 +18,12 @@
 
 class ShooterSubsystem : public frc2::SubsystemBase {
  public:
-  ShooterSubsystem();
+ /**
+  * 
+  * 
+  * @param shooterAngleOffset // Angle offset for the pitch encoder
+ */
+  ShooterSubsystem(double shooterAngleOffset);
 
   /**
    * Will be called periodically whenever the CommandScheduler runs.
@@ -28,6 +33,10 @@ class ShooterSubsystem : public frc2::SubsystemBase {
   //Sets the motor's power (between -1.0 and 1.0).
   void SetShooterMotorPower(double power);
 
+  /**
+   * DO NOT SET FULL SPEED TO THIS
+  */
+  void SetPitchMotorPower(double power); 
   /**
    * Sets the Shooter angle using closed loop control on the SparkMax
    * 
@@ -41,6 +50,11 @@ class ShooterSubsystem : public frc2::SubsystemBase {
    * @param speed The desired speed in radians per second
   */
   void SetShooterSpeed(units::revolutions_per_minute_t speed);
+
+  /**
+   * Takes values from NT to set speed and position of the shooter
+  */
+  void ManualNteShoot();
 
   /**
    * Gets if the PID Controller is at the setpoint
@@ -57,8 +71,8 @@ class ShooterSubsystem : public frc2::SubsystemBase {
   bool AtSpeedSetpoint();
 
  private:
-  // Components (e.g. motor controllers and sensors) should generally be
-  // declared private and exposed only through public methods.
+  // Local copy of arguments
+  double m_shooterAngleOffset = 0.0;
 
   // Networktable entries
   nt::NetworkTableEntry nte_shooterSpeed;
@@ -66,6 +80,8 @@ class ShooterSubsystem : public frc2::SubsystemBase {
   nt::NetworkTableEntry nte_shooterSetpoint;
   nt::NetworkTableEntry nte_pitchAngle;
   nt::NetworkTableEntry nte_pitchSetpoint;
+  nt::NetworkTableEntry nte_setpointSpeedRPM;
+  nt::NetworkTableEntry nte_setpointAngleRadians;
 
   // Motor Controllers
   rev::CANSparkMax m_shooterMotor;

@@ -165,8 +165,9 @@ constexpr rev::CANSparkLowLevel::MotorType kMotorType = rev::CANSparkLowLevel::M
 } // namespace IntakeConstants
 
 namespace StagerConstants {
-// Stager motor
-constexpr int kMotorID = 9;
+// Stager motornm
+constexpr int kMotorID = 25;
+constexpr int kFollowerID = 26;
 constexpr rev::CANSparkLowLevel::MotorType kMotorType = rev::CANSparkLowLevel::MotorType::kBrushless;
 } // namespace StagerConstants
 
@@ -184,7 +185,7 @@ constexpr double kShooterMotorFreeSpeedRps =
     5676.0 / 60;  // NEO free speed is 5676 RPM
 
 // Setup conversion factor for shooter encoders
-constexpr double kShooterGearboxRatio = 1.0;
+constexpr double kShooterGearboxRatio = 0.5; // Large gear is 36T smaller is 18T
 constexpr double kShooterPositionFactor = 1 / kShooterGearboxRatio; // revolutions
 constexpr double kShooterEncoderVelocityFactor = kShooterPositionFactor;  // revolutions per minute
 
@@ -193,7 +194,7 @@ constexpr double kPitchPositionFactor = (std::numbers::pi * 2); // radians
 constexpr double kPitchEncoderVelocityFactor = (2 * std::numbers::pi) / 60.0; // radians per second
 
 // PID Constants for the speed of the shooter
-constexpr double kShooterP = 1.0; 
+constexpr double kShooterP = 0.05; 
 constexpr double kShooterI = 0.0; 
 constexpr double kShooterD = 0.0; 
 constexpr double kShooterFF = 1.0 / kShooterMotorFreeSpeedRps;
@@ -207,6 +208,9 @@ constexpr double kPitchD = 0.0;
 constexpr double kPitchFF = 0.0;
 constexpr double kPitchMin = -1.0;
 constexpr double kPitchMax = 1.0;
+
+// Offset for the pitch
+constexpr double kPitchOffset = 0.0;
 
 constexpr units::ampere_t kShooterMotorCurrentLimit = 50_A;
 constexpr units::ampere_t kFollowerMotorCurrentLimit = 50_A;
@@ -274,6 +278,7 @@ namespace ControllerConstants {
  * Center Right Button - 8
  * Left Joystick Button - 9
  * Right Joystick Button - 10
+ * 
  * AXES
  * Left x-axis - 0, input right creates a positive output
  * Left y-axis - 1, input down creates a positive output
@@ -290,6 +295,8 @@ constexpr int kDriveRightYIndex = 5; // An input UP creates a NEGATIVE output
 constexpr int kDriveRightXIndex = 4; // An input RIGHT creates a NEGATIVE output
 
 constexpr int kOperatorLeftYIndex = 1; // An input UP creates a NEGATIVE output
+constexpr int kStagerIntakeTrigger = 3; // R Trigger
+constexpr int kStagerOuttakeTrigger = 2; //  L Trigger
 
 // Drive Controller
 constexpr int kFieldRelativeButtonIndex = 7; // CL
@@ -302,6 +309,7 @@ constexpr int kResetGyroButtonIndex = 2; // B
 constexpr int kIntakeButtonIndex = 6; // RB
 constexpr int kOuttakeButtonIndex = 5; // LB
 constexpr int kShooterButtonIndex = 4; // Y
+
 } // namespace ControllerConstants
 
 namespace OIConstants {

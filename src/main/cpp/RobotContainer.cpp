@@ -24,13 +24,18 @@
 #include <pathplanner/lib/commands/PathPlannerAuto.h>
 #include <pathplanner/lib/auto/NamedCommands.h>
 
+#include "commands/drive/DriveWithController.h"
+#include "commands/intake/SimpleIntake.h"
+#include "commands/drive/SlowDrive.h"
+#include "commands/shooter/ManualNteShooter.h"
+
 #include "Constants.h"
 #include "subsystems/DriveSubsystem.h"
 
 using namespace DriveConstants;
 using namespace pathplanner;
 
-RobotContainer::RobotContainer() {
+RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
   // Initialize all of your commands and subsystems here
 
   // Configuring command bindings for pathplanner
@@ -49,8 +54,18 @@ RobotContainer::RobotContainer() {
   m_shooter.SetDefaultCommand(frc2::RunCommand(
     [this] {
       m_shooter.SetShooterAngle((units::radian_t)1.0);
-      m_shooter.SetShooterMotorPower(frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kOperatorLeftYIndex), 0.15));
+      m_shooter.SetShooterMotorPower(frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kOperatorLeftYIndex), 0.05));
+      m_shooter.SetPitchMotorPower(0.25 * frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kDriveRightYIndex), 0.05));
     }, {&m_shooter}
+  ));
+
+  m_stager.SetDefaultCommand(frc2::RunCommand(
+    [this] {
+      if (frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kStagerIntakeTrigger), 0.05) != 0)
+        m_stager.SetMotorPower(-frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kStagerIntakeTrigger), 0.05));
+      else
+        m_stager.SetMotorPower(frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kStagerOuttakeTrigger), 0.05));
+    }, {&m_stager}
   ));
 
   // Add auto name options
@@ -70,13 +85,14 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton slowButton(&m_driveController, ControllerConstants::kSlowStateButtonIndex); 
   frc2::JoystickButton intakeButton(&m_operatorController, ControllerConstants::kIntakeButtonIndex); // Creates a new JoystickButton object for the intake button on Operator Controller 
   frc2::JoystickButton shooterButton(&m_operatorController, ControllerConstants::kShooterButtonIndex); // Creates a new JoystickButton object for the shoot button on Operator Controller 
-  
+
   // I don't exactly know why this works, but the documentation for command based c++ is kind of b-ad 
   resetButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.ZeroHeading();}, {}));
   robotRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetRobotRelative();}, {}));
   fieldRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetFieldRelative();}, {}));
   slowButton.ToggleOnTrue(SlowDrive{&m_drive, &m_driveController}.ToPtr());
   intakeButton.WhileTrue(SimpleIntake{&m_intake}.ToPtr());
+  shooterButton.WhileTrue(ManualNteShooter{&m_shooter, &m_operatorController}.ToPtr());
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {

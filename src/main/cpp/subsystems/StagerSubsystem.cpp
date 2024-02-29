@@ -6,12 +6,24 @@
 #include "Constants.h"
 
 
-StagerSubsystem::StagerSubsystem() : m_stagerMotor{IntakeConstants::kMotorID, IntakeConstants::kMotorType} {
+StagerSubsystem::StagerSubsystem() : m_stagerMotor{StagerConstants::kMotorID, StagerConstants::kMotorType},
+                                     m_stagerFollower{StagerConstants::kFollowerID, StagerConstants::kMotorType}{
   // Implementation of subsystem constructor goes here.
-}
 
-void StagerSubsystem::Periodic() {
-  // Implementation of subsystem periodic method goes here.
+  #ifdef BURNSPARKMAX
+  // Restore to deafaults
+  m_stagerMotor.RestoreFactoryDefaults();
+  m_stagerFollower.RestoreFactoryDefaults();
+
+  // Set follwers and inversted state
+  m_stagerFollower.SetInverted(true);
+
+  printf("Flash Burned on shooter subsystem\r\n");
+  #else
+  printf("Flash was not burned on shooter subsystem\r\n");
+  #endif
+
+  m_stagerFollower.Follow(m_stagerMotor);
 }
 
 void StagerSubsystem::SetMotorPower(double power) {

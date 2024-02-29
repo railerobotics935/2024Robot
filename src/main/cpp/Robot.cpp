@@ -14,6 +14,32 @@
  * List of items need to be compleated, list may change or be amended as 
  * we decide on adding new features
  * 
+ * TODO: Stuff for people to work on (softmores and zoe)
+ *    TODO: Solder
+ *      TODO: Finish soldering extentions for motorcontrollers for shooter (one more)
+ *      TODO: Create a troubleshooting/saftey check guide for eletronics for each eletrical componet/problem
+ *        TODO: ex. Motorcontollers - check can wire, pdp breaker, CAN ID
+ *        TODO: Write it down and store it in a safe place
+ *    TODO: Code
+ *      TODO: Create button bindings for all actions on robot
+ *      TODO: Fix Code for Stager
+ *        TODO: Add a second Motor
+ *        TODO: Make sure the configuration is burned to set follwer and reverse
+ *      TODO: Change max amp draw for swerve drive
+ *        TODO: In Constants.h
+ *        TODO: Deafault is something,
+ *        TODO: Try 40, 30 and 20
+ *        TODO: Write down resutls or make sure Erik sees how the robot behaves
+ *    TODO: Test Robot
+ *      TODO: Drive robot while running the shooter to check battery draw (AFTER FINILIZING MAX AMP DRAW)
+ *      TODO(NOT NOW): Collect date - need cameras for distance from goal
+ * 
+ * 
+ * TODO: Erik is currenly working on
+ *    TODO: Path generation command
+ *    TODO: Tune PID Controllers for shooter parts
+ * 
+ * 
  * TODO: Create Pathplanner Auto
  *    VERIFY: Fix Gear ratios
  *    TODO: Tune PID controller for accurate positioning

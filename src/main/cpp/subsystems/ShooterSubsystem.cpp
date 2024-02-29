@@ -7,10 +7,10 @@
 
 using namespace ShooterConstants;
 
-ShooterSubsystem::ShooterSubsystem() : m_shooterMotor{kShooterID, kShooterMotorType},
+ShooterSubsystem::ShooterSubsystem(double shooterAngleOffset) : m_shooterMotor{kShooterID, kShooterMotorType},
                     m_followerMotor{kFollowerID, kFollowerMotorType},
                     m_pitchMotor{kPitchID, kPitchMotorType}{
-                      
+  
   // Burn flash only if desired - true set in constants
   #ifdef BURNSPARKMAX 
   // Restore deafults
@@ -53,13 +53,16 @@ ShooterSubsystem::ShooterSubsystem() : m_shooterMotor{kShooterID, kShooterMotorT
   m_shooterMotor.BurnFlash();
   m_followerMotor.BurnFlash();
   m_pitchMotor.BurnFlash();
+
+  // Set folower motor
+  m_followerMotor.Follow(m_shooterMotor, true);
+
   printf("Flash Burned on shooter subsystem\r\n");
   #else
   printf("Flash was not burned on shooter subsystem\r\n");
   #endif
 
-  // Set folower motor
-  m_followerMotor.Follow(m_shooterMotor, true);
+  m_shooterAngleOffset = shooterAngleOffset;
 
   // Initialize shuffleboard communication
   auto nt_inst = nt::NetworkTableInstance::GetDefault();
@@ -70,6 +73,12 @@ ShooterSubsystem::ShooterSubsystem() : m_shooterMotor{kShooterID, kShooterMotorT
   nte_shooterSetpoint = nt_table->GetEntry("Shooter Setpoint");
   nte_pitchAngle = nt_table->GetEntry("Pitch Angle");
   nte_pitchSetpoint = nt_table->GetEntry("Pitch Setpoint");
+  nte_setpointSpeedRPM = nt_table->GetEntry("Setpoint Speed in RPM");
+  nte_setpointAngleRadians = nt_table->GetEntry("Setpoint Angle in Radians");
+
+  nte_setpointSpeedRPM.SetDouble(0.0);
+  nte_setpointAngleRadians.SetDouble(0.0);
+
 }
 
 void ShooterSubsystem::Periodic() {
@@ -82,6 +91,16 @@ void ShooterSubsystem::Periodic() {
 void ShooterSubsystem::SetShooterMotorPower(double power) {
   // Sets the motor's power (between -1.0 and 1.0). 
   m_shooterMotor.Set(power);
+}
+
+void ShooterSubsystem::SetPitchMotorPower(double power) {
+  // Sets the motor's power (between -1.0 and 1.0). 
+  m_pitchMotor.Set(power);
+}
+void ShooterSubsystem::ManualNteShoot() {
+  // Set shooter to angle and speed from shuffleboard
+  SetShooterAngle((units::radian_t)nte_setpointAngleRadians.GetDouble(1.0));
+  SetShooterSpeed((units::revolutions_per_minute_t)nte_setpointSpeedRPM.GetDouble(0.0));
 }
 
 void ShooterSubsystem::SetShooterAngle(units::radian_t angle) {

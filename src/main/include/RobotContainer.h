@@ -20,9 +20,7 @@
 #include "subsystems/DriveSubsystem.h"
 #include "subsystems/IntakeSubsystem.h"
 #include "subsystems/ShooterSubsystem.h"
-#include "commands/drive/DriveWithController.h"
-#include "commands/intake/SimpleIntake.h"
-#include "commands/drive/SlowDrive.h"
+#include "subsystems/StagerSubsystem.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -54,6 +52,7 @@ class RobotContainer {
   DriveSubsystem m_drive;
   IntakeSubsystem m_intake;
   ShooterSubsystem m_shooter;
+  StagerSubsystem m_stager;
 
   // Sendable chooser for auto
   frc::SendableChooser<std::string> m_autoChooser;
