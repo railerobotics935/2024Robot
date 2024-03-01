@@ -1,6 +1,8 @@
 
+#include <frc/DriverStation.h>
 
 #include "commands/drive/DriveToAmp.h"
+#include "Constants.h"
 
 DriveToAmp::DriveToAmp(DriveSubsystem* drive) : m_drive{drive} {
   // Add requierments to the command
@@ -8,7 +10,14 @@ DriveToAmp::DriveToAmp(DriveSubsystem* drive) : m_drive{drive} {
 }
 
 void DriveToAmp::Initialize() {
-  // Will probably be used to create path in the moment
+  // Create poses based on robot position and where the goal is
+  if (frc::DriverStation::GetAlliance() == frc::DriverStation::Alliance::kBlue)
+    m_fieldPoses = {m_drive->GetPose(), GameConstants::kRobotPoseForBlueAmp};
+  else
+    m_fieldPoses = {m_drive->GetPose(), GameConstants::kRobotPoseForRedAmp};
+
+  // create bezier points out of them
+  m_bezierPoints = pathplanner::PathPlannerPath::bezierFromPoses(m_fieldPoses);
 }
 
 void DriveToAmp::Execute() {

@@ -21,8 +21,8 @@
 #include <units/velocity.h>
 #include <frc2/command/button/JoystickButton.h>
 
-#include <pathplanner/lib/commands/PathPlannerAuto.h>
-#include <pathplanner/lib/auto/NamedCommands.h>
+#include "pathplanner/lib/commands/PathPlannerAuto.h"
+#include "pathplanner/lib/auto/NamedCommands.h"
 
 #include "commands/drive/DriveWithController.h"
 #include "commands/intake/SimpleIntake.h"

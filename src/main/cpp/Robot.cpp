@@ -23,11 +23,6 @@
  *      DONE: Fix Code for Stager
  *        DONE: Add a second Motor
  *        DONE: Make sure the configuration is burned to set follwer and reverse
- *      TODO: Change max amp draw for swerve drive
- *        TODO: In Constants.h
- *        TODO: Deafault is something,
- *        TODO: Try 40, 30 and 20
- *        TODO: Write down resutls or make sure Erik sees how the robot behaves
  *    TODO: Test Robot
  *      TODO: Drive robot while running the shooter to check battery draw (AFTER FINILIZING MAX AMP DRAW)
  *      TODO(NOT NOW): Collect date - need cameras for distance from goal
@@ -35,7 +30,12 @@
  * 
  * TODO: Erik is currenly working on
  *    TODO: Path generation command
+ *      TODO: Create correct position for robot to path plan to
+ *      TODO: Use path planner libaries to create paths to a specific location
+ *      TODO: have a way to say you are at the correct location
  *    TODO: Tune PID Controllers for shooter parts
+ *      TODO: Figure out correct setting for pid controlelr
+ *    TODO: Create a smart intake command that included a color sensor to stop the note.
  * 
  * 
  * TODO: Create Pathplanner Auto

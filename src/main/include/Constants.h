@@ -23,7 +23,7 @@
 
 // Turn this off when there is no new constants need to be burned onto motorcontrollers
 //#define BURNSHOOTERSPARKMAX 
-//#define BURNSTAGERSPARKMAX
+#define BURNSTAGERSPARKMAX
 //#define BURNMODULESPARKMAX
 
 /**
@@ -41,8 +41,8 @@ namespace GameConstants {
   constexpr units::meter_t kNoteOutsideDiameter = 0.3556_m; // in meters
 
   // Goal Position for the robot
-  constexpr frc::Pose2d kRobotPoseForBlueAmp = {(units::meter_t)1.8415, (units::meter_t)7.2042, (units::radian_t)1.5 * std::numbers::pi}; // tag 6 minus one 
-  constexpr frc::Pose2d kRobotPoseForRedAmp = {(units::meter_t)14.700758, (units::meter_t)7.2042, (units::radian_t)1.5 * std::numbers::pi}; // tag 5
+  constexpr frc::Pose2d kRobotPoseForBlueAmp = {(units::meter_t)1.8415, (units::meter_t)7.2042, (units::radian_t)1.5 * std::numbers::pi}; // tag 6 minus one meter
+  constexpr frc::Pose2d kRobotPoseForRedAmp = {(units::meter_t)14.700758, (units::meter_t)7.2042, (units::radian_t)1.5 * std::numbers::pi}; // tag 5 minus one meter
   
 }
 
@@ -153,7 +153,7 @@ constexpr double kTurningMaxOutput = 1;
 constexpr rev::CANSparkMax::IdleMode kDrivingMotorIdleMode =  rev::CANSparkMax::IdleMode::kBrake;
 constexpr rev::CANSparkMax::IdleMode kTurningMotorIdleMode = rev::CANSparkMax::IdleMode::kBrake;
 
-constexpr units::ampere_t kDrivingMotorCurrentLimit = 50_A;
+constexpr units::ampere_t kDrivingMotorCurrentLimit = 40_A;
 constexpr units::ampere_t kTurningMotorCurrentLimit = 20_A;
 
 constexpr auto kModuleMaxAngularVelocity =  std::numbers::pi * 9_rad_per_s;  // radians per second ?????????
@@ -196,11 +196,11 @@ constexpr double kShooterEncoderVelocityFactor = kShooterPositionFactor;  // rev
 constexpr double kPitchPositionFactor = (std::numbers::pi * 2); // radians
 constexpr double kPitchEncoderVelocityFactor = (2 * std::numbers::pi) / 60.0; // radians per second
 
-// PID Constants for the speed of the shooter
+// PID Constants for the speed of the shooter   RR had  0.0001, 0.0005, 0
 constexpr double kShooterP = 0.05; 
 constexpr double kShooterI = 0.0; 
 constexpr double kShooterD = 0.0; 
-constexpr double kShooterFF = 1.0 / kShooterMotorFreeSpeedRps;
+constexpr double kShooterFF = 1.0 / kShooterMotorFreeSpeedRps; // and 0.00016
 constexpr double kShooterMin = -1.0;
 constexpr double kShooterMax = 1.0;
 
@@ -215,8 +215,8 @@ constexpr double kPitchMax = 1.0;
 // Offset for the pitch
 constexpr double kPitchOffset = 0.0;
 
-constexpr units::ampere_t kShooterMotorCurrentLimit = 50_A;
-constexpr units::ampere_t kFollowerMotorCurrentLimit = 50_A;
+constexpr units::ampere_t kShooterMotorCurrentLimit = 40_A;
+constexpr units::ampere_t kFollowerMotorCurrentLimit = 40_A;
 constexpr units::ampere_t kPitchMotorCurrentLimit = 20_A;
 
 } // namespace IntakeConstants
@@ -246,8 +246,8 @@ constexpr double kElevatorFF = 0.0;
 constexpr double kElevatorMin = -1.0;
 constexpr double kElevatorMax = 1.0;
 
-constexpr units::ampere_t kElevatorMotorCurrentLimit = 50_A;
-constexpr units::ampere_t kFollowerMotorCurrentLimit = 50_A;
+constexpr units::ampere_t kElevatorMotorCurrentLimit = 40_A;
+constexpr units::ampere_t kFollowerMotorCurrentLimit = 40_A;
 
 } // namespace IntakeConstants
 
