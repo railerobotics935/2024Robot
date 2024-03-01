@@ -31,7 +31,7 @@ class DriveWithController
   void Initialize() override; // Initializes
   void Execute() override; // Main loop that runs
   bool IsFinished() override; // Can sample states to determine if command needs to end
-  void End(bool interupted) override; // Runs once after command is finnished
+  void End(bool interrupted) override; // Runs once after command is finnished
 
  private:
   // Declare private subsystem pointers to refrence real subsystmes

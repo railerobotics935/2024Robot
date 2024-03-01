@@ -12,7 +12,7 @@ ElevatorSubsystem::ElevatorSubsystem() : m_elevatorMotor{kElevatorID, kElevatorM
                                          m_followerMotor{kFollowerID, kFollowerMotorType} {
 
   // Burn flash only if desired - true set in constants
-  #ifdef 0 
+  #ifdef DONT
   // Restore deafults
   m_elevatorMotor.RestoreFactoryDefaults();
   m_followerMotor.RestoreFactoryDefaults();

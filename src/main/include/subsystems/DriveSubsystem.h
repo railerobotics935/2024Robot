@@ -38,8 +38,6 @@ public:
    */
   void Periodic() override;
 
-  // Subsystem methods go here.
-
   /**
    * Drives the robot at given x, y and theta speeds. Speeds range from [-1, 1]
    * and the linear speeds haven the angular speed.
