@@ -22,7 +22,9 @@
 #include <rev/CANSparkMax.h>
 
 // Turn this off when there is no new constants need to be burned onto motorcontrollers
-#define BURNSPARKMAX 
+//#define BURNSHOOTERSPARKMAX 
+//#define BURNSTAGERSPARKMAX
+//#define BURNMODULESPARKMAX
 
 /**
  * The Constants header provides a convenient place for teams to hold robot-wide
@@ -52,6 +54,7 @@ const units::meter_t kShooterSideWidth =
   0.370_m;  // Distance between centers of right and left wheels on robot
 const units::meter_t kWheelBase =
   0.500_m;  // Distance between centers of front and back wheels on robot
+
 }
 
 namespace DriveConstants {
@@ -322,17 +325,24 @@ namespace CameraConstats {
 // Pose3d/transformation2d of the camera relative to the robot
 // X if forward, Y is Left, Z is up 
 namespace FrontCamera {
-    const frc::Translation3d kTranlation3d{(units::meter_t)0.2286, (units::meter_t)0.0, (units::meter_t)0.1651};
-    const frc::Rotation3d kRotation3d{(units::radian_t)0.0, (units::radian_t)0.0, (units::radian_t)0.0};
+    const frc::Translation3d kTranlation3d{(units::meter_t)0.250, (units::meter_t)-0.185, (units::meter_t)0.2286};
+    const frc::Rotation3d kRotation3d{(units::radian_t)0.0, (units::radian_t)std::numbers::pi / 12.0, (units::radian_t)std::numbers::pi / 2.0};
     const frc::Pose3d kPose3d{kTranlation3d, kRotation3d};
 } // namespace FrontCamera
 
-namespace BackCamera {
-    const frc::Translation3d kTranlation3d{(units::meter_t)-0.2667, -(units::meter_t)0.0, (units::meter_t)0.0635};
-    const frc::Rotation3d kRotation3d{(units::radian_t)0.0, (units::radian_t)0.0, (units::radian_t)std::numbers::pi};
-    const frc::Pose3d kPose3d{kTranlation3d, kRotation3d};
-} // namespace BackCamera
+namespace BackLeftCamera {
+    const frc::Translation3d kTranlation3d{(units::meter_t)-0.250, -(units::meter_t)0.4125, (units::meter_t)0.2286};
+    const frc::Rotation3d kYawRotation3d{(units::radian_t)0.0, (units::radian_t)0.0, (units::radian_t)std::numbers::pi * 1.75};
+    const frc::Rotation3d kPitchRotation3d{(units::radian_t)0.0, (units::radian_t)std::numbers::pi / 12, (units::radian_t)0.0};
+    const frc::Pose3d kPose3d{kTranlation3d, kYawRotation3d.operator+(kPitchRotation3d)};
+} // namespace BackLeftCamera
 
+namespace BackRightCamera {
+    const frc::Translation3d kTranlation3d{(units::meter_t)-0.250, -(units::meter_t)-0.4125, (units::meter_t)0.2286};
+    const frc::Rotation3d kYawRotation3d{(units::radian_t)0.0, (units::radian_t)0.0, (units::radian_t)std::numbers::pi * 1.25};
+    const frc::Rotation3d kPitchRotation3d{(units::radian_t)0.0, (units::radian_t)std::numbers::pi / 12, (units::radian_t)0.0};
+    const frc::Pose3d kPose3d{kTranlation3d, kYawRotation3d.operator+(kPitchRotation3d)};
+} // namespace BackRightCamera
 
 } // namespace CameraConstants
 

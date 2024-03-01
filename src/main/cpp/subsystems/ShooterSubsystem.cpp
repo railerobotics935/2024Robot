@@ -12,7 +12,7 @@ ShooterSubsystem::ShooterSubsystem(double shooterAngleOffset) : m_shooterMotor{k
                     m_pitchMotor{kPitchID, kPitchMotorType}{
   
   // Burn flash only if desired - true set in constants
-  #ifdef BURNSPARKMAX 
+  #ifdef BURNSHOOTERSPARKMAX 
   // Restore deafults
   m_shooterMotor.RestoreFactoryDefaults();
   m_followerMotor.RestoreFactoryDefaults();
@@ -21,6 +21,8 @@ ShooterSubsystem::ShooterSubsystem(double shooterAngleOffset) : m_shooterMotor{k
   // Set converstion factors for encoders
   m_shooterEncoder.SetPositionConversionFactor(kShooterPositionFactor);
   m_shooterEncoder.SetVelocityConversionFactor(kShooterEncoderVelocityFactor);
+  m_followerEncoder.SetPositionConversionFactor(kShooterPositionFactor);
+  m_followerEncoder.SetVelocityConversionFactor(kShooterEncoderVelocityFactor);
   m_pitchAbsoluteEncoder.SetPositionConversionFactor(kPitchPositionFactor);
   m_pitchAbsoluteEncoder.SetVelocityConversionFactor(kPitchEncoderVelocityFactor);
 

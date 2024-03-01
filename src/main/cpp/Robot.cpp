@@ -14,17 +14,15 @@
  * List of items need to be compleated, list may change or be amended as 
  * we decide on adding new features
  * 
- * TODO: Stuff for people to work on (softmores and zoe)
- *    TODO: Solder
- *      TODO: Finish soldering extentions for motorcontrollers for shooter (one more)
- *      TODO: Create a troubleshooting/saftey check guide for eletronics for each eletrical componet/problem
- *        TODO: ex. Motorcontollers - check can wire, pdp breaker, CAN ID
- *        TODO: Write it down and store it in a safe place
+ * TODO: Stuff for people to work on (sophomore and zoe)
+ *    TODO: Create a troubleshooting/saftey check guide for eletronics for each eletrical componet/problem
+ *      TODO: ex. Motorcontollers - check can wire, pdp breaker, CAN ID
+ *      TODO: Write it down and store it in a safe place
  *    TODO: Code
- *      TODO: Create button bindings for all actions on robot
- *      TODO: Fix Code for Stager
- *        TODO: Add a second Motor
- *        TODO: Make sure the configuration is burned to set follwer and reverse
+ *      DONE: Create button bindings for all actions on robot
+ *      DONE: Fix Code for Stager
+ *        DONE: Add a second Motor
+ *        DONE: Make sure the configuration is burned to set follwer and reverse
  *      TODO: Change max amp draw for swerve drive
  *        TODO: In Constants.h
  *        TODO: Deafault is something,

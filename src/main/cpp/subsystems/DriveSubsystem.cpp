@@ -472,7 +472,9 @@ void DriveSubsystem::EstimatePoseWithApriltag() {
   for (int tag = 1; tag <= 16; tag++ ) { // Check each tag for each camera
     if (m_frontCameraSensor.TagIsTracked(tag) && m_frontCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
       m_poseEstimator.AddVisionMeasurement(m_frontCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_frontCameraSensor.GetTimestamp(tag));
-    if (m_backCameraSensor.TagIsTracked(tag) && m_backCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
-      m_poseEstimator.AddVisionMeasurement(m_backCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backCameraSensor.GetTimestamp(tag));
+    if (m_backLeftCameraSensor.TagIsTracked(tag) && m_backLeftCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
+      m_poseEstimator.AddVisionMeasurement(m_backLeftCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backLeftCameraSensor.GetTimestamp(tag));
+    if (m_backRightCameraSensor.TagIsTracked(tag) && m_backRightCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
+      m_poseEstimator.AddVisionMeasurement(m_backRightCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backRightCameraSensor.GetTimestamp(tag));
   }
 } 

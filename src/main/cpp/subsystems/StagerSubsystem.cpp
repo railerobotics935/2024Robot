@@ -10,7 +10,7 @@ StagerSubsystem::StagerSubsystem() : m_stagerMotor{StagerConstants::kMotorID, St
                                      m_stagerFollower{StagerConstants::kFollowerID, StagerConstants::kMotorType}{
   // Implementation of subsystem constructor goes here.
 
-  #ifdef BURNSPARKMAX
+  #ifdef BURNSTAGERSPARKMAX
   // Restore to deafaults
   m_stagerMotor.RestoreFactoryDefaults();
   m_stagerFollower.RestoreFactoryDefaults();

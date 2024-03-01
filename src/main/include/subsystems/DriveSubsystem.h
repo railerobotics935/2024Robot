@@ -209,7 +209,8 @@ private:
 
   // Apriltag sensor 
   ApriltagSensor m_frontCameraSensor{"FrontCam", CameraConstats::FrontCamera::kPose3d};
-  ApriltagSensor m_backCameraSensor{"BackCam", CameraConstats::BackCamera::kPose3d};
+  ApriltagSensor m_backLeftCameraSensor{"BackLeftCam", CameraConstats::BackLeftCamera::kPose3d};
+  ApriltagSensor m_backRightCameraSensor{"BackRightCam", CameraConstats::BackRightCamera::kPose3d};
 
   // Odometry class for tracking robot pose
   // 4 defines the number of modules

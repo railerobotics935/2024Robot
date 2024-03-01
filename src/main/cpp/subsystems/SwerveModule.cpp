@@ -17,7 +17,7 @@ SwerveModule::SwerveModule(const int drivingCANId, const int turningCANId,
     : m_drivingSparkMax(drivingCANId, rev::CANSparkMax::MotorType::kBrushless),
       m_turningSparkMax(turningCANId, rev::CANSparkMax::MotorType::kBrushless) {
 
-  #ifdef BURNSPARKMAX 
+  #ifdef BURNMODULESPARKMAX 
   ConfigureSparkMax();
   printf("Flash Burned on Swerve Module\r\n");
   #else
