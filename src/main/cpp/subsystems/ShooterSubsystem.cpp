@@ -18,6 +18,8 @@ ShooterSubsystem::ShooterSubsystem(double shooterAngleOffset) : m_shooterMotor{k
   m_followerMotor.RestoreFactoryDefaults();
   m_pitchMotor.RestoreFactoryDefaults();
 
+  
+
   // Set converstion factors for encoders
   m_shooterEncoder.SetPositionConversionFactor(kShooterPositionFactor);
   m_shooterEncoder.SetVelocityConversionFactor(kShooterEncoderVelocityFactor);
@@ -25,6 +27,8 @@ ShooterSubsystem::ShooterSubsystem(double shooterAngleOffset) : m_shooterMotor{k
   m_followerEncoder.SetVelocityConversionFactor(kShooterEncoderVelocityFactor);
   m_pitchAbsoluteEncoder.SetPositionConversionFactor(kPitchPositionFactor);
   m_pitchAbsoluteEncoder.SetVelocityConversionFactor(kPitchEncoderVelocityFactor);
+
+ // m_shooterPIDController.SetFeedbackDevice(m_shooterEncoder);
 
   // Set the PID Controller to use the duty cycle encoder on the swerve
   // module instead of the built in NEO550 encoder.
@@ -52,9 +56,9 @@ ShooterSubsystem::ShooterSubsystem(double shooterAngleOffset) : m_shooterMotor{k
   m_followerMotor.SetSmartCurrentLimit(kFollowerMotorCurrentLimit.value());
   m_pitchMotor.SetSmartCurrentLimit(kPitchMotorCurrentLimit.value());
 
-  m_shooterMotor.BurnFlash();
-  m_followerMotor.BurnFlash();
-  m_pitchMotor.BurnFlash();
+  //m_shooterMotor.BurnFlash();
+  //m_followerMotor.BurnFlash();
+  //m_pitchMotor.BurnFlash();
 
   // Set folower motor
   m_followerMotor.Follow(m_shooterMotor, true);

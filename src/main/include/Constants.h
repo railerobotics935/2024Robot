@@ -22,8 +22,8 @@
 #include <rev/CANSparkMax.h>
 
 // Turn this off when there is no new constants need to be burned onto motorcontrollers
-//#define BURNSHOOTERSPARKMAX 
-#define BURNSTAGERSPARKMAX
+#define BURNSHOOTERSPARKMAX 
+//#define BURNSTAGERSPARKMAX
 //#define BURNMODULESPARKMAX
 
 /**
@@ -194,13 +194,13 @@ constexpr double kShooterEncoderVelocityFactor = kShooterPositionFactor;  // rev
 
 // Pitch encoder
 constexpr double kPitchPositionFactor = (std::numbers::pi * 2); // radians
-constexpr double kPitchEncoderVelocityFactor = (2 * std::numbers::pi) / 60.0; // radians per second
+constexpr double kPitchEncoderVelocityFactor = (2 * std::numbers::pi); // radians per second
 
 // PID Constants for the speed of the shooter   RR had  0.0001, 0.0005, 0
-constexpr double kShooterP = 0.05; 
-constexpr double kShooterI = 0.0; 
-constexpr double kShooterD = 0.0; 
-constexpr double kShooterFF = 1.0 / kShooterMotorFreeSpeedRps; // and 0.00016
+constexpr double kShooterP = 0.00025;//  0.00025 
+constexpr double kShooterI = 0.00000;//  0.000000 
+constexpr double kShooterD = 0.01;//  0.01 
+constexpr double kShooterFF = 0.000095;//  0.000095 // and 0.00016 Effects steady state error
 constexpr double kShooterMin = -1.0;
 constexpr double kShooterMax = 1.0;
 
