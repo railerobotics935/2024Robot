@@ -99,7 +99,12 @@ void ShooterSubsystem::SetShooterMotorPower(double power) {
 
 void ShooterSubsystem::SetPitchMotorPower(double power) {
   // Sets the motor's power (between -1.0 and 1.0). 
-  m_pitchMotor.Set(power);
+  if (m_pitchAbsoluteEncoder.GetPosition() > kMaxPitchAngle)
+    m_pitchMotor.Set(0.3);
+  else if (m_pitchAbsoluteEncoder.GetPosition() < kMinPitchAngle)
+    m_pitchMotor.Set(-0.3);
+  else
+    m_pitchMotor.Set(power);
 }
 
 double ShooterSubsystem::GetShooterAngle() {
@@ -115,6 +120,10 @@ void ShooterSubsystem::ManualNteShoot() {
 
 void ShooterSubsystem::SetShooterAngle(units::radian_t angle) {
   // Set the setpoint as the input angle
+  if ((double)angle > kMaxPitchAngle)
+    angle = (units::radian_t)kMaxPitchAngle;
+  if ((double)angle < kMinPitchAngle)
+    angle = (units::radian_t)kMinPitchAngle;
   m_pitchPIDController.SetReference((double)angle, rev::CANSparkMax::ControlType::kPosition);
   nte_pitchSetpoint.SetDouble((double)angle);
 }

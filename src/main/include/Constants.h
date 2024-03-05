@@ -209,8 +209,12 @@ constexpr double kPitchP = 0.0;
 constexpr double kPitchI = 0.0;
 constexpr double kPitchD = 0.0;
 constexpr double kPitchFF = 0.0;
-constexpr double kPitchMin = -0.0;
-constexpr double kPitchMax = 0.0;
+constexpr double kPitchMin = -0.5;
+constexpr double kPitchMax = 0.5;
+
+// Limits so the shooter pitch can't be over extened
+constexpr double kMinPitchAngle = 0.55; // Radians
+constexpr double kMaxPitchAngle = 1.25; // Radians
 
 // Offset for the pitch
 constexpr double kPitchOffset = 2.653 - (51.0 * std::numbers::pi/180.0);
