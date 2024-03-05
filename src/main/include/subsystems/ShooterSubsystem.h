@@ -52,6 +52,13 @@ class ShooterSubsystem : public frc2::SubsystemBase {
   void SetShooterSpeed(units::revolutions_per_minute_t speed);
 
   /**
+   * Gets the angle of shooter with the offset accounted for
+   * 
+   * @return The angle of the shooter in radians
+  */
+  double GetShooterAngle();
+  
+  /**
    * Takes values from NT to set speed and position of the shooter
   */
   void ManualNteShoot();

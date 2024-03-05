@@ -19,8 +19,10 @@ StagerSubsystem::StagerSubsystem() : m_stagerMotor{StagerConstants::kMotorID, St
   m_stagerFollower.SetIdleMode(rev::CANSparkBase::IdleMode::kBrake);
   
   // Set follwers and inversted state
-  m_stagerFollower.SetInverted(true);
-  m_stagerFollower.Follow(m_stagerMotor);
+  m_stagerFollower.Follow(m_stagerMotor, true);
+
+  m_stagerMotor.BurnFlash();
+  m_stagerFollower.BurnFlash();
 
   printf("Flash Burned on shooter subsystem\r\n");
   #else

@@ -53,8 +53,7 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
 
   m_shooter.SetDefaultCommand(frc2::RunCommand(
     [this] {
-      m_shooter.SetShooterAngle((units::radian_t)1.0);
-      m_shooter.SetShooterMotorPower(frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kOperatorLeftYIndex), 0.05));
+      m_shooter.SetShooterMotorPower(-frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kOperatorLeftYIndex), 0.05));
       m_shooter.SetPitchMotorPower(0.5 * frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kDriveRightYIndex), 0.05));
     }, {&m_shooter}
   ));

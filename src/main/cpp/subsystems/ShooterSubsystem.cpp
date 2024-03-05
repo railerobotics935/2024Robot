@@ -18,8 +18,6 @@ ShooterSubsystem::ShooterSubsystem(double shooterAngleOffset) : m_shooterMotor{k
   m_followerMotor.RestoreFactoryDefaults();
   m_pitchMotor.RestoreFactoryDefaults();
 
-  
-
   // Set converstion factors for encoders
   m_shooterEncoder.SetPositionConversionFactor(kShooterPositionFactor);
   m_shooterEncoder.SetVelocityConversionFactor(kShooterEncoderVelocityFactor);
@@ -91,7 +89,7 @@ void ShooterSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
   nte_shooterSpeed.SetDouble((double)m_shooterEncoder.GetVelocity());
   nte_followerSpeed.SetDouble((double)m_followerEncoder.GetVelocity());
-  nte_pitchAngle.SetDouble((double)m_pitchAbsoluteEncoder.GetPosition());
+  nte_pitchAngle.SetDouble((double)GetShooterAngle());
 }
 
 void ShooterSubsystem::SetShooterMotorPower(double power) {
@@ -103,6 +101,12 @@ void ShooterSubsystem::SetPitchMotorPower(double power) {
   // Sets the motor's power (between -1.0 and 1.0). 
   m_pitchMotor.Set(power);
 }
+
+double ShooterSubsystem::GetShooterAngle() {
+  return m_pitchAbsoluteEncoder.GetPosition() - m_shooterAngleOffset;
+}
+
+
 void ShooterSubsystem::ManualNteShoot() {
   // Set shooter to angle and speed from shuffleboard
   SetShooterAngle((units::radian_t)nte_setpointAngleRadians.GetDouble(1.0));
@@ -122,7 +126,7 @@ void ShooterSubsystem::SetShooterSpeed(units::revolutions_per_minute_t speed) {
 }
 
 bool ShooterSubsystem::AtAngleSetpoint() {
-  if (abs(nte_pitchSetpoint.GetDouble(1.0) - m_pitchAbsoluteEncoder.GetPosition()) < 0.1) // in radians
+  if (abs(nte_pitchSetpoint.GetDouble(1.0) - GetShooterAngle()) < 0.1) // in radians
     return true;
   else
     return false;
