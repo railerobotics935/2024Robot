@@ -110,11 +110,11 @@ AutoBuilder::configureHolonomic(
   nte_bl_raw_encoder_voltage = nt_table->GetEntry("Swerve Drive/Back Left/Encoder Voltage");
   nte_br_raw_encoder_voltage = nt_table->GetEntry("Swerve Drive/Back Right/Encoder Voltage");
 
-
   nte_gyro_angle = nt_table->GetEntry("Swerve Drive/Gyro Angle");
   nte_robot_x = nt_table->GetEntry("Swerve Drive/Robot X");
   nte_robot_y = nt_table->GetEntry("Swerve Drive/Robot Y");
 
+  nte_robot_distance_to_goal = nt_table->GetEntry("Pose Estimation/Distance to Goal");
   // Send Field to shuffleboard
   frc::Shuffleboard::GetTab("Field").Add(m_field);
 
@@ -470,11 +470,17 @@ void DriveSubsystem::EstimatePoseWithApriltag() {
                 
   // Iterate through each tag, adding it to the pose estimator if it is tracked
   for (int tag = 1; tag <= 16; tag++ ) { // Check each tag for each camera
+
+    // Front Camera
     if (m_frontCameraSensor.TagIsTracked(tag) && m_frontCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
-      m_poseEstimator.AddVisionMeasurement(m_frontCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_frontCameraSensor.GetTimestamp(tag));
+      m_poseEstimator.AddVisionMeasurement(m_frontCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_frontCameraSensor.GetTimestamp(tag), m_frontCameraSensor.GetStandardDeviations(tag));
+
+    // Back Left Camera
     if (m_backLeftCameraSensor.TagIsTracked(tag) && m_backLeftCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
-      m_poseEstimator.AddVisionMeasurement(m_backLeftCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backLeftCameraSensor.GetTimestamp(tag));
+      m_poseEstimator.AddVisionMeasurement(m_backLeftCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backLeftCameraSensor.GetTimestamp(tag), m_backLeftCameraSensor.GetStandardDeviations(tag));
+
+    // Back Right Camera
     if (m_backRightCameraSensor.TagIsTracked(tag) && m_backRightCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
-      m_poseEstimator.AddVisionMeasurement(m_backRightCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backRightCameraSensor.GetTimestamp(tag));
+      m_poseEstimator.AddVisionMeasurement(m_backRightCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backRightCameraSensor.GetTimestamp(tag), m_backRightCameraSensor.GetStandardDeviations(tag));
   }
 } 

@@ -9,6 +9,7 @@
 #include <frc/apriltag/AprilTagFieldLayout.h>
 #include <frc/Filesystem.h>
 #include <wpi/fs.h>
+#include <wpi/array.h>
 
 #include <string.h>
 
@@ -34,6 +35,12 @@ public:
   frc::Pose3d GetFieldRelativePose(int tag);
 
   /**
+   * @param tag the ID number for the apriltag wanted to identify
+   * @return An array of standard deviations scaled by the distance form the shooter
+  */
+  wpi::array<double, 3> GetStandardDeviations(int tag);
+
+  /**
    * @return If the tag is tracked
   */
   bool TagIsTracked(int tag);
@@ -49,6 +56,7 @@ private:
   nt::NetworkTableEntry nte_status[MAX_NUM_TAGS];
   nt::NetworkTableEntry nte_pose[MAX_NUM_TAGS];
   nt::NetworkTableEntry nte_latency;
+  nt::NetworkTableEntry nte_finalLatency;
 
   std::string m_cameraName;
   frc::Pose3d m_cameraPose3d;

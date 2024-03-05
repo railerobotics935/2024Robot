@@ -34,6 +34,10 @@ ApriltagSensor::ApriltagSensor(std::string cameraName, frc::Pose3d cameraPose3d)
   sprintf(s_tableEntryPath, "%s/Latency/Apriltag", m_cameraName.c_str());
   nte_latency = nt_table->GetEntry(s_tableEntryPath);
 
+    // Latency from time camera picks up image to when the pi published the data
+  sprintf(s_tableEntryPath, "%s/Latency/Final", m_cameraName.c_str());
+  nte_finalLatency = nt_table->GetEntry(s_tableEntryPath);
+
 }
 
 frc::Pose3d ApriltagSensor::GetFieldRelativePose(int tag) {
@@ -59,6 +63,18 @@ frc::Pose3d ApriltagSensor::GetFieldRelativePose(int tag) {
   return tagPoseOnField;
 }
 
+wpi::array<double, 3> ApriltagSensor::GetStandardDeviations(int tag) {
+  // Grab Pose3d values in an vector
+  std::vector<double> poseArr = nte_pose[tag].GetDoubleArray(std::vector<double>());
+  
+  // use the raw distance to get the information
+  double standardDeviation = CameraConstants::GetStandardDeviationFromDistance((double)poseArr[2]);
+
+  return wpi::array<double, 3>{standardDeviation, standardDeviation, standardDeviation};
+
+}
+
+
 bool ApriltagSensor::TagIsTracked(int tag) {
   // If tag is traked, return true, else return false
   if (nte_status[tag].GetString("LOST") == "TRACKED")
@@ -68,5 +84,7 @@ bool ApriltagSensor::TagIsTracked(int tag) {
 }
 
 units::second_t ApriltagSensor::GetTimestamp(int tag) {
-  return (units::second_t)(nte_pose[tag].GetLastChange() / 1000000.0) - (units::second_t)nte_latency.GetDouble(360.0);
+  double latency = ((double)nte_pose[tag].GetLastChange() / 1000000.0) - nte_latency.GetDouble(360.0);
+  nte_finalLatency.SetDouble(latency);
+  return (units::second_t)latency;
 }

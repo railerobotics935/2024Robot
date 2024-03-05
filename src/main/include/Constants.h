@@ -324,7 +324,19 @@ constexpr int kDriverControllerPort = 0;
 constexpr int kOperatorControllerPort = 1;
 }  // namespace OIConstants
 
-namespace CameraConstats {
+namespace CameraConstants {
+
+// Min and Max standard deviations for the apriltag detetion 
+constexpr double kMinStandardDeviation = 0.2;
+constexpr double kMaxStandardDeviation = 2.0;
+
+/**
+ * @param distance The raw distance from the apriltag
+ * 
+ * @return The standard deviation value for the distance
+*/
+double GetStandardDeviationFromDistance(double distance);
+
 
 // Pose3d/transformation2d of the camera relative to the robot
 // X if forward, Y is Left, Z is up 

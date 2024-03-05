@@ -18,6 +18,9 @@ void DriveToAmp::Initialize() {
 
   // create bezier points out of them
   m_bezierPoints = pathplanner::PathPlannerPath::bezierFromPoses(m_fieldPoses);
+
+  // I think this step might have to be done manualy, isntead of createing besizer poitns from poses, create them manualy
+  // link to the c++ pathplanner documentation is in the header file
 }
 
 void DriveToAmp::Execute() {

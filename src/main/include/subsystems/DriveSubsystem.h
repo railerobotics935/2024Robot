@@ -206,9 +206,9 @@ private:
   frc::ADIS16470_IMU m_gyro{frc::ADIS16470_IMU::IMUAxis::kZ, frc::ADIS16470_IMU::IMUAxis::kY, frc::ADIS16470_IMU::IMUAxis::kX};
 
   // Apriltag sensor 
-  ApriltagSensor m_frontCameraSensor{"FrontCam", CameraConstats::FrontCamera::kPose3d};
-  ApriltagSensor m_backLeftCameraSensor{"BackLeftCam", CameraConstats::BackLeftCamera::kPose3d};
-  ApriltagSensor m_backRightCameraSensor{"BackRightCam", CameraConstats::BackRightCamera::kPose3d};
+  ApriltagSensor m_frontCameraSensor{"FrontCam", CameraConstants::FrontCamera::kPose3d};
+  ApriltagSensor m_backLeftCameraSensor{"BackLeftCam", CameraConstants::BackLeftCamera::kPose3d};
+  ApriltagSensor m_backRightCameraSensor{"BackRightCam", CameraConstants::BackRightCamera::kPose3d};
 
   // Odometry class for tracking robot pose
   // 4 defines the number of modules

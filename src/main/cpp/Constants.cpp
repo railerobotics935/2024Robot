@@ -1,9 +1,21 @@
 
 #include "Constants.h"
 
+namespace CameraConstants {
+
+  double GetStandardDeviationFromDistance(double distance) {
+    if(distance < 1.0)
+      return kMinStandardDeviation;
+    else if (distance > 3.5)
+      return kMaxStandardDeviation;
+    else
+      return ((distance - 1.0) / 2.5) * (kMaxStandardDeviation - kMinStandardDeviation) + kMinStandardDeviation;
+  }
+}
+
 namespace ShootingCalculations {
   
-  // Pute equations for each here
+  // Put equations for each here
   double GetAngleFromDistance(double distance) {
     return 1.0; // in radians
   }
