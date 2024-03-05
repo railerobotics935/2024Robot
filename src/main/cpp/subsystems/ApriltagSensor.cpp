@@ -74,7 +74,6 @@ wpi::array<double, 3> ApriltagSensor::GetStandardDeviations(int tag) {
 
 }
 
-
 bool ApriltagSensor::TagIsTracked(int tag) {
   // If tag is traked, return true, else return false
   if (nte_status[tag].GetString("LOST") == "TRACKED")
