@@ -18,3 +18,10 @@ void IntakeSubsystem::SetMotorPower(double power) {
   // Sets the motor's power (between -1.0 and 1.0). 
   m_intakeMotor.Set(power);
 }
+
+bool IntakeSubsystem::NoteLoaded() {
+  if (m_colorSensor.GetColor() == frc::Color::kOrange)
+    return true;
+  else 
+    return false;
+}
