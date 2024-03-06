@@ -26,7 +26,7 @@ void ManualNteShooter::Execute() {
 
 void ManualNteShooter::End(bool interrupted) {
   // Reset everything to zero
-  m_shooter->SetShooterAngle((units::radian_t)1.0);
+  m_shooter->SetShooterAngle((units::radian_t)0.8);
   m_shooter->SetShooterMotorPower(0.0);
   m_opController->SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
 }
