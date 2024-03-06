@@ -7,8 +7,8 @@
 
 using namespace ShooterConstants;
 
-ShooterSubsystem::ShooterSubsystem(double shooterAngleOffset) : m_topShooterMotor{kShooterID, kShooterMotorType},
-                    m_bottomShooterMotor{kShooterID, kShooterMotorType},
+ShooterSubsystem::ShooterSubsystem(double shooterAngleOffset) : m_topShooterMotor{kTopShooterID, kShooterMotorType},
+                    m_bottomShooterMotor{kBottomShooterID, kShooterMotorType},
                     m_pitchMotor{kPitchID, kPitchMotorType}{
   
   // Burn flash only if desired - true set in constants

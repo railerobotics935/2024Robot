@@ -84,6 +84,17 @@ bool ApriltagSensor::TagIsTracked(int tag) {
 
 units::second_t ApriltagSensor::GetTimestamp(int tag) {
   double timestamp = ((double)nte_pose[tag].GetLastChange() / 1000000.0) - nte_latency.GetDouble(360.0);
-  nte_finalLatency.SetDouble(((double)frc::Timer::GetFPGATimestamp() / 1000000.0) - timestamp);
+  nte_finalLatency.SetDouble(((double)frc::Timer::GetFPGATimestamp()) - timestamp);
   return (units::second_t)timestamp;
+}
+
+bool ApriltagSensor::HasNewData(int tag) {
+  return true;
+  
+  if (nte_pose[tag].GetLastChange() - m_prevLatency != 0) {
+    m_prevLatency = nte_pose[tag].GetLastChange();
+    return true;
+  }
+  else
+    return false;
 }

@@ -51,6 +51,13 @@ public:
   */
   units::second_t GetTimestamp(int tag);
 
+  /**
+   * Uses the timestamp information to deterime if the camera has new data compared to the last time ran
+   * 
+   * @return True if the camera has new data to process
+  */
+ bool HasNewData(int tag);
+
 private:
   // Declare Network table entrys for apriltag pos
   nt::NetworkTableEntry nte_status[MAX_NUM_TAGS];
@@ -67,4 +74,6 @@ private:
 
   // Field layout to get apriltag pose
   frc::AprilTagFieldLayout m_fieldLayout{deployDirectory.string()};
+
+  int64_t m_prevLatency = 0;
 };

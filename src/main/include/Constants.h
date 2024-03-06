@@ -176,8 +176,8 @@ constexpr rev::CANSparkLowLevel::MotorType kMotorType = rev::CANSparkLowLevel::M
 
 namespace ShooterConstants {
 // Intake motor 
-constexpr int kShooterID = 27;
-constexpr int kBottomID = 28;
+constexpr int kTopShooterID = 27;
+constexpr int kBottomShooterID = 28;
 constexpr int kPitchID = 29;
 constexpr rev::CANSparkLowLevel::MotorType kShooterMotorType = rev::CANSparkLowLevel::MotorType::kBrushless;
 constexpr rev::CANSparkLowLevel::MotorType kBottomMotorType = rev::CANSparkLowLevel::MotorType::kBrushless;
@@ -213,12 +213,12 @@ constexpr double kBottomShooterMin = -1.0;
 constexpr double kBottomShooterMax = 1.0;
 
 // PID Constants for the pitch of shooter
-constexpr double kPitchP = 5.0;
-constexpr double kPitchI = 0.01;
-constexpr double kPitchD = 0.05;
+constexpr double kPitchP = 7.0;
+constexpr double kPitchI = 0.004;
+constexpr double kPitchD = 0.2;
 constexpr double kPitchFF = 0.0;
-constexpr double kPitchMin = -0.7;
-constexpr double kPitchMax = 0.7;
+constexpr double kPitchMin = -0.6;
+constexpr double kPitchMax = 0.6;
 
 // Limits so the shooter pitch can't be over extened
 constexpr double kMinPitchAngle = 0.5; // Radians

@@ -6,10 +6,10 @@ namespace CameraConstants {
   double GetStandardDeviationFromDistance(double distance) {
     if(distance < 1.0)
       return kMinStandardDeviation;
-    else if (distance > 3.5)
+    else if (distance > 10.0)
       return kMaxStandardDeviation;
     else
-      return ((distance - 1.0) / 2.5) * (kMaxStandardDeviation - kMinStandardDeviation) + kMinStandardDeviation;
+      return ((distance - 1.0) / 9.0) * (kMaxStandardDeviation - kMinStandardDeviation) + kMinStandardDeviation;
   }
 }
 
