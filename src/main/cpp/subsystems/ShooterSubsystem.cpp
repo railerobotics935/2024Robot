@@ -25,12 +25,9 @@ ShooterSubsystem::ShooterSubsystem(double shooterAngleOffset) : m_topShooterMoto
   m_bottomShooterEncoder.SetVelocityConversionFactor(kShooterEncoderVelocityFactor);
   m_pitchAbsoluteEncoder.SetPositionConversionFactor(kPitchPositionFactor);
   m_pitchAbsoluteEncoder.SetVelocityConversionFactor(kPitchEncoderVelocityFactor);
-
- // m_topShooterPIDController.SetFeedbackDevice(m_topShooterEncoder);
-
-  // Set the PID Controller to use the duty cycle encoder on the swerve
-  // module instead of the built in NEO550 encoder.
-  m_pitchPIDController.SetFeedbackDevice(m_pitchAbsoluteEncoder);
+  m_pitchAbsoluteEncoder.SetZeroOffset(shooterAngleOffset);
+  
+ // m_shooterPIDController.SetFeedbackDevice(m_shooterEncoder);
 
   // Set PID Constants
   m_topShooterPIDController.SetP(kTopShooterP);
@@ -59,6 +56,17 @@ ShooterSubsystem::ShooterSubsystem(double shooterAngleOffset) : m_topShooterMoto
   m_topShooterMotor.SetSmartCurrentLimit(kShooterMotorCurrentLimit.value());
   m_bottomShooterMotor.SetSmartCurrentLimit(kShooterMotorCurrentLimit.value());
   m_pitchMotor.SetSmartCurrentLimit(kPitchMotorCurrentLimit.value());
+
+  m_pitchMotor.SetInverted(true);
+
+  // Set the PID Controller to use the duty cycle encoder on the swerve
+  // module instead of the built in NEO550 encoder.
+  m_pitchPIDController.SetFeedbackDevice(m_pitchAbsoluteEncoder);
+  m_pitchMotor.SetInverted(true);
+
+  // Set the PID Controller to use the duty cycle encoder on the swerve
+  // module instead of the built in NEO550 encoder.
+  m_pitchPIDController.SetFeedbackDevice(m_pitchAbsoluteEncoder);
 
   m_bottomShooterMotor.SetInverted(true);
 
@@ -96,7 +104,7 @@ void ShooterSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
   nte_topShooterSpeed.SetDouble((double)m_topShooterEncoder.GetVelocity());
   nte_bottomShooterSpeed.SetDouble((double)m_bottomShooterEncoder.GetVelocity());
-  nte_pitchAngle.SetDouble((double)GetShooterAngle());
+  nte_pitchAngle.SetDouble((double)m_pitchAbsoluteEncoder.GetPosition());
 }
 
 void ShooterSubsystem::SetShooterMotorPower(double power) {
@@ -107,18 +115,13 @@ void ShooterSubsystem::SetShooterMotorPower(double power) {
 
 void ShooterSubsystem::SetPitchMotorPower(double power) {
   // Sets the motor's power (between -1.0 and 1.0). 
-  if (m_pitchAbsoluteEncoder.GetPosition() > kMaxPitchAngle)
-    m_pitchMotor.Set(0.3);
-  else if (m_pitchAbsoluteEncoder.GetPosition() < kMinPitchAngle)
-    m_pitchMotor.Set(-0.3);
+  if (m_pitchAbsoluteEncoder.GetPosition() > kMaxPitchAngle && power > 0.0)
+    m_pitchMotor.Set(0.0);
+  else if (m_pitchAbsoluteEncoder.GetPosition() < kMinPitchAngle && power < 0.0)
+    m_pitchMotor.Set(0.0);
   else
     m_pitchMotor.Set(power);
 }
-
-double ShooterSubsystem::GetShooterAngle() {
-  return m_pitchAbsoluteEncoder.GetPosition() - m_shooterAngleOffset;
-}
-
 
 void ShooterSubsystem::ManualNteShoot() {
   // Set shooter to angle and speed from shuffleboard
@@ -152,7 +155,7 @@ void ShooterSubsystem::SetIndivualShooterSpeed(units::revolutions_per_minute_t t
 }
 
 bool ShooterSubsystem::AtAngleSetpoint() {
-  if (abs(nte_pitchSetpoint.GetDouble(1.0) - GetShooterAngle()) < 0.1) // in radians
+  if (abs(nte_pitchSetpoint.GetDouble(1.0) - m_pitchAbsoluteEncoder.GetPosition()) < 0.1) // in radians
     return true;
   else
     return false;

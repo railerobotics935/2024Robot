@@ -22,7 +22,7 @@
 #include <rev/CANSparkMax.h>
 
 // Turn this off when there is no new constants need to be burned onto motorcontrollers
-#define BURNSHOOTERSPARKMAX 
+#define BURNSHOOTERSPARKMAX // Remember to turn on burn feature
 //#define BURNSTAGERSPARKMAX
 //#define BURNMODULESPARKMAX
 
@@ -213,16 +213,16 @@ constexpr double kBottomShooterMin = -1.0;
 constexpr double kBottomShooterMax = 1.0;
 
 // PID Constants for the pitch of shooter
-constexpr double kPitchP = 0.0;
-constexpr double kPitchI = 0.0;
-constexpr double kPitchD = 0.0;
+constexpr double kPitchP = 5.0;
+constexpr double kPitchI = 0.01;
+constexpr double kPitchD = 0.05;
 constexpr double kPitchFF = 0.0;
-constexpr double kPitchMin = -0.5;
-constexpr double kPitchMax = 0.5;
+constexpr double kPitchMin = -0.7;
+constexpr double kPitchMax = 0.7;
 
 // Limits so the shooter pitch can't be over extened
-constexpr double kMinPitchAngle = 0.55; // Radians
-constexpr double kMaxPitchAngle = 1.25; // Radians
+constexpr double kMinPitchAngle = 0.5; // Radians
+constexpr double kMaxPitchAngle = 1.1; // Radians
 
 // Offset for the pitch
 constexpr double kPitchOffset = 2.653 - (51.0 * std::numbers::pi/180.0);
