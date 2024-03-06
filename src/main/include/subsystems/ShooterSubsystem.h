@@ -45,11 +45,19 @@ class ShooterSubsystem : public frc2::SubsystemBase {
   void SetShooterAngle(units::radian_t angle);
 
   /**
-   * Sets the Shooter speed using closed loop control on the SparkMax
+   * Sets both shooter speeds using closed loop control on the SparkMax
    * 
-   * @param speed The desired speed in radians per second
+   * @param speed The desired speed in radians per second for both motors
   */
   void SetShooterSpeed(units::revolutions_per_minute_t speed);
+
+  /**
+   * Sets the Shooter speeds using closed loop control on the SparkMax
+   * 
+   * @param topSpeed The desired speed for the top shooter in radians per second
+   * @param bottomSpeed The desired speed for the bottom shooter in radians per second
+  */
+  void SetIndivualShooterSpeed(units::revolutions_per_minute_t topSpeed, units::revolutions_per_minute_t bottomSpeed);
 
   /**
    * Gets the angle of shooter with the offset accounted for
@@ -82,25 +90,28 @@ class ShooterSubsystem : public frc2::SubsystemBase {
   double m_shooterAngleOffset = 0.0;
 
   // Networktable entries
-  nt::NetworkTableEntry nte_shooterSpeed;
-  nt::NetworkTableEntry nte_followerSpeed;
-  nt::NetworkTableEntry nte_shooterSetpoint;
+  nt::NetworkTableEntry nte_topShooterSpeed;
+  nt::NetworkTableEntry nte_bottomShooterSpeed;
+  nt::NetworkTableEntry nte_topShooterSetpoint;
+  nt::NetworkTableEntry nte_bottomShooterSetpoint;
   nt::NetworkTableEntry nte_pitchAngle;
   nt::NetworkTableEntry nte_pitchSetpoint;
-  nt::NetworkTableEntry nte_setpointSpeedRPM;
+  nt::NetworkTableEntry nte_topSetpointSpeedRPM;
+  nt::NetworkTableEntry nte_bottomSetpointSpeedRPM;
   nt::NetworkTableEntry nte_setpointAngleRadians;
 
   // Motor Controllers
-  rev::CANSparkMax m_shooterMotor;
-  rev::CANSparkMax m_followerMotor;
+  rev::CANSparkMax m_topShooterMotor;
+  rev::CANSparkMax m_bottomShooterMotor;
   rev::CANSparkMax m_pitchMotor;
 
   // Encoders motor controllers
-  rev::SparkRelativeEncoder m_shooterEncoder = m_shooterMotor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor);
-  rev::SparkRelativeEncoder m_followerEncoder = m_followerMotor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor);
+  rev::SparkRelativeEncoder m_topShooterEncoder = m_topShooterMotor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor);
+  rev::SparkRelativeEncoder m_bottomShooterEncoder = m_bottomShooterMotor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor);
   rev::SparkAbsoluteEncoder m_pitchAbsoluteEncoder = m_pitchMotor.GetAbsoluteEncoder(rev::SparkAbsoluteEncoder::Type::kDutyCycle);
 
   // PID Contollers for
-  rev::SparkPIDController m_shooterPIDController = m_shooterMotor.GetPIDController();
+  rev::SparkPIDController m_topShooterPIDController = m_topShooterMotor.GetPIDController();
+  rev::SparkPIDController m_bottomShooterPIDController = m_bottomShooterMotor.GetPIDController();
   rev::SparkPIDController m_pitchPIDController = m_pitchMotor.GetPIDController();
 };

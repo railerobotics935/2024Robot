@@ -11,17 +11,17 @@ void ManualNteShooter::Execute() {
   // Set shooter to angle and speed from shuffleboard
   m_shooter->ManualNteShoot();
 
-  /*/ If at angle setpoint, rumble left
+  // If at angle setpoint, rumble left
   if (m_shooter->AtAngleSetpoint())
-    m_opController->SetRumble(frc::GenericHID::RumbleType::kLeftRumble, 1.0);
+    m_opController->SetRumble(frc::GenericHID::RumbleType::kLeftRumble, 0.5);
   else 
     m_opController->SetRumble(frc::GenericHID::RumbleType::kLeftRumble, 0.0);
 
   // If at speed setpoint, rumble right
   if (m_shooter->AtSpeedSetpoint())
-    m_opController->SetRumble(frc::GenericHID::RumbleType::kRightRumble, 1.0);
+    m_opController->SetRumble(frc::GenericHID::RumbleType::kRightRumble, 0.5);
   else 
-    m_opController->SetRumble(frc::GenericHID::RumbleType::kRightRumble, 0.0); */
+    m_opController->SetRumble(frc::GenericHID::RumbleType::kRightRumble, 0.0); 
 }
 
 void ManualNteShooter::End(bool interrupted) {

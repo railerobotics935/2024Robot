@@ -7,37 +7,43 @@
 
 using namespace ShooterConstants;
 
-ShooterSubsystem::ShooterSubsystem(double shooterAngleOffset) : m_shooterMotor{kShooterID, kShooterMotorType},
-                    m_followerMotor{kFollowerID, kFollowerMotorType},
+ShooterSubsystem::ShooterSubsystem(double shooterAngleOffset) : m_topShooterMotor{kShooterID, kShooterMotorType},
+                    m_bottomShooterMotor{kShooterID, kShooterMotorType},
                     m_pitchMotor{kPitchID, kPitchMotorType}{
   
   // Burn flash only if desired - true set in constants
   #ifdef BURNSHOOTERSPARKMAX 
   // Restore deafults
-  m_shooterMotor.RestoreFactoryDefaults();
-  m_followerMotor.RestoreFactoryDefaults();
+  m_topShooterMotor.RestoreFactoryDefaults();
+  m_bottomShooterMotor.RestoreFactoryDefaults();
   m_pitchMotor.RestoreFactoryDefaults();
 
   // Set converstion factors for encoders
-  m_shooterEncoder.SetPositionConversionFactor(kShooterPositionFactor);
-  m_shooterEncoder.SetVelocityConversionFactor(kShooterEncoderVelocityFactor);
-  m_followerEncoder.SetPositionConversionFactor(kShooterPositionFactor);
-  m_followerEncoder.SetVelocityConversionFactor(kShooterEncoderVelocityFactor);
+  m_topShooterEncoder.SetPositionConversionFactor(kShooterPositionFactor);
+  m_topShooterEncoder.SetVelocityConversionFactor(kShooterEncoderVelocityFactor);
+  m_bottomShooterEncoder.SetPositionConversionFactor(kShooterPositionFactor);
+  m_bottomShooterEncoder.SetVelocityConversionFactor(kShooterEncoderVelocityFactor);
   m_pitchAbsoluteEncoder.SetPositionConversionFactor(kPitchPositionFactor);
   m_pitchAbsoluteEncoder.SetVelocityConversionFactor(kPitchEncoderVelocityFactor);
 
- // m_shooterPIDController.SetFeedbackDevice(m_shooterEncoder);
+ // m_topShooterPIDController.SetFeedbackDevice(m_topShooterEncoder);
 
   // Set the PID Controller to use the duty cycle encoder on the swerve
   // module instead of the built in NEO550 encoder.
   m_pitchPIDController.SetFeedbackDevice(m_pitchAbsoluteEncoder);
 
   // Set PID Constants
-  m_shooterPIDController.SetP(kShooterP);
-  m_shooterPIDController.SetI(kShooterI);
-  m_shooterPIDController.SetD(kShooterD);
-  m_shooterPIDController.SetFF(kShooterFF);
-  m_shooterPIDController.SetOutputRange(kShooterMin, kShooterMax);
+  m_topShooterPIDController.SetP(kTopShooterP);
+  m_topShooterPIDController.SetI(kTopShooterI);
+  m_topShooterPIDController.SetD(kTopShooterD);
+  m_topShooterPIDController.SetFF(kTopShooterFF);
+  m_topShooterPIDController.SetOutputRange(kTopShooterMin, kTopShooterMax);
+
+  m_bottomShooterPIDController.SetP(kBottomShooterP);
+  m_bottomShooterPIDController.SetI(kBottomShooterI);
+  m_bottomShooterPIDController.SetD(kBottomShooterD);
+  m_bottomShooterPIDController.SetFF(kBottomShooterFF);
+  m_bottomShooterPIDController.SetOutputRange(kBottomShooterMin, kBottomShooterMax);
 
   // Set PID Constants
   m_pitchPIDController.SetP(kPitchP);
@@ -47,19 +53,18 @@ ShooterSubsystem::ShooterSubsystem(double shooterAngleOffset) : m_shooterMotor{k
   m_pitchPIDController.SetOutputRange(kPitchMin, kPitchMax);
 
   // Set Idle mode (what to do when not commanded at a speed)
-  m_shooterMotor.SetIdleMode(rev::CANSparkBase::IdleMode::kCoast);
-  m_followerMotor.SetIdleMode(rev::CANSparkBase::IdleMode::kCoast);
+  m_topShooterMotor.SetIdleMode(rev::CANSparkBase::IdleMode::kCoast);
+  m_bottomShooterMotor.SetIdleMode(rev::CANSparkBase::IdleMode::kCoast);
   m_pitchMotor.SetIdleMode(rev::CANSparkBase::IdleMode::kBrake);
-  m_shooterMotor.SetSmartCurrentLimit(kShooterMotorCurrentLimit.value());
-  m_followerMotor.SetSmartCurrentLimit(kFollowerMotorCurrentLimit.value());
+  m_topShooterMotor.SetSmartCurrentLimit(kShooterMotorCurrentLimit.value());
+  m_bottomShooterMotor.SetSmartCurrentLimit(kShooterMotorCurrentLimit.value());
   m_pitchMotor.SetSmartCurrentLimit(kPitchMotorCurrentLimit.value());
 
-  //m_shooterMotor.BurnFlash();
-  //m_followerMotor.BurnFlash();
-  //m_pitchMotor.BurnFlash();
+  m_bottomShooterMotor.SetInverted(true);
 
-  // Set folower motor
-  m_followerMotor.Follow(m_shooterMotor, true);
+  //m_topShooterMotor.BurnFlash();
+  //m_bottomShooterMotor.BurnFlash();
+  //m_pitchMotor.BurnFlash();
 
   printf("Flash Burned on shooter subsystem\r\n");
   #else
@@ -72,29 +77,32 @@ ShooterSubsystem::ShooterSubsystem(double shooterAngleOffset) : m_shooterMotor{k
   auto nt_inst = nt::NetworkTableInstance::GetDefault();
   auto nt_table = nt_inst.GetTable("Shooter");  
 
-  nte_shooterSpeed = nt_table->GetEntry("Shooter Speed");
-  nte_followerSpeed = nt_table->GetEntry("Follower Speed");
-  nte_shooterSetpoint = nt_table->GetEntry("Shooter Setpoint");
+  nte_topShooterSpeed = nt_table->GetEntry("Top Shooter Speed");
+  nte_bottomShooterSpeed = nt_table->GetEntry("Bottom Shooter Speed");
+  nte_topShooterSetpoint = nt_table->GetEntry("Top Shooter Setpoint");
+  nte_bottomShooterSetpoint = nt_table->GetEntry("Bottom Shooter Setpoint");
   nte_pitchAngle = nt_table->GetEntry("Pitch Angle");
   nte_pitchSetpoint = nt_table->GetEntry("Pitch Setpoint");
-  nte_setpointSpeedRPM = nt_table->GetEntry("Setpoint Speed in RPM");
+  nte_topSetpointSpeedRPM = nt_table->GetEntry("Top Setpoint Speed in RPM");
+  nte_bottomSetpointSpeedRPM = nt_table->GetEntry("Bottom Setpoint Speed in RPM");
   nte_setpointAngleRadians = nt_table->GetEntry("Setpoint Angle in Radians");
 
-  nte_setpointSpeedRPM.SetDouble(0.0);
-  nte_setpointAngleRadians.SetDouble(0.0);
+  nte_topSetpointSpeedRPM.SetDouble(0.0);
+  nte_setpointAngleRadians.SetDouble(0.8);
 
 }
 
 void ShooterSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
-  nte_shooterSpeed.SetDouble((double)m_shooterEncoder.GetVelocity());
-  nte_followerSpeed.SetDouble((double)m_followerEncoder.GetVelocity());
+  nte_topShooterSpeed.SetDouble((double)m_topShooterEncoder.GetVelocity());
+  nte_bottomShooterSpeed.SetDouble((double)m_bottomShooterEncoder.GetVelocity());
   nte_pitchAngle.SetDouble((double)GetShooterAngle());
 }
 
 void ShooterSubsystem::SetShooterMotorPower(double power) {
   // Sets the motor's power (between -1.0 and 1.0). 
-  m_shooterMotor.Set(power);
+  m_topShooterMotor.Set(power);
+  m_bottomShooterMotor.Set(power);
 }
 
 void ShooterSubsystem::SetPitchMotorPower(double power) {
@@ -115,7 +123,7 @@ double ShooterSubsystem::GetShooterAngle() {
 void ShooterSubsystem::ManualNteShoot() {
   // Set shooter to angle and speed from shuffleboard
   SetShooterAngle((units::radian_t)nte_setpointAngleRadians.GetDouble(1.0));
-  SetShooterSpeed((units::revolutions_per_minute_t)nte_setpointSpeedRPM.GetDouble(0.0));
+  SetIndivualShooterSpeed((units::revolutions_per_minute_t)nte_topSetpointSpeedRPM.GetDouble(0.0), (units::revolutions_per_minute_t)nte_bottomShooterSetpoint.GetDouble(0.0));
 }
 
 void ShooterSubsystem::SetShooterAngle(units::radian_t angle) {
@@ -130,8 +138,17 @@ void ShooterSubsystem::SetShooterAngle(units::radian_t angle) {
 
 void ShooterSubsystem::SetShooterSpeed(units::revolutions_per_minute_t speed) {
   // Set the setpoint as the input angle
-  m_shooterPIDController.SetReference((double)speed, rev::CANSparkMax::ControlType::kVelocity);
-  nte_shooterSetpoint.SetDouble((double)speed);
+  m_topShooterPIDController.SetReference((double)speed, rev::CANSparkMax::ControlType::kVelocity);
+  m_bottomShooterPIDController.SetReference((double)speed, rev::CANSparkMax::ControlType::kVelocity);
+  nte_topShooterSetpoint.SetDouble((double)speed);
+}
+
+void ShooterSubsystem::SetIndivualShooterSpeed(units::revolutions_per_minute_t topSpeed, units::revolutions_per_minute_t bottomSpeed) {
+  // Set the setpoint as the input angle
+  m_topShooterPIDController.SetReference((double)topSpeed, rev::CANSparkMax::ControlType::kVelocity);
+  m_bottomShooterPIDController.SetReference((double)bottomSpeed, rev::CANSparkMax::ControlType::kVelocity);
+  nte_topShooterSetpoint.SetDouble((double)topSpeed);
+  nte_bottomShooterSetpoint.SetDouble((double)bottomSpeed);
 }
 
 bool ShooterSubsystem::AtAngleSetpoint() {
@@ -142,7 +159,8 @@ bool ShooterSubsystem::AtAngleSetpoint() {
 }
 
 bool ShooterSubsystem::AtSpeedSetpoint() {
-  if (abs(nte_shooterSetpoint.GetDouble(0.0) - m_shooterEncoder.GetVelocity()) < 10.0) // in RPM
+  if (abs(nte_topShooterSetpoint.GetDouble(0.0) - m_topShooterEncoder.GetVelocity()) < 10.0 &&
+      abs(nte_bottomShooterSetpoint.GetDouble(0.0) - m_bottomShooterEncoder.GetVelocity()) < 10.0) // in RPM
     return true;
   else
     return false;

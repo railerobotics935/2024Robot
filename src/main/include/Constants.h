@@ -22,7 +22,7 @@
 #include <rev/CANSparkMax.h>
 
 // Turn this off when there is no new constants need to be burned onto motorcontrollers
-//#define BURNSHOOTERSPARKMAX 
+#define BURNSHOOTERSPARKMAX 
 //#define BURNSTAGERSPARKMAX
 //#define BURNMODULESPARKMAX
 
@@ -177,10 +177,10 @@ constexpr rev::CANSparkLowLevel::MotorType kMotorType = rev::CANSparkLowLevel::M
 namespace ShooterConstants {
 // Intake motor 
 constexpr int kShooterID = 27;
-constexpr int kFollowerID = 28;
+constexpr int kBottomID = 28;
 constexpr int kPitchID = 29;
 constexpr rev::CANSparkLowLevel::MotorType kShooterMotorType = rev::CANSparkLowLevel::MotorType::kBrushless;
-constexpr rev::CANSparkLowLevel::MotorType kFollowerMotorType = rev::CANSparkLowLevel::MotorType::kBrushless;
+constexpr rev::CANSparkLowLevel::MotorType kBottomMotorType = rev::CANSparkLowLevel::MotorType::kBrushless;
 constexpr rev::CANSparkLowLevel::MotorType kPitchMotorType = rev::CANSparkLowLevel::MotorType::kBrushless;
 
 // Calculations required for driving motor conversion factors and feed forward
@@ -197,12 +197,20 @@ constexpr double kPitchPositionFactor = (std::numbers::pi * 2); // radians
 constexpr double kPitchEncoderVelocityFactor = (2 * std::numbers::pi); // radians per second
 
 // PID Constants for the speed of the shooter   RR had  0.0001, 0.0005, 0
-constexpr double kShooterP = 0.00025;//  0.00025 
-constexpr double kShooterI = 0.00000;//  0.000000 
-constexpr double kShooterD = 0.01;//  0.01 
-constexpr double kShooterFF = 0.000095;//  0.000095 // and 0.00016 Effects steady state error
-constexpr double kShooterMin = -1.0;
-constexpr double kShooterMax = 1.0;
+constexpr double kTopShooterP = 0.00025;//  0.00025 
+constexpr double kTopShooterI = 0.00000;//  0.000000 
+constexpr double kTopShooterD = 0.01;//  0.01 
+constexpr double kTopShooterFF = 0.000095;//  0.000095 // and 0.00016 Effects steady state error
+constexpr double kTopShooterMin = -1.0;
+constexpr double kTopShooterMax = 1.0;
+
+// PID Constants for the speed of the shooter   RR had  0.0001, 0.0005, 0
+constexpr double kBottomShooterP = 0.00025;//  0.00025 
+constexpr double kBottomShooterI = 0.00000;//  0.000000 
+constexpr double kBottomShooterD = 0.01;//  0.01 
+constexpr double kBottomShooterFF = 0.000095;//  0.000095 // and 0.00016 Effects steady state error
+constexpr double kBottomShooterMin = -1.0;
+constexpr double kBottomShooterMax = 1.0;
 
 // PID Constants for the pitch of shooter
 constexpr double kPitchP = 0.0;
@@ -220,7 +228,7 @@ constexpr double kMaxPitchAngle = 1.25; // Radians
 constexpr double kPitchOffset = 2.653 - (51.0 * std::numbers::pi/180.0);
 
 constexpr units::ampere_t kShooterMotorCurrentLimit = 40_A;
-constexpr units::ampere_t kFollowerMotorCurrentLimit = 40_A;
+constexpr units::ampere_t kBottomMotorCurrentLimit = 40_A;
 constexpr units::ampere_t kPitchMotorCurrentLimit = 20_A;
 
 } // namespace IntakeConstants

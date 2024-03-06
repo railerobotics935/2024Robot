@@ -4,6 +4,7 @@
 #include <frc/apriltag/AprilTagFieldLayout.h>
 #include <Constants.h>
 #include <frc/geometry/CoordinateSystem.h>
+#include <frc/Timer.h>
 
 #include "subsystems/ApriltagSensor.h"
 
@@ -71,7 +72,6 @@ wpi::array<double, 3> ApriltagSensor::GetStandardDeviations(int tag) {
   double standardDeviation = CameraConstants::GetStandardDeviationFromDistance((double)poseArr[2]);
 
   return wpi::array<double, 3>{standardDeviation, standardDeviation, standardDeviation};
-
 }
 
 bool ApriltagSensor::TagIsTracked(int tag) {
@@ -83,7 +83,7 @@ bool ApriltagSensor::TagIsTracked(int tag) {
 }
 
 units::second_t ApriltagSensor::GetTimestamp(int tag) {
-  double latency = ((double)nte_pose[tag].GetLastChange() / 1000000.0) - nte_latency.GetDouble(360.0);
-  nte_finalLatency.SetDouble(latency);
-  return (units::second_t)latency;
+  double timestamp = ((double)nte_pose[tag].GetLastChange() / 1000000.0) - nte_latency.GetDouble(360.0);
+  nte_finalLatency.SetDouble(((double)frc::Timer::GetFPGATimestamp() / 1000000.0) - timestamp);
+  return (units::second_t)timestamp;
 }
