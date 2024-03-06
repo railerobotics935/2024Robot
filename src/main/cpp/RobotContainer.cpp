@@ -53,7 +53,7 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
 
   m_shooter.SetDefaultCommand(frc2::RunCommand(
     [this] {
-      m_shooter.SetShooterMotorPower(frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kOperatorLeftYIndex), 0.05));
+      m_shooter.SetShooterMotorPower(-frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kOperatorLeftYIndex), 0.05));
       m_shooter.SetPitchMotorPower(-0.5 * frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kDriveRightYIndex), 0.05));
     }, {&m_shooter}
   ));
@@ -84,6 +84,8 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton slowButton(&m_driveController, ControllerConstants::kSlowStateButtonIndex); 
   frc2::JoystickButton intakeButton(&m_operatorController, ControllerConstants::kIntakeButtonIndex); // Creates a new JoystickButton object for the intake button on Operator Controller 
   frc2::JoystickButton shooterButton(&m_operatorController, ControllerConstants::kShooterButtonIndex); // Creates a new JoystickButton object for the shoot button on Operator Controller 
+  frc2::JoystickButton shootGoodNoteButton(&m_operatorController, ControllerConstants::kShootGoodNoteButtonIndex);
+  frc2::JoystickButton shootBadNoteButton(&m_operatorController, ControllerConstants::kShootBadNoteButtonIndex);
 
   // I don't exactly know why this works, but the documentation for command based c++ is kind of b-ad 
   resetButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.ZeroHeading();}, {}));
@@ -92,6 +94,17 @@ void RobotContainer::ConfigureButtonBindings() {
   slowButton.ToggleOnTrue(SlowDrive{&m_drive, &m_driveController}.ToPtr());
   intakeButton.WhileTrue(SimpleIntake{&m_intake}.ToPtr());
   shooterButton.WhileTrue(ManualNteShooter{&m_shooter, &m_operatorController}.ToPtr());
+
+  // Manual buttons for shooting
+  shootGoodNoteButton.WhileTrue(frc2::cmd::Run([&] {
+    m_shooter.SetShooterAngle((units::radian_t)0.9);
+    m_shooter.SetShooterSpeed((units::revolutions_per_minute_t)7000);
+  }, {}));
+
+  shootBadNoteButton.WhileTrue(frc2::cmd::Run([&] {
+    m_shooter.SetShooterAngle((units::radian_t)1.0);
+    m_shooter.SetShooterSpeed((units::revolutions_per_minute_t)8000);
+  }, {}));
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {

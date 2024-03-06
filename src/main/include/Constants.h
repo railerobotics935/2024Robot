@@ -324,6 +324,8 @@ constexpr int kResetGyroButtonIndex = 2; // B
 constexpr int kIntakeButtonIndex = 6; // RB
 constexpr int kOuttakeButtonIndex = 5; // LB
 constexpr int kShooterButtonIndex = 4; // Y
+constexpr int kShootGoodNoteButtonIndex = 3; // X
+constexpr int kShootBadNoteButtonIndex = 1; // A
 
 } // namespace ControllerConstants
 
