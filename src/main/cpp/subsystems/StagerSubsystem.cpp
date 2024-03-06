@@ -35,3 +35,10 @@ void StagerSubsystem::SetMotorPower(double power) {
   // Sets the motor's power (between -1.0 and 1.0). 
   m_stagerMotor.Set(power);
 }
+
+bool StagerSubsystem::NoteLoaded() {
+  if (m_colorSensor.GetColor() == frc::Color::kOrange)
+    return true;
+  else 
+    return false;
+}

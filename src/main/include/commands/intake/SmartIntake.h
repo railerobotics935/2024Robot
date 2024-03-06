@@ -21,6 +21,8 @@ public:
   explicit SmartIntake(IntakeSubsystem* intake, StagerSubsystem* stager);
 
   void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
   void End(bool interrupted) override;
   
 private:
