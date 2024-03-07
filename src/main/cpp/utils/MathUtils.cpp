@@ -44,7 +44,6 @@ double MathUtils::RobotDistanceToGoal(frc::Pose2d robotPose) {
 }
 
 frc::Rotation2d MathUtils::AngleToGoal(frc::Translation2d targetTranslation) {
-
   // do math
   return frc::Rotation2d{(units::radian_t)std::tan(((double)targetTranslation.Y())/((double)targetTranslation.X()))};
   

@@ -71,7 +71,7 @@ wpi::array<double, 3> ApriltagSensor::GetStandardDeviations(int tag) {
   // use the raw distance to get the information
   double standardDeviation = CameraConstants::GetStandardDeviationFromDistance((double)poseArr[2]);
 
-  return wpi::array<double, 3>{standardDeviation, standardDeviation, standardDeviation};
+  return wpi::array<double, 3>{standardDeviation, standardDeviation, standardDeviation*2.0};
 }
 
 bool ApriltagSensor::TagIsTracked(int tag) {
@@ -83,8 +83,8 @@ bool ApriltagSensor::TagIsTracked(int tag) {
 }
 
 units::second_t ApriltagSensor::GetTimestamp(int tag) {
-  double timestamp = ((double)nte_pose[tag].GetLastChange() / 1000000.0) - nte_latency.GetDouble(360.0);
-  nte_finalLatency.SetDouble(((double)frc::Timer::GetFPGATimestamp()) - timestamp);
+  units::second_t timestamp = (m_timer.GetFPGATimestamp()) - (units::second_t)nte_latency.GetDouble(360.0) - (units::second_t)0.05;
+  nte_finalLatency.SetDouble((double)timestamp);
   return (units::second_t)timestamp;
 }
 

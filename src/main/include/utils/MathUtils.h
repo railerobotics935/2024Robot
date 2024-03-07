@@ -35,7 +35,7 @@ namespace MathUtils {
   /**
    * Finds the angle of the robot in relation to the goal. 
    * 
-   * @param robotTranslation is the position of the robot on the field
+   * @param targetTranslation is the position of the robot on the field
    * @return the rotation of the robot
   */
   frc::Rotation2d AngleToGoal(frc::Translation2d targetTranslation);

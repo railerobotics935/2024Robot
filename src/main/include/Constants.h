@@ -22,7 +22,7 @@
 #include <rev/CANSparkMax.h>
 
 // Turn this off when there is no new constants need to be burned onto motorcontrollers
-#define BURNSHOOTERSPARKMAX // Remember to turn on burn feature
+//#define BURNSHOOTERSPARKMAX 
 //#define BURNSTAGERSPARKMAX
 //#define BURNMODULESPARKMAX
 
@@ -213,12 +213,12 @@ constexpr double kBottomShooterMin = -1.0;
 constexpr double kBottomShooterMax = 1.0;
 
 // PID Constants for the pitch of shooter
-constexpr double kPitchP = 7.0;
+constexpr double kPitchP = 3.0;
 constexpr double kPitchI = 0.004;
 constexpr double kPitchD = 0.2;
 constexpr double kPitchFF = 0.0;
-constexpr double kPitchMin = -0.6;
-constexpr double kPitchMax = 0.6;
+constexpr double kPitchMin = -0.5;
+constexpr double kPitchMax = 0.5;
 
 // Limits so the shooter pitch can't be over extened
 constexpr double kMinPitchAngle = 0.5; // Radians
@@ -319,6 +319,7 @@ constexpr int kRobotRelativeButtonIndex = 8; // CR
 constexpr int kSlowStateButtonIndex = 4; // Y
 constexpr int kFastStateButtonIndex = 1; // A
 constexpr int kResetGyroButtonIndex = 2; // B
+constexpr int kDriveFacingGoalButtonIndex = 3; // X
 
 // Operator controller 
 constexpr int kIntakeButtonIndex = 6; // RB
@@ -337,8 +338,8 @@ constexpr int kOperatorControllerPort = 1;
 namespace CameraConstants {
 
 // Min and Max standard deviations for the apriltag detetion 
-constexpr double kMinStandardDeviation = 0.2;
-constexpr double kMaxStandardDeviation = 2.0;
+constexpr double kMinStandardDeviation = 1.0;
+constexpr double kMaxStandardDeviation = 1.5;
 
 /**
  * @param distance The raw distance from the apriltag
@@ -360,14 +361,14 @@ namespace BackLeftCamera {
     const frc::Translation3d kTranlation3d{(units::meter_t)-0.250, -(units::meter_t)0.4125, (units::meter_t)0.2286};
     const frc::Rotation3d kYawRotation3d{(units::radian_t)0.0, (units::radian_t)0.0, (units::radian_t)std::numbers::pi * 1.25};
     const frc::Rotation3d kPitchRotation3d{(units::radian_t)0.0, (units::radian_t)std::numbers::pi / 12.0, (units::radian_t)0.0};
-    const frc::Pose3d kPose3d{kTranlation3d, kYawRotation3d.operator+(kPitchRotation3d)};
+    const frc::Pose3d kPose3d{kTranlation3d, kYawRotation3d};
 } // namespace BackLeftCamera
 
 namespace BackRightCamera {
     const frc::Translation3d kTranlation3d{(units::meter_t)-0.250, -(units::meter_t)-0.4125, (units::meter_t)0.2286};
     const frc::Rotation3d kYawRotation3d{(units::radian_t)0.0, (units::radian_t)0.0, (units::radian_t)std::numbers::pi * 0.75};
     const frc::Rotation3d kPitchRotation3d{(units::radian_t)0.0, (units::radian_t)std::numbers::pi / 12.0, (units::radian_t)0.0};
-    const frc::Pose3d kPose3d{kTranlation3d, kYawRotation3d.operator+(kPitchRotation3d)};
+    const frc::Pose3d kPose3d{kTranlation3d, kYawRotation3d};
 } // namespace BackRightCamera
 
 } // namespace CameraConstants

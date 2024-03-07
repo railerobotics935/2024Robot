@@ -25,9 +25,11 @@
 #include "pathplanner/lib/auto/NamedCommands.h"
 
 #include "commands/drive/DriveWithController.h"
+#include "commands/drive/DriveFacingGoal.h"
 #include "commands/intake/SimpleIntake.h"
 #include "commands/drive/SlowDrive.h"
 #include "commands/shooter/ManualNteShooter.h"
+#include "commands/intake/SmartIntake.h"
 
 #include "Constants.h"
 #include "subsystems/DriveSubsystem.h"
@@ -86,23 +88,25 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton shooterButton(&m_operatorController, ControllerConstants::kShooterButtonIndex); // Creates a new JoystickButton object for the shoot button on Operator Controller 
   frc2::JoystickButton shootGoodNoteButton(&m_operatorController, ControllerConstants::kShootGoodNoteButtonIndex);
   frc2::JoystickButton shootBadNoteButton(&m_operatorController, ControllerConstants::kShootBadNoteButtonIndex);
+  frc2::JoystickButton driveFacingGoalButton(&m_driveController, ControllerConstants::kDriveFacingGoalButtonIndex);
 
   // I don't exactly know why this works, but the documentation for command based c++ is kind of b-ad 
   resetButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.ZeroHeading();}, {}));
   robotRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetRobotRelative();}, {}));
   fieldRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetFieldRelative();}, {}));
   slowButton.ToggleOnTrue(SlowDrive{&m_drive, &m_driveController}.ToPtr());
-  intakeButton.WhileTrue(SimpleIntake{&m_intake}.ToPtr());
+  intakeButton.WhileTrue(SmartIntake{&m_intake, &m_stager}.ToPtr());
   shooterButton.WhileTrue(ManualNteShooter{&m_shooter, &m_operatorController}.ToPtr());
+  driveFacingGoalButton.ToggleOnTrue(DriveFacingGoal{&m_drive, &m_driveController}.ToPtr());
 
   // Manual buttons for shooting
   shootGoodNoteButton.WhileTrue(frc2::cmd::Run([&] {
-    m_shooter.SetShooterAngle((units::radian_t)0.9);
-    m_shooter.SetShooterSpeed((units::revolutions_per_minute_t)7000);
+    m_shooter.SetShooterAngle((units::radian_t)0.85);
+    m_shooter.SetShooterSpeed((units::revolutions_per_minute_t)8000);
   }, {}));
 
   shootBadNoteButton.WhileTrue(frc2::cmd::Run([&] {
-    m_shooter.SetShooterAngle((units::radian_t)1.0);
+    m_shooter.SetShooterAngle((units::radian_t)1.1);
     m_shooter.SetShooterSpeed((units::revolutions_per_minute_t)8000);
   }, {}));
 }

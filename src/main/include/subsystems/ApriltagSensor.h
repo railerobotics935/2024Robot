@@ -8,6 +8,7 @@
 #include <frc/geometry/Transform2d.h>
 #include <frc/apriltag/AprilTagFieldLayout.h>
 #include <frc/Filesystem.h>
+#include <frc/Timer.h>
 #include <wpi/fs.h>
 #include <wpi/array.h>
 
@@ -74,6 +75,7 @@ private:
 
   // Field layout to get apriltag pose
   frc::AprilTagFieldLayout m_fieldLayout{deployDirectory.string()};
-
+  
+  frc::Timer m_timer{};
   int64_t m_prevLatency = 0;
 };

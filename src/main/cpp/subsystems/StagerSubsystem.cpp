@@ -4,6 +4,7 @@
 
 #include "subsystems/StagerSubsystem.h"
 #include "Constants.h"
+#include "string"
 
 
 StagerSubsystem::StagerSubsystem() : m_stagerMotor{StagerConstants::kMotorID, StagerConstants::kMotorType},
@@ -29,6 +30,24 @@ StagerSubsystem::StagerSubsystem() : m_stagerMotor{StagerConstants::kMotorID, St
   printf("Flash was not burned on shooter subsystem\r\n");
   #endif
 
+  // Initialize shuffleboard communication
+  auto nt_inst = nt::NetworkTableInstance::GetDefault();
+  auto nt_table = nt_inst.GetTable("Stager");
+
+  nte_color = nt_table->GetEntry("Note Loaded");
+  nte_colorBlue = nt_table->GetEntry("Color/Blue");
+  nte_colorRed = nt_table->GetEntry("Color/Red");
+  nte_colorGreen = nt_table->GetEntry("Color/Green");
+  nte_proximity = nt_table->GetEntry("Color/Proximity");
+  
+}
+
+void StagerSubsystem::Periodic() {
+  nte_color.SetBoolean(NoteLoaded());
+  nte_colorBlue.SetDouble((double)m_colorSensor.GetColor().blue);
+  nte_colorRed.SetDouble((double)m_colorSensor.GetColor().red);
+  nte_colorGreen.SetDouble((double)m_colorSensor.GetColor().green);
+  nte_proximity.SetDouble((double)m_colorSensor.GetProximity());
 }
 
 void StagerSubsystem::SetMotorPower(double power) {
@@ -37,7 +56,7 @@ void StagerSubsystem::SetMotorPower(double power) {
 }
 
 bool StagerSubsystem::NoteLoaded() {
-  if (m_colorSensor.GetColor() == frc::Color::kOrange)
+  if ((double)m_colorSensor.GetProximity() > 500.0) // Erik put 500.0
     return true;
   else 
     return false;

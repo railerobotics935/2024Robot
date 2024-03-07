@@ -9,7 +9,7 @@ using namespace ShooterConstants;
 
 ShooterSubsystem::ShooterSubsystem(double shooterAngleOffset) : m_topShooterMotor{kTopShooterID, kShooterMotorType},
                     m_bottomShooterMotor{kBottomShooterID, kShooterMotorType},
-                    m_pitchMotor{kPitchID, kPitchMotorType}{
+                    m_pitchMotor{kPitchID, kPitchMotorType} {
   
   // Burn flash only if desired - true set in constants
   #ifdef BURNSHOOTERSPARKMAX 
@@ -70,9 +70,9 @@ ShooterSubsystem::ShooterSubsystem(double shooterAngleOffset) : m_topShooterMoto
 
   m_bottomShooterMotor.SetInverted(true);
 
-  //m_topShooterMotor.BurnFlash();
-  //m_bottomShooterMotor.BurnFlash();
-  //m_pitchMotor.BurnFlash();
+  m_topShooterMotor.BurnFlash();
+  m_bottomShooterMotor.BurnFlash();
+  m_pitchMotor.BurnFlash();
 
   printf("Flash Burned on shooter subsystem\r\n");
   #else
