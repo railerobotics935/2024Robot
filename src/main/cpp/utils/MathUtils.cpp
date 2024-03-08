@@ -3,6 +3,8 @@
 #include <frc/DriverStation.h>
 #include <frc/geometry/Pose3d.h>
 #include <frc/apriltag/AprilTagFieldLayout.h>
+#include <wpi/fs.h>
+#include <frc/Filesystem.h>
 
 
 #include "utils/MathUtils.h"
@@ -15,21 +17,22 @@ double MathUtils::SignedSquare(double input) {
 }
 
 frc::Translation2d MathUtils::TranslationToGoal(frc::Pose2d robotPose) {
+  // Create path to deploy directory
+  fs::path deployDirectory{frc::filesystem::GetDeployDirectory() + "/2024-crescendo.json"};
   // Initialize variables
-  frc::AprilTagFieldLayout m_fieldLayout; 
-  frc::Pose2d centerOfSpeaker;
-  
+  frc::AprilTagFieldLayout m_fieldLayout{deployDirectory.string()}; 
+  frc::Pose2d centerOfSpeaker{};
+
   if (frc::DriverStation::GetAlliance() == frc::DriverStation::Alliance::kBlue) {
     // Get position of center of blue speaker
-    centerOfSpeaker = m_fieldLayout.GetTagPose(7).value().ToPose2d(); 
+  centerOfSpeaker = m_fieldLayout.GetTagPose(7).value().ToPose2d(); 
   } else {
     // Get position of center of red speaker
     centerOfSpeaker = m_fieldLayout.GetTagPose(4).value().ToPose2d(); 
   }
-
+  
   // Find Translation of robot
-  frc::Translation2d robotTranslation = robotPose.operator-(centerOfSpeaker).Translation();
-  return robotTranslation;
+  return robotPose.operator-(centerOfSpeaker).Translation();
 /*
   // Finding the distance between the robot and center of goal in meters
   double robotDistanceToGoal = std::sqrt(std::pow((double)robotTranslation.X(), 2) + std::pow((double)robotTranslation.Y(), 2));
@@ -45,6 +48,6 @@ double MathUtils::RobotDistanceToGoal(frc::Pose2d robotPose) {
 
 frc::Rotation2d MathUtils::AngleToGoal(frc::Translation2d targetTranslation) {
   // do math
-  return frc::Rotation2d{(units::radian_t)std::tan(((double)targetTranslation.Y())/((double)targetTranslation.X()))};
+  return frc::Rotation2d{(units::radian_t)std::atan(((double)targetTranslation.Y())/((double)targetTranslation.X()))};
   
 }

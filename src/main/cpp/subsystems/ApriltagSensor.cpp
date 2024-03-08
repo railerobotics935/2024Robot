@@ -71,7 +71,7 @@ wpi::array<double, 3> ApriltagSensor::GetStandardDeviations(int tag) {
   // use the raw distance to get the information
   double standardDeviation = CameraConstants::GetStandardDeviationFromDistance((double)poseArr[2]);
 
-  return wpi::array<double, 3>{standardDeviation, standardDeviation, standardDeviation*2.0};
+  return wpi::array<double, 3>{standardDeviation, standardDeviation, standardDeviation};
 }
 
 bool ApriltagSensor::TagIsTracked(int tag) {
