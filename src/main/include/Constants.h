@@ -344,7 +344,7 @@ namespace CameraConstants {
 
 // Min and Max standard deviations for the apriltag detetion 
 constexpr double kMinStandardDeviation = 1.4;
-constexpr double kMaxStandardDeviation = 1.5;
+constexpr double kMaxStandardDeviation = 3.5;
 
 /**
  * @param distance The raw distance from the apriltag
@@ -362,14 +362,14 @@ namespace FrontCamera {
     const frc::Pose3d kPose3d{kTranlation3d, kRotation3d};
 } // namespace FrontCamera
 
-namespace BackRightCamera {
-    const frc::Translation3d kTranlation3d{(units::meter_t)-0.250, -(units::meter_t)0.4125, (units::meter_t)0.2286};
+namespace BackLeftCamera {
+    const frc::Translation3d kTranlation3d{(units::meter_t)-0.250, (units::meter_t)0.4125, (units::meter_t)0.2286};
     const frc::Rotation3d kRotation3d{(units::radian_t)std::numbers::pi * 0.1152976, -(units::radian_t)std::numbers::pi * 0.1152976, (units::radian_t)std::numbers::pi * 1.25};
     const frc::Pose3d kPose3d{kTranlation3d, kRotation3d};
 } // namespace BackLeftCamera
 
-namespace BackLeftCamera {
-    const frc::Translation3d kTranlation3d{(units::meter_t)-0.250, -(units::meter_t)-0.4125, (units::meter_t)0.2286};
+namespace BackRightCamera {
+    const frc::Translation3d kTranlation3d{(units::meter_t)-0.250, (units::meter_t)-0.4125, (units::meter_t)0.2286};
     const frc::Rotation3d kRotation3d{(units::radian_t)std::numbers::pi * 0.1152976, -(units::radian_t)std::numbers::pi * 0.1152976, (units::radian_t)std::numbers::pi * 0.75};
     const frc::Pose3d kPose3d{kTranlation3d, kRotation3d};
 } // namespace BackRightCamera

@@ -78,4 +78,15 @@ private:
   
   frc::Timer m_timer{};
   int64_t m_prevLatency = 0;
+
+  // Local variables resued in processing
+  std::vector<double> m_poseArr{};
+
+  frc::Translation3d m_rawTranslation{};
+  frc::Rotation3d m_rawRotation{};
+  frc::Transform3d m_rawPose{};
+
+  frc::Translation3d m_convertedTranslation{};
+  frc::Rotation3d m_correctedRotation{};
+  
 };

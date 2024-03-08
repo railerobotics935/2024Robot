@@ -151,12 +151,6 @@ public:
   void ResetOdometry(frc::Pose2d pose);
 
   /**
-   * Sets the wheels on the swerve modules in an X shape 
-   * 
-  */
-  void Park();
-
-  /**
    *  Uses the 3d transfomation information from apriltag to further 
    *  update the position of the robot
   */

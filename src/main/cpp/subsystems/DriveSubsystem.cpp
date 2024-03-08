@@ -405,25 +405,6 @@ void DriveSubsystem::SetModuleStates(
   m_backRight.SetDesiredState(desiredStates[3]);
 }
 
-// Method to put the Robot in Park
-void DriveSubsystem::Park()
-{
-  frc::SwerveModuleState fl;
-  frc::SwerveModuleState fr;
-  frc::SwerveModuleState bl;
-  frc::SwerveModuleState br;
-
-  fl.angle = frc::Rotation2d (units::radian_t(std::numbers::pi / 4));
-  fr.angle = frc::Rotation2d (units::radian_t(-std::numbers::pi / 4));
-  bl.angle = frc::Rotation2d (units::radian_t(-std::numbers::pi / 4));
-  br.angle = frc::Rotation2d (units::radian_t(std::numbers::pi / 4));
-
-  m_frontLeft.SetDesiredState(fl);
-  m_frontRight.SetDesiredState(fr);
-  m_backLeft.SetDesiredState(bl);
-  m_backRight.SetDesiredState(br);
-}
-
 units::degree_t DriveSubsystem::GetHeading() const {
   return -m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw);
 }
