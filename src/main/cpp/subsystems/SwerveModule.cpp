@@ -35,6 +35,9 @@ void SwerveModule::ConfigureSparkMax() {
   // them. This is useful in case a SPARK MAX is swapped out.
   m_drivingSparkMax.RestoreFactoryDefaults();
   m_turningSparkMax.RestoreFactoryDefaults();
+    
+  m_drivingSparkMax.EnableVoltageCompensation(RobotConstants::kVoltageCompentationValue);
+  m_turningSparkMax.EnableVoltageCompensation(RobotConstants::kVoltageCompentationValue);
 
   // Apply position and velocity conversion factors for the driving encoder. The
   // native units for position and velocity are rotations and RPM, respectively,

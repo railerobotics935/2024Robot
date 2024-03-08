@@ -8,6 +8,17 @@
 
 IntakeSubsystem::IntakeSubsystem() : m_intakeMotor{IntakeConstants::kMotorID, IntakeConstants::kMotorType} {
   // Implementation of subsystem constructor goes here.
+  #ifdef BURNSTAGERSPARKMAX
+  m_intakeMotor.RestoreFactoryDefaults();
+
+  // Enable Voltage Compensation
+  m_intakeMotor.EnableVoltageCompensation(RobotConstants::kVoltageCompentationValue);
+
+  printf("Burned Intake Motor Controller");
+  #else
+
+  printf("Did Not Burn Intake Motor Controller");
+  #endif
 }
 
 void IntakeSubsystem::Periodic() {

@@ -19,6 +19,10 @@ StagerSubsystem::StagerSubsystem() : m_stagerMotor{StagerConstants::kMotorID, St
   m_stagerMotor.SetIdleMode(rev::CANSparkBase::IdleMode::kBrake);
   m_stagerFollower.SetIdleMode(rev::CANSparkBase::IdleMode::kBrake);
   
+  // Enable voltage Compensation
+  m_stagerMotor.EnableVoltageCompensation(RobotConstants::kVoltageCompentationValue);
+  m_stagerFollower.EnableVoltageCompensation(RobotConstants::kVoltageCompentationValue);
+
   // Set follwers and inversted state
   m_stagerFollower.Follow(m_stagerMotor, true);
 

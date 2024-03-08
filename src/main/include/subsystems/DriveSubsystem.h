@@ -23,7 +23,7 @@
 
 #include "Constants.h"
 #include "SwerveModule.h"
-#include "ApriltagSensor.h"
+#include "sensors/ApriltagSensor.h"
 
 class DriveSubsystem : public frc2::SubsystemBase {
 public:

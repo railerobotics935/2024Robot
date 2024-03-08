@@ -14,28 +14,14 @@
  * List of items need to be compleated, list may change or be amended as 
  * we decide on adding new features
  * 
- * TODO: Stuff for people to work on (sophomore and zoe)
- *    TODO: Create a troubleshooting/saftey check guide for eletronics for each eletrical componet/problem
- *      TODO: ex. Motorcontollers - check can wire, pdp breaker, CAN ID
- *      TODO: Write it down and store it in a safe place
- *    TODO: Code
- *      DONE: Create button bindings for all actions on robot
- *      DONE: Fix Code for Stager
- *        DONE: Add a second Motor
- *        DONE: Make sure the configuration is burned to set follwer and reverse
- *    TODO: Test Robot
- *      TODO: Drive robot while running the shooter to check battery draw (AFTER FINILIZING MAX AMP DRAW)
- *      TODO(NOT NOW): Collect date - need cameras for distance from goal
- * 
- * 
  * TODO: Erik is currenly working on
- *    TODO: Path generation command
- *      TODO: Create correct position for robot to path plan to
- *      TODO: Use path planner libaries to create paths to a specific location
- *      TODO: have a way to say you are at the correct location
- *    TODO: Tune PID Controllers for shooter parts
- *      TODO: Figure out correct setting for pid controlelr
- *    TODO: Create a smart intake command that included a color sensor to stop the note.
+ *    TODO: Implement Voltage compensation
+ *    TODO: Double check calculations for Calculating angle of robot to the goal
+ *    TODO: Switch apriltag sensors to only during shooting/when we need it
+ * 
+ *    TODO: Finish binding buttons to controllers
+ *      TODO: Change outtake speed to be conxtatn instead of axis
+ *    TODO: Automatic shooting when ready
  * 
  * 
  * TODO: Create Pathplanner Auto
@@ -44,15 +30,9 @@
  *    TODO: Regester Command for auto
  *    TODO: Create Autos using commands
  * 
- * VERIFY: Create Apriltag recongition system 
- *    DONE: Finalize camera location/configuatoin
- *    DONE: Create reference list for apriltag positions on fiels / Pull information about apriltag position
- *    DONE: Transform apriltag Pose2d to get field relative robot position
- *    DONE: Correct the axis used for the apriltag to get correct pose3d
- *    DONE: Itterate for multiple cameras
- *    DONE: Fix camera
- *    VERIFY: Create a poseEstimator for integration of robot
- *      VERIFY: Add timestamp for pose estimator
+ * TROUBLESHOOT: Create Apriltag recongition system 
+ *    TODO: Increase Stability in script
+ *    TODO: Increase Stability in the robot
  *
  * TODO: Add Robot Code, an overview
  *    DONE: Convert to trapazoid robot (Honeybee)
@@ -92,7 +72,7 @@
  *      TODO: Use sensor data to determine when to shoot note
  *    TODO: check location
  *      TODO: Use Pose/camera to deterime correct position
- *    TODO: Shoot While moving
+ *    VEIRIFY: Shoot While moving
  *      DONE: Math util to get robot velocity and acceleration (maybe)
  *      DONE: Look up time based on speed of shooter (we want as high of a speed as possible)
  *      DONE: use time to calculate translation of robot based on velocity and acceleration
