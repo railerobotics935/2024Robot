@@ -78,7 +78,7 @@ AutoBuilder::configureHolonomic(
         kDriveBaseRadius, // Drive base radius in meters. Distance from robot center to furthest module.
         ReplanningConfig() // Default path replanning config. See the API for the options here
     ),
-    // Supplier that determines if paths should be flipped to the other side of the field. This will maintain a global blue alliance origin.
+    // Supplier that determines if paths should be flipped to the other side of the field. This will helps keep the cordinate system on the blue side
     [this](){return InRedAlliance();},
     this // Reference to this subsystem to set requirements
   );
@@ -122,8 +122,8 @@ AutoBuilder::configureHolonomic(
   //nte_ki.SetDouble(0.0);
   //nte_kd.SetDouble(0.0);
 
-
   nte_robot_distance_to_goal = nt_table->GetEntry("Pose Estimation/Distance to Goal");
+  
   // Send Field to shuffleboard
   frc::Shuffleboard::GetTab("Field").Add(m_field);
 
@@ -447,7 +447,6 @@ frc::ChassisSpeeds DriveSubsystem::GetFieldRelativeSpeeds()
 
                             (units::radians_per_second_t)GetRobotRelativeSpeeds().omega()}; // Rotational Velocity stays the same
 }
-
 
 void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
   m_poseEstimator.ResetPosition(
