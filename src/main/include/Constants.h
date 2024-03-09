@@ -366,13 +366,13 @@ namespace FrontCamera {
 namespace BackLeftCamera {
     const frc::Translation3d kTranlation3d{(units::meter_t)-0.250, (units::meter_t)0.4125, (units::meter_t)0.2286};
     const frc::Rotation3d kRotation3d{(units::radian_t)std::numbers::pi * -0.1116883853, (units::radian_t)std::numbers::pi * 0.1116883853, (units::radian_t)std::numbers::pi * 1.25};
-    const frc::Pose3d kPose3d{kTranlation3d, kRotation3d};
+    const frc::Pose3d kPose3d{-kTranlation3d, kRotation3d};
 } // namespace BackLeftCamera
 
 namespace BackRightCamera {
     const frc::Translation3d kTranlation3d{(units::meter_t)-0.250, (units::meter_t)-0.4125, (units::meter_t)0.2286};
     const frc::Rotation3d kRotation3d{(units::radian_t)std::numbers::pi * 0.1116883853, (units::radian_t)std::numbers::pi * 0.1116883853, (units::radian_t)std::numbers::pi * 0.75};
-    const frc::Pose3d kPose3d{kTranlation3d, kRotation3d};
+    const frc::Pose3d kPose3d{-kTranlation3d, kRotation3d};
 } // namespace BackRightCamera
 
 } // namespace CameraConstants

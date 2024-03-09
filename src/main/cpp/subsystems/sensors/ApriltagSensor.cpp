@@ -13,8 +13,8 @@ ApriltagSensor::ApriltagSensor(std::string cameraName, frc::Pose3d cameraPose3d)
 	
 	// Set the camera name to identify whitch camera to look at in NT
 	m_cameraName = cameraName;
-  m_cameraPose3d = cameraPose3d;
-  m_cameraTransform2d = {cameraPose3d.ToPose2d().Translation(), cameraPose3d.ToPose2d().Rotation()};
+  m_cameraPose3d = frc::Pose3d{-cameraPose3d.Translation(), -cameraPose3d.Rotation()};
+  m_cameraTransform2d = {m_cameraPose3d.ToPose2d().Translation(), m_cameraPose3d.ToPose2d().Rotation()};
 
 	auto nt_inst = nt::NetworkTableInstance::GetDefault();
 	auto nt_table = nt_inst.GetTable("SmartDashboard");
@@ -35,10 +35,13 @@ ApriltagSensor::ApriltagSensor(std::string cameraName, frc::Pose3d cameraPose3d)
   sprintf(s_tableEntryPath, "%s/Latency/Apriltag", m_cameraName.c_str());
   nte_latency = nt_table->GetEntry(s_tableEntryPath);
 
-    // Latency from time camera picks up image to when the pi published the data
+  // Latency from time camera picks up image to when the pi published the data
   sprintf(s_tableEntryPath, "%s/Latency/Final", m_cameraName.c_str());
   nte_finalLatency = nt_table->GetEntry(s_tableEntryPath);
 
+  // Estimated Robot pose 3d
+  sprintf(s_tableEntryPath, "%s/RobotEstimatedPose", m_cameraName.c_str());
+  nte_estimatedRobotPose = nt_table->GetEntry(s_tableEntryPath);
 }
 
 frc::Pose3d ApriltagSensor::GetFieldRelativePose(int tag) {
@@ -59,7 +62,11 @@ frc::Pose3d ApriltagSensor::GetFieldRelativePose(int tag) {
                                 frc::CoordinateSystem::NWU());
   
   // Final Transformation
-  return m_fieldLayout.GetTagPose(tag).value().TransformBy(frc::Transform3d{m_convertedTranslation, m_correctedRotation}).TransformBy(frc::Transform3d{m_cameraPose3d.Translation(), m_cameraPose3d.Rotation()});
+  m_estimatedPose = m_fieldLayout.GetTagPose(tag).value().TransformBy(frc::Transform3d{m_convertedTranslation, m_correctedRotation}).TransformBy(frc::Transform3d{m_cameraPose3d.Translation(), m_cameraPose3d.Rotation()});
+  
+  nte_estimatedRobotPose.SetDoubleArray(std::vector<double>{(double)m_estimatedPose.Translation().X(), (double)m_estimatedPose.Translation().Y(), (double)m_estimatedPose.Translation().Z(),
+                                         (double)m_estimatedPose.Rotation().X(), (double)m_estimatedPose.Rotation().Y(), (double)m_estimatedPose.Rotation().Z()});
+  return m_estimatedPose;
 }
 
 wpi::array<double, 3> ApriltagSensor::GetStandardDeviations(int tag) {
