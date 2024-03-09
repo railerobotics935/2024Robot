@@ -5,7 +5,7 @@
 #include <Constants.h>
 #include <frc/geometry/CoordinateSystem.h>
 
-#include "subsystems/OakDLiteSensor.h"
+#include "subsystems/sensors/OakDLiteSensor.h"
 
 
 OakDLiteSensor::OakDLiteSensor(std::string cameraName, frc::Pose3d cameraPose3d, frc::SwerveDrivePoseEstimator<4>* poseEstimator) {

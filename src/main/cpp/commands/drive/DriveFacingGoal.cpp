@@ -23,7 +23,7 @@ void DriveFacingGoal::Execute() {
   
   m_drive->DriveFacingGoal(units::meters_per_second_t{MathUtils::SignedSquare(xSpeed)},
     units::meters_per_second_t{MathUtils::SignedSquare(ySpeed)},
-    MathUtils::AngleToGoal(m_drive->GetPose().Translation()), 
+    MathUtils::AngleToGoal(MathUtils::TranslationToGoal(m_drive->GetPose())), 
     true);
 
   if (m_drive->AtAngleSetpoint())

@@ -22,9 +22,9 @@
 #include <rev/CANSparkMax.h>
 
 // Turn this off when there is no new constants need to be burned onto motorcontrollers
-//#define BURNSHOOTERSPARKMAX 
-//#define BURNSTAGERSPARKMAX
-//#define BURNMODULESPARKMAX
+#define BURNSHOOTERSPARKMAX 
+#define BURNSTAGERSPARKMAX
+#define BURNMODULESPARKMAX
 
 /**
  * The Constants header provides a convenient place for teams to hold robot-wide
@@ -48,6 +48,8 @@ namespace GameConstants {
 
 namespace RobotConstants {
 
+constexpr double kVoltageCompentationValue = 11.0;
+
 const units::meter_t kIntakeSideWidth =
   0.825_m;  // Distance between centers of right and left wheels on robot
 const units::meter_t kShooterSideWidth =
@@ -64,7 +66,7 @@ constexpr units::meters_per_second_t kMaxSpeed = 4.0_mps;
 constexpr units::radians_per_second_t kMaxAngularSpeed{1.25 * std::numbers::pi};
 
 constexpr double kDirectionSlewRate = 6.0;   // radians per second
-constexpr double kMagnitudeSlewRate = 3.0;   // percent per second (1 = 100%)
+constexpr double kMagnitudeSlewRate = 3.5;   // percent per second (1 = 100%)
 constexpr double kRotationalSlewRate = 4.0;  // percent per second (1 = 100%)
 
 // CAN Sparkmax id numbers
@@ -77,6 +79,11 @@ constexpr int kFrontLeftTurningMotorPort = 23;
 constexpr int kFrontRightTurningMotorPort = 16;
 constexpr int kBackLeftTurningMotorPort = 20;
 constexpr int kBackRightTurningMotorPort = 19;
+
+// PID Controller for the auto rotation of the robot
+constexpr double kRotationP = 2.5;
+constexpr double kRotationI = 0.002;
+constexpr double kRotationD = 0.05;
 
 // Anolog input ports on roborio
 constexpr int kFrontLeftTurningEncoderPort = kFrontLeftTurningMotorPort;
@@ -338,8 +345,8 @@ constexpr int kOperatorControllerPort = 1;
 namespace CameraConstants {
 
 // Min and Max standard deviations for the apriltag detetion 
-constexpr double kMinStandardDeviation = 1.0;
-constexpr double kMaxStandardDeviation = 1.5;
+constexpr double kMinStandardDeviation = 1.4;
+constexpr double kMaxStandardDeviation = 3.5;
 
 /**
  * @param distance The raw distance from the apriltag
@@ -353,22 +360,20 @@ double GetStandardDeviationFromDistance(double distance);
 // X if forward, Y is Left, Z is up 
 namespace FrontCamera {
     const frc::Translation3d kTranlation3d{(units::meter_t)0.250, (units::meter_t)-0.185, (units::meter_t)0.2286};
-    const frc::Rotation3d kRotation3d{(units::radian_t)0.0, (units::radian_t)std::numbers::pi / 12.0, (units::radian_t)0.0};
+    const frc::Rotation3d kRotation3d{(units::radian_t)0.0, (units::radian_t)std::numbers::pi / 12, (units::radian_t)0.0};
     const frc::Pose3d kPose3d{kTranlation3d, kRotation3d};
 } // namespace FrontCamera
 
 namespace BackLeftCamera {
-    const frc::Translation3d kTranlation3d{(units::meter_t)-0.250, -(units::meter_t)0.4125, (units::meter_t)0.2286};
-    const frc::Rotation3d kYawRotation3d{(units::radian_t)0.0, (units::radian_t)0.0, (units::radian_t)std::numbers::pi * 1.25};
-    const frc::Rotation3d kPitchRotation3d{(units::radian_t)0.0, (units::radian_t)std::numbers::pi / 12.0, (units::radian_t)0.0};
-    const frc::Pose3d kPose3d{kTranlation3d, kYawRotation3d};
+    const frc::Translation3d kTranlation3d{(units::meter_t)-0.250, (units::meter_t)0.4125, (units::meter_t)0.2286};
+    const frc::Rotation3d kRotation3d{(units::radian_t)std::numbers::pi * 0.1152976, -(units::radian_t)std::numbers::pi * 0.1152976, (units::radian_t)std::numbers::pi * 1.25};
+    const frc::Pose3d kPose3d{kTranlation3d, kRotation3d};
 } // namespace BackLeftCamera
 
 namespace BackRightCamera {
-    const frc::Translation3d kTranlation3d{(units::meter_t)-0.250, -(units::meter_t)-0.4125, (units::meter_t)0.2286};
-    const frc::Rotation3d kYawRotation3d{(units::radian_t)0.0, (units::radian_t)0.0, (units::radian_t)std::numbers::pi * 0.75};
-    const frc::Rotation3d kPitchRotation3d{(units::radian_t)0.0, (units::radian_t)std::numbers::pi / 12.0, (units::radian_t)0.0};
-    const frc::Pose3d kPose3d{kTranlation3d, kYawRotation3d};
+    const frc::Translation3d kTranlation3d{(units::meter_t)-0.250, (units::meter_t)-0.4125, (units::meter_t)0.2286};
+    const frc::Rotation3d kRotation3d{(units::radian_t)std::numbers::pi * 0.1152976, -(units::radian_t)std::numbers::pi * 0.1152976, (units::radian_t)std::numbers::pi * 0.75};
+    const frc::Pose3d kPose3d{kTranlation3d, kRotation3d};
 } // namespace BackRightCamera
 
 } // namespace CameraConstants

@@ -37,5 +37,4 @@ class DriveFacingGoal
   // Declare private subsystem pointers to refrence real subsystmes
   DriveSubsystem* m_drive;
   frc::XboxController* m_driveController;
-
 };

@@ -17,7 +17,12 @@ ShooterSubsystem::ShooterSubsystem(double shooterAngleOffset) : m_topShooterMoto
   m_topShooterMotor.RestoreFactoryDefaults();
   m_bottomShooterMotor.RestoreFactoryDefaults();
   m_pitchMotor.RestoreFactoryDefaults();
-
+  
+  // Enable Voltage
+  m_topShooterMotor.EnableVoltageCompensation(RobotConstants::kVoltageCompentationValue);
+  m_bottomShooterMotor.EnableVoltageCompensation(RobotConstants::kVoltageCompentationValue);
+  m_pitchMotor.EnableVoltageCompensation(RobotConstants::kVoltageCompentationValue);
+  
   // Set converstion factors for encoders
   m_topShooterEncoder.SetPositionConversionFactor(kShooterPositionFactor);
   m_topShooterEncoder.SetVelocityConversionFactor(kShooterEncoderVelocityFactor);

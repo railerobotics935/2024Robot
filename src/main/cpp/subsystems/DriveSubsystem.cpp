@@ -114,6 +114,15 @@ AutoBuilder::configureHolonomic(
   nte_robot_x = nt_table->GetEntry("Swerve Drive/Robot X");
   nte_robot_y = nt_table->GetEntry("Swerve Drive/Robot Y");
 
+  //nte_kp = nt_table->GetEntry("SwerveDrive/PID/KP");
+  //nte_ki = nt_table->GetEntry("SwerveDrive/PID/KI");
+  //nte_kd = nt_table->GetEntry("SwerveDrive/PID/KD"); 
+
+  //nte_kp.SetDouble(1.0);
+  //nte_ki.SetDouble(0.0);
+  //nte_kd.SetDouble(0.0);
+
+
   nte_robot_distance_to_goal = nt_table->GetEntry("Pose Estimation/Distance to Goal");
   // Send Field to shuffleboard
   frc::Shuffleboard::GetTab("Field").Add(m_field);
@@ -158,6 +167,10 @@ void DriveSubsystem::Periodic() {
 
   // Set robot position to shuffleboard field
   m_field.SetRobotPose(m_poseEstimator.GetEstimatedPosition());
+
+  //m_robotAngleController.SetP(nte_kp.GetDouble(1.0));
+  //m_robotAngleController.SetI(nte_ki.GetDouble(0.0));
+  //m_robotAngleController.SetD(nte_kd.GetDouble(0.0));
 
   // Update robot distance from goal
   nte_robot_distance_to_goal.SetDouble((double)MathUtils::RobotDistanceToGoal(m_poseEstimator.GetEstimatedPosition()));
@@ -392,25 +405,6 @@ void DriveSubsystem::SetModuleStates(
   m_backRight.SetDesiredState(desiredStates[3]);
 }
 
-// Method to put the Robot in Park
-void DriveSubsystem::Park()
-{
-  frc::SwerveModuleState fl;
-  frc::SwerveModuleState fr;
-  frc::SwerveModuleState bl;
-  frc::SwerveModuleState br;
-
-  fl.angle = frc::Rotation2d (units::radian_t(std::numbers::pi / 4));
-  fr.angle = frc::Rotation2d (units::radian_t(-std::numbers::pi / 4));
-  bl.angle = frc::Rotation2d (units::radian_t(-std::numbers::pi / 4));
-  br.angle = frc::Rotation2d (units::radian_t(std::numbers::pi / 4));
-
-  m_frontLeft.SetDesiredState(fl);
-  m_frontRight.SetDesiredState(fr);
-  m_backLeft.SetDesiredState(bl);
-  m_backRight.SetDesiredState(br);
-}
-
 units::degree_t DriveSubsystem::GetHeading() const {
   return -m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw);
 }
@@ -475,12 +469,12 @@ void DriveSubsystem::EstimatePoseWithApriltag() {
     if (m_frontCameraSensor.TagIsTracked(tag) && m_frontCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
       m_poseEstimator.AddVisionMeasurement(m_frontCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_frontCameraSensor.GetTimestamp(tag), m_frontCameraSensor.GetStandardDeviations(tag));
 
-    // Back Left Camera
-    //if (m_backLeftCameraSensor.TagIsTracked(tag) && m_backLeftCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
-    //  m_poseEstimator.AddVisionMeasurement(m_backLeftCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backLeftCameraSensor.GetTimestamp(tag), m_backLeftCameraSensor.GetStandardDeviations(tag));
+//    // Back Left Camera
+//    if (m_backLeftCameraSensor.TagIsTracked(tag) && m_backLeftCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
+//      m_poseEstimator.AddVisionMeasurement(m_backLeftCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backLeftCameraSensor.GetTimestamp(tag), m_backLeftCameraSensor.GetStandardDeviations(tag));
 //
-    //// Back Right Camera
-    //if (m_backRightCameraSensor.TagIsTracked(tag) && m_backRightCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
-    //  m_poseEstimator.AddVisionMeasurement(m_backRightCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backRightCameraSensor.GetTimestamp(tag), m_backRightCameraSensor.GetStandardDeviations(tag));
+//    // Back Right Camera
+//    if (m_backRightCameraSensor.TagIsTracked(tag) && m_backRightCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
+//      m_poseEstimator.AddVisionMeasurement(m_backRightCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backRightCameraSensor.GetTimestamp(tag), m_backRightCameraSensor.GetStandardDeviations(tag));
   }
 } 

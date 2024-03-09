@@ -19,10 +19,11 @@
 #include <frc/apriltag/AprilTagFieldLayout.h>
 #include <frc/estimator/SwerveDrivePoseEstimator.h>
 #include <frc/controller/PIDController.h>
+#include <frc2/command/PIDSubsystem.h>
 
 #include "Constants.h"
 #include "SwerveModule.h"
-#include "ApriltagSensor.h"
+#include "sensors/ApriltagSensor.h"
 
 class DriveSubsystem : public frc2::SubsystemBase {
 public:
@@ -122,6 +123,13 @@ public:
   frc::Pose2d GetPose();
 
   /**
+   * Returns the rotation of the robot reletive to the driver to use for field relative
+   *
+   * @return The rotation.
+   */
+  frc::Rotation2d GetRotation();
+
+  /**
    * Returns the chassis speeds of the robot IN ROBOT RELATIVE
    * 
    * @return Robot chassis speeds
@@ -141,12 +149,6 @@ public:
    * @param pose The pose to which to set the odometry.
    */
   void ResetOdometry(frc::Pose2d pose);
-
-  /**
-   * Sets the wheels on the swerve modules in an X shape 
-   * 
-  */
-  void Park();
 
   /**
    *  Uses the 3d transfomation information from apriltag to further 
@@ -191,6 +193,10 @@ private:
   nt::NetworkTableEntry nte_robot_x;
   nt::NetworkTableEntry nte_robot_y;
 
+  //nt::NetworkTableEntry nte_kp;
+  //nt::NetworkTableEntry nte_ki;
+  //nt::NetworkTableEntry nte_kd;
+
   nt::NetworkTableEntry nte_robot_distance_to_goal;
 
   frc::Field2d m_field;
@@ -207,8 +213,8 @@ private:
 
   // Apriltag sensor 
   ApriltagSensor m_frontCameraSensor{"FrontCam", CameraConstants::FrontCamera::kPose3d};
-  //ApriltagSensor m_backLeftCameraSensor{"BackLeftCam", CameraConstants::BackLeftCamera::kPose3d};
-  //ApriltagSensor m_backRightCameraSensor{"BackRightCam", CameraConstants::BackRightCamera::kPose3d};
+  ApriltagSensor m_backLeftCameraSensor{"BackLeftCam", CameraConstants::BackLeftCamera::kPose3d};
+  ApriltagSensor m_backRightCameraSensor{"BackRightCam", CameraConstants::BackRightCamera::kPose3d};
 
   // Odometry class for tracking robot pose
   // 4 defines the number of modules
@@ -229,7 +235,7 @@ private:
   double m_prevTime = wpi::Now() * 1e-6;
 
   // PID controller for robot angle
-  frc::PIDController m_robotAngleController{AutoConstants::kPRotationController, AutoConstants::kIRotationController, AutoConstants::kDRotationController};
+  frc::PIDController m_robotAngleController{DriveConstants::kRotationP, DriveConstants::kRotationI, DriveConstants::kRotationD};
 
   // Variables to internialy keep track of drive state
   bool m_fieldRelative = true;
