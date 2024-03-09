@@ -14,10 +14,10 @@ IntakeSubsystem::IntakeSubsystem() : m_intakeMotor{IntakeConstants::kMotorID, In
   // Enable Voltage Compensation
   m_intakeMotor.EnableVoltageCompensation(RobotConstants::kVoltageCompentationValue);
 
-  printf("Burned Intake Motor Controller");
+  printf("Burned Intake Motor Controller\r\n");
   #else
 
-  printf("Did Not Burn Intake Motor Controller");
+  printf("Did Not Burn Intake Motor Controller\r\n");
   #endif
 }
 
