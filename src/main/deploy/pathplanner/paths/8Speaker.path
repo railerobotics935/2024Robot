@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.1529330422057296,
-        "y": 6.473839455992257
+        "x": 7.841267178971414,
+        "y": 0.7409816244810651
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8384715971711143,
-        "y": 6.5136440244390466
+        "x": 4.77984309887378,
+        "y": 1.1699709860206222
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.561123321769186,
-        "y": 6.893079059317069
+        "x": 0.8799398121313403,
+        "y": 4.387391197583136
       },
       "prevControl": {
-        "x": 1.2186814117217974,
-        "y": 7.4608705342766815
+        "x": 1.6989195023472514,
+        "y": 2.066948741971385
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,14 +39,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 145.0466979165107,
+    "rotation": 124.28687697720896,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Practice",
+  "folder": null,
   "previewStartingState": {
-    "rotation": -179.23029623049678,
-    "velocity": 0.0
+    "rotation": -179.99999999965553,
+    "velocity": 0
   },
   "useDefaultConstraints": false
 }

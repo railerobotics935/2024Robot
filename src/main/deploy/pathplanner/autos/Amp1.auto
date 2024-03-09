@@ -2,15 +2,21 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.1529330422057296,
-      "y": 6.473839455992257
+      "x": 1.2504306243766656,
+      "y": 6.347092599178589
     },
-    "rotation": 179.18476394103388
+    "rotation": -137.3859440297155
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
+        },
         {
           "type": "parallel",
           "data": {
@@ -18,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "TestIntake"
+                  "pathName": "Amp1"
                 }
               },
               {
@@ -29,10 +35,22 @@
               }
             ]
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "1Speaker"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot"
+          }
         }
       ]
     }
   },
-  "folder": "Practice",
+  "folder": null,
   "choreoAuto": false
 }
