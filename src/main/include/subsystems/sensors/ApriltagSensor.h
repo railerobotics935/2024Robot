@@ -70,7 +70,7 @@ private:
   std::string m_cameraName;
   frc::Pose3d m_cameraPose3d;
   frc::Transform2d m_cameraTransform2d;
-  frc::Pose3d m_estimatedPose;
+  frc::Pose3d m_calculatedRobotPose;
   
   // Create path to deploy directory
   fs::path deployDirectory{frc::filesystem::GetDeployDirectory() + "/2024-crescendo.json"};

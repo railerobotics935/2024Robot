@@ -30,7 +30,6 @@
 #include "commands/drive/SlowDrive.h"
 #include "commands/shooter/ManualNteShooter.h"
 #include "commands/intake/SmartIntake.h"
-
 #include "Constants.h"
 #include "subsystems/DriveSubsystem.h"
 
@@ -38,8 +37,8 @@ using namespace DriveConstants;
 using namespace pathplanner;
 
 RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
-  // Initialize all of your commands and subsystems here
 
+  // Initialize all of your commands and subsystems here
   // Configuring command bindings for pathplanner
   NamedCommands::registerCommand("SimpleIntake", SimpleIntake{&m_intake}.ToPtr());
   

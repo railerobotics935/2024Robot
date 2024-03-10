@@ -14,6 +14,7 @@
 #include <frc2/command/ParallelRaceGroup.h>
 #include <frc2/command/RunCommand.h>
 #include <frc/filter/SlewRateLimiter.h>
+#include <frc/PowerDistribution.h>
 
 #include "Constants.h"
 #include "utils/SwerveUtils.h"
@@ -45,6 +46,7 @@ class RobotContainer {
   frc::XboxController m_driveController{OIConstants::kDriverControllerPort};
   frc::XboxController m_operatorController{OIConstants::kOperatorControllerPort};
 
+  frc::PowerDistribution m_revPDH{1, frc::PowerDistribution::ModuleType::kRev};
   // Variables 
   bool isFieldRelative = true;
 
