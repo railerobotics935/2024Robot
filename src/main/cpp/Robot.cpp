@@ -120,12 +120,6 @@ void Robot::RobotInit() {}
  */
 void Robot::RobotPeriodic() {
   frc2::CommandScheduler::GetInstance().Run();
-
-  // Get Estimate Pose Command and 
-  m_estimatePoseCommand = m_container.GetRobotCommand();
-  if (m_estimatePoseCommand) {
-    m_estimatePoseCommand->Schedule();
-  }
 }
 
 /**
