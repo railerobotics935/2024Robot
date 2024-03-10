@@ -62,7 +62,7 @@ DriveSubsystem::DriveSubsystem()
                 m_backLeft.GetPosition(), m_backRight.GetPosition()},
                 frc::Pose2d{(units::meter_t)3.0, (units::meter_t)3.0, -m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw)},
                 {0.05, 0.05, 0.05}, // Standard Deviation of the encoder position value
-                {0.5, 0.5, 0.5}} // Standard Deviation of vision pose esitmation
+                {0.1, 0.1, 0.1}} // Standard Deviation of vision pose esitmation
 {
   
 // Configure the AutoBuilder last
@@ -466,14 +466,14 @@ void DriveSubsystem::EstimatePoseWithApriltag() {
 
     // Front Camera
     if (m_frontCameraSensor.TagIsTracked(tag) && m_frontCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
-      m_poseEstimator.AddVisionMeasurement(m_frontCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_frontCameraSensor.GetTimestamp(tag), m_frontCameraSensor.GetStandardDeviations(tag));
+      m_poseEstimator.AddVisionMeasurement(m_frontCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_frontCameraSensor.GetTimestamp(tag));
 
     // Back Left Camera
     if (m_backLeftCameraSensor.TagIsTracked(tag) && m_backLeftCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
-      m_poseEstimator.AddVisionMeasurement(m_backLeftCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backLeftCameraSensor.GetTimestamp(tag), m_backLeftCameraSensor.GetStandardDeviations(tag));
+      m_poseEstimator.AddVisionMeasurement(m_backLeftCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backLeftCameraSensor.GetTimestamp(tag));
 
     // Back Right Camera
     if (m_backRightCameraSensor.TagIsTracked(tag) && m_backRightCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
-      m_poseEstimator.AddVisionMeasurement(m_backRightCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backRightCameraSensor.GetTimestamp(tag), m_backRightCameraSensor.GetStandardDeviations(tag));
+      m_poseEstimator.AddVisionMeasurement(m_backRightCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backRightCameraSensor.GetTimestamp(tag));
   }
 } 

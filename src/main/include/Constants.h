@@ -348,6 +348,9 @@ namespace CameraConstants {
 constexpr double kMinStandardDeviation = 0.4;
 constexpr double kMaxStandardDeviation = 0.5;
 
+// Max speed allowed for adding vidion measurments to the robot pose esitmator
+constexpr double kMaxEstimationSpeed = 1.5; // mps
+
 /**
  * @param distance The raw distance from the apriltag
  * 
@@ -360,7 +363,6 @@ double GetStandardDeviationFromDistance(double distance);
 namespace FrontCamera {
     const frc::Translation3d kTranlation3d{(units::meter_t)0.250, (units::meter_t)-0.185, (units::meter_t)0.2286};
     const frc::Rotation3d kRotation3d{(units::radian_t)0.0, (units::radian_t)std::numbers::pi / 12, (units::radian_t)0.0};
-    //const frc::Rotation3d kRotation3d{(units::radian_t)0.0, (units::radian_t)std::numbers::pi / 12, (units::radian_t)std::numbers::pi};
     const frc::Pose3d kPose3d{kTranlation3d, kRotation3d};
 } // namespace FrontCamera
 

@@ -30,6 +30,7 @@
 #include "commands/drive/SlowDrive.h"
 #include "commands/shooter/ManualNteShooter.h"
 #include "commands/intake/SmartIntake.h"
+#include "commands/EstimatePose.h"
 #include "Constants.h"
 #include "subsystems/DriveSubsystem.h"
 
@@ -112,6 +113,10 @@ void RobotContainer::ConfigureButtonBindings() {
     m_shooter.SetIndivualShooterSpeed((units::revolutions_per_minute_t)200,(units::revolutions_per_minute_t)3300);
   }, {&m_shooter}));
 }
+
+  frc2::CommandPtr RobotContainer::GetRobotCommand() {
+    return EstimatePose{&m_drive}.ToPtr();
+  }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
   
