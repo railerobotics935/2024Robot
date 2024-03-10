@@ -20,24 +20,19 @@ frc::Translation2d MathUtils::TranslationToGoal(frc::Pose2d robotPose) {
   // Create path to deploy directory
   fs::path deployDirectory{frc::filesystem::GetDeployDirectory() + "/2024-crescendo.json"};
   // Initialize variables
-  frc::AprilTagFieldLayout m_fieldLayout{deployDirectory.string()}; 
+  frc::AprilTagFieldLayout fieldLayout{deployDirectory.string()}; 
   frc::Pose2d centerOfSpeaker{};
 
   if (frc::DriverStation::GetAlliance() == frc::DriverStation::Alliance::kBlue) {
     // Get position of center of blue speaker
-  centerOfSpeaker = m_fieldLayout.GetTagPose(7).value().ToPose2d(); 
+    centerOfSpeaker = fieldLayout.GetTagPose(7).value().ToPose2d(); 
   } else {
     // Get position of center of red speaker
-    centerOfSpeaker = m_fieldLayout.GetTagPose(4).value().ToPose2d(); 
+    centerOfSpeaker = fieldLayout.GetTagPose(4).value().ToPose2d(); 
   }
   
   // Find Translation of robot
   return robotPose.operator-(centerOfSpeaker).Translation();
-/*
-  // Finding the distance between the robot and center of goal in meters
-  double robotDistanceToGoal = std::sqrt(std::pow((double)robotTranslation.X(), 2) + std::pow((double)robotTranslation.Y(), 2));
-  return robotDistanceToGoal;
-*/
 }
 
 double MathUtils::RobotDistanceToGoal(frc::Pose2d robotPose) {

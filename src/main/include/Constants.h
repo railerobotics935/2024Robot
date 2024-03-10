@@ -22,9 +22,9 @@
 #include <rev/CANSparkMax.h>
 
 // Turn this off when there is no new constants need to be burned onto motorcontrollers
-#define BURNSHOOTERSPARKMAX 
-#define BURNSTAGERSPARKMAX
-#define BURNMODULESPARKMAX
+//#define BURNSHOOTERSPARKMAX 
+//#define BURNSTAGERSPARKMAX
+//#define BURNMODULESPARKMAX
 
 /**
  * The Constants header provides a convenient place for teams to hold robot-wide
