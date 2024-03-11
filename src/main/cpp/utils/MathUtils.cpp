@@ -37,7 +37,8 @@ frc::Translation2d MathUtils::TranslationToGoal(frc::Pose2d robotPose) {
 
 double MathUtils::RobotDistanceToGoal(frc::Pose2d robotPose) {
   //Find the distance between the robot and the goal
-  double robotDistanceToGoal = std::sqrt(std::pow((double)robotPose.X(), 2) + std::pow((double)robotPose.Y(), 2));
+  frc::Translation2d translationToGoal = TranslationToGoal(robotPose);
+  double robotDistanceToGoal = std::sqrt(std::pow((double)translationToGoal.X(), 2) + std::pow((double)translationToGoal.Y(), 2));
   return robotDistanceToGoal;
 }
 

@@ -13,6 +13,7 @@ DriveFacingGoal::DriveFacingGoal(DriveSubsystem* drive, frc::XboxController* dri
 
 void DriveFacingGoal::Initialize() {
   // Run once when command is scheduled
+  m_gyroOffset = ((double)m_drive->GetPose().Rotation().Radians()) - ((double)m_drive->GetHeading() * std::numbers::pi / 180.0);
   printf("DriveFacingGoal Initialized\r\n");
 }
 
@@ -22,19 +23,14 @@ void DriveFacingGoal::Execute() {
   const auto ySpeed = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveLeftXIndex), 0.05);
   
   m_drive->DriveFacingGoal(units::meters_per_second_t{MathUtils::SignedSquare(xSpeed)},
-    units::meters_per_second_t{MathUtils::SignedSquare(ySpeed)},
-    MathUtils::AngleToGoal(MathUtils::TranslationToGoal(m_drive->GetPose())), 
+    units::meters_per_second_t{MathUtils::SignedSquare(ySpeed)}, //frc::Rotation2d{}.operator-((units::radian_t)m_gyroOffset),
+    MathUtils::AngleToGoal(MathUtils::TranslationToGoal(m_drive->GetPose())).operator-((units::radian_t)m_gyroOffset), 
     true);
 
   if (m_drive->AtAngleSetpoint())
     m_driveController->SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.5);
   else
     m_driveController->SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
-}
-
-bool DriveFacingGoal::IsFinished() {
-  // You can make a custom state to end the command and then return true
-  return false;
 }
 
 void DriveFacingGoal::End(bool interrupted) {

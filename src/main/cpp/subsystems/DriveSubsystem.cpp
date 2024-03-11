@@ -62,7 +62,7 @@ DriveSubsystem::DriveSubsystem()
                 m_backLeft.GetPosition(), m_backRight.GetPosition()},
                 frc::Pose2d{(units::meter_t)3.0, (units::meter_t)3.0, -m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw)},
                 {0.05, 0.05, 0.05}, // Standard Deviation of the encoder position value
-                {0.1, 0.1, 0.1}} // Standard Deviation of vision pose esitmation
+                {0.7, 0.7, 0.7}} // Standard Deviation of vision pose esitmation
 {
   
 // Configure the AutoBuilder last
@@ -114,13 +114,13 @@ AutoBuilder::configureHolonomic(
   nte_robot_x = nt_table->GetEntry("Swerve Drive/Robot X");
   nte_robot_y = nt_table->GetEntry("Swerve Drive/Robot Y");
 
-  //nte_kp = nt_table->GetEntry("SwerveDrive/PID/KP");
-  //nte_ki = nt_table->GetEntry("SwerveDrive/PID/KI");
-  //nte_kd = nt_table->GetEntry("SwerveDrive/PID/KD"); 
+  nte_kp = nt_table->GetEntry("SwerveDrive/PID/KP");
+  nte_ki = nt_table->GetEntry("SwerveDrive/PID/KI");
+  nte_kd = nt_table->GetEntry("SwerveDrive/PID/KD"); 
 
-  //nte_kp.SetDouble(1.0);
-  //nte_ki.SetDouble(0.0);
-  //nte_kd.SetDouble(0.0);
+  nte_kp.SetDouble(4.5);
+  nte_ki.SetDouble(0.002);
+  nte_kd.SetDouble(0.05);
 
   nte_robot_distance_to_goal = nt_table->GetEntry("Pose Estimation/Distance to Goal");
   
@@ -145,10 +145,11 @@ void DriveSubsystem::Periodic() {
                     m_backLeft.GetPosition(), m_backRight.GetPosition()});
 
   // set odometry relative to the apriltag
-  if (GetLinearRobotSpeed() < CameraConstants::kMaxEstimationSpeed) {
+  if (GetLinearRobotSpeed() < CameraConstants::kMaxEstimationSpeed && GetTurnRate() < 10.0) {
     EstimatePoseWithApriltag();
-    printf("estimating\r\n");
   }
+  m_poseEstimator.Update(-m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw), 
+                      {m_frontLeft.GetPosition(), m_frontRight.GetPosition(), m_backLeft.GetPosition(), m_backRight.GetPosition()});
                     
   nte_fl_real_angle.SetDouble((double)m_frontLeft.GetState().angle.Radians());
   nte_fr_real_angle.SetDouble((double)m_frontRight.GetState().angle.Radians());
@@ -171,9 +172,9 @@ void DriveSubsystem::Periodic() {
   // Set robot position to shuffleboard field
   m_field.SetRobotPose(m_poseEstimator.GetEstimatedPosition());
 
-  //m_robotAngleController.SetP(nte_kp.GetDouble(1.0));
-  //m_robotAngleController.SetI(nte_ki.GetDouble(0.0));
-  //m_robotAngleController.SetD(nte_kd.GetDouble(0.0));
+  //m_robotAngleController.SetP(nte_kp.GetDouble(4.5));
+  //m_robotAngleController.SetI(nte_ki.GetDouble(0.002));
+  //m_robotAngleController.SetD(nte_kd.GetDouble(0.05));
 
   // Update robot distance from goal
   nte_robot_distance_to_goal.SetDouble((double)MathUtils::RobotDistanceToGoal(m_poseEstimator.GetEstimatedPosition()));
@@ -336,13 +337,15 @@ void DriveSubsystem::DriveFacingGoal(units::meters_per_second_t xSpeed,
 
     xSpeedCommanded = m_currentTranslationMag * cos(m_currentTranslationDir);
     ySpeedCommanded = m_currentTranslationMag * sin(m_currentTranslationDir);
-    m_currentRotation = m_rotLimiter.Calculate(m_robotAngleController.Calculate((double)m_poseEstimator.GetEstimatedPosition().Rotation().Radians(), (double)rotation.Radians()));
+    m_currentRotation = m_rotLimiter.Calculate(m_robotAngleController.Calculate(
+      (double)(GetHeading() * std::numbers::pi / 180.0), (double)rotation.Radians()));
+      //(double)(GetHeading() * std::numbers::pi / 180.0), (double)rotation.Radians()));
 
   } 
   else {
     xSpeedCommanded = xSpeed.value();
     ySpeedCommanded = ySpeed.value();
-    m_currentRotation = m_robotAngleController.Calculate((double)m_poseEstimator.GetEstimatedPosition().Rotation().Radians(), (double)rotation.Radians());
+    m_currentRotation = m_robotAngleController.Calculate((double)(GetHeading() * std::numbers::pi / 180.0), (double)rotation.Radians());
   }
 
   // Convert the commanded speeds into the correct units for the drivetrain
@@ -465,9 +468,6 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
 }
 
 void DriveSubsystem::EstimatePoseWithApriltag() {
-  
-  m_poseEstimator.Update(-m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw), 
-                        {m_frontLeft.GetPosition(), m_frontRight.GetPosition(), m_backLeft.GetPosition(), m_backRight.GetPosition()});
                 
   // Iterate through each tag, adding it to the pose estimator if it is tracked
   for (int tag = 1; tag <= 16; tag++ ) { // Check each tag for each camera

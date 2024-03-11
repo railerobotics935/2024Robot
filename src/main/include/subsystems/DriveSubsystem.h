@@ -198,9 +198,9 @@ private:
   nt::NetworkTableEntry nte_robot_x;
   nt::NetworkTableEntry nte_robot_y;
 
-  //nt::NetworkTableEntry nte_kp;
-  //nt::NetworkTableEntry nte_ki;
-  //nt::NetworkTableEntry nte_kd;
+  nt::NetworkTableEntry nte_kp;
+  nt::NetworkTableEntry nte_ki;
+  nt::NetworkTableEntry nte_kd;
 
   nt::NetworkTableEntry nte_robot_distance_to_goal;
 

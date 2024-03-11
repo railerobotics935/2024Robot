@@ -11,7 +11,7 @@ SmartShooter::SmartShooter(ShooterSubsystem* shooter, DriveSubsystem* drive, frc
   m_driveController = driveController;
 
   AddRequirements(m_shooter);
-  AddRequirements(m_drive);
+  //AddRequirements(m_drive);
 }
 
 // Right now nothing, but maybe somthing later
@@ -21,15 +21,15 @@ void SmartShooter::Initialize() {
 
 void SmartShooter::Execute() {
   
-  // Grab speeds from the controllers
-  const auto xSpeed = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveLeftYIndex), 0.05);
-  const auto ySpeed = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveLeftXIndex), 0.05);
-  
-  // Drive while facing the goal
-  m_drive->DriveFacingGoal(units::meters_per_second_t{MathUtils::SignedSquare(xSpeed)},
-    units::meters_per_second_t{MathUtils::SignedSquare(ySpeed)},
-    MathUtils::AngleToGoal(MathUtils::TranslationToGoal(m_drive->GetPose())), 
-    true);
+  //// Grab speeds from the controllers
+  //const auto xSpeed = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveLeftYIndex), 0.05);
+  //const auto ySpeed = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveLeftXIndex), 0.05);
+  //
+  //// Drive while facing the goal
+  //m_drive->DriveFacingGoal(units::meters_per_second_t{MathUtils::SignedSquare(xSpeed)},
+  //  units::meters_per_second_t{MathUtils::SignedSquare(ySpeed)},
+  //  MathUtils::AngleToGoal(MathUtils::TranslationToGoal(m_drive->GetPose())), 
+  //  true);
 
   // Set Shooter to correct angle based on the distance fo the robot
   m_distanceToShooter = MathUtils::RobotDistanceToGoal(m_drive->GetPose());

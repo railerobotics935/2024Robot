@@ -83,7 +83,7 @@ constexpr int kBackRightTurningMotorPort = 19;
 // PID Controller for the auto rotation of the robot
 constexpr double kRotationP = 2.5;
 constexpr double kRotationI = 0.002;
-constexpr double kRotationD = 0.05;
+constexpr double kRotationD = 0.2;
 
 // Anolog input ports on roborio
 constexpr int kFrontLeftTurningEncoderPort = kFrontLeftTurningMotorPort;
@@ -332,9 +332,9 @@ constexpr int kDriveFacingGoalButtonIndex = 3; // X
 constexpr int kIntakeButtonIndex = 6; // RB
 constexpr int kOuttakeButtonIndex = 5; // LB
 constexpr int kNTEShooterButton = 4; // Y
-constexpr int kAmpShooterButton = 3; // X
-constexpr int kCloseShooterButton = 1; // A
-constexpr int kFarShooterButton = 2; // B
+constexpr int kAmpShooterButton = 2; // B
+constexpr int kCloseShooterButton = 3; // X
+constexpr int kFarShooterButton = 1; // A
 
 } // namespace ControllerConstants
 
