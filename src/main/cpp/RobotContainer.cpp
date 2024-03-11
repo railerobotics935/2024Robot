@@ -30,6 +30,7 @@
 
 #include "commands/intake/SimpleIntake.h"
 #include "commands/intake/SmartIntake.h"
+#include "commands/intake/SmartOuttake.h"
 
 #include "commands/shooter/ManualNteShooter.h"
 #include "commands/shooter/SmartShooting.h"
@@ -92,6 +93,7 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton slowButton(&m_driveController, ControllerConstants::kSlowStateButtonIndex); 
   frc2::JoystickButton driveFacingGoalButton(&m_driveController, ControllerConstants::kDriveFacingGoalButtonIndex);
   frc2::JoystickButton intakeButton(&m_operatorController, ControllerConstants::kIntakeButtonIndex); 
+  frc2::JoystickButton outtakeButton(&m_operatorController, ControllerConstants::kOuttakeButtonIndex); 
   frc2::JoystickButton closeShootButton(&m_operatorController, ControllerConstants::kCloseShooterButton);
   frc2::JoystickButton farShooterButton(&m_operatorController, ControllerConstants::kFarShooterButton);
   frc2::JoystickButton ampShooterButton(&m_operatorController, ControllerConstants::kAmpShooterButton);
@@ -104,17 +106,18 @@ void RobotContainer::ConfigureButtonBindings() {
   driveFacingGoalButton.ToggleOnTrue(DriveFacingGoal{&m_drive, &m_driveController}.ToPtr());
   slowButton.ToggleOnTrue(SlowDrive{&m_drive, &m_driveController}.ToPtr());
   intakeButton.WhileTrue(SmartIntake{&m_intake, &m_stager}.ToPtr());
+  outtakeButton.WhileTrue(SmartOuttake{&m_intake, &m_stager}.ToPtr());
   NTEShooterButton.WhileTrue(SmartShooter{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
 
   // Manual shooting buttons
   closeShootButton.WhileTrue(frc2::cmd::Run([&] {
     m_shooter.SetShooterAngle((units::radian_t)1.00);
-    m_shooter.SetShooterSpeed((units::revolutions_per_minute_t)9000);
+    m_shooter.SetShooterSpeed((units::revolutions_per_minute_t)8500);
   }, {&m_shooter}));
 
   farShooterButton.WhileTrue(frc2::cmd::Run([&] {
     m_shooter.SetShooterAngle((units::radian_t)0.8);
-    m_shooter.SetShooterSpeed((units::revolutions_per_minute_t)8000);
+    m_shooter.SetShooterSpeed((units::revolutions_per_minute_t)8500);
   }, {&m_shooter}));
 
   ampShooterButton.WhileTrue(frc2::cmd::Run([&] {
