@@ -270,6 +270,27 @@ constexpr units::ampere_t kFollowerMotorCurrentLimit = 40_A;
 
 } // namespace IntakeConstants
 
+namespace ClimberConstants {
+
+  namespace LeftClimber {
+    constexpr int kID = 2;
+    constexpr int kLimitSwitchPort = 0;
+  }
+
+  namespace RightClimber {
+    constexpr int kID = 3;
+    constexpr int kLimitSwitchPort = 1;
+  }
+
+constexpr double kClimberGearRatio = 1.0;
+constexpr double kPositionFactor = 1.0 / kClimberGearRatio;
+constexpr double kVelocityFactor = kPositionFactor;
+
+constexpr units::ampere_t kMotorCurrentLimit = 40_A;
+constexpr rev::CANSparkLowLevel::MotorType kMotorType = rev::CANSparkLowLevel::MotorType::kBrushless;
+
+} // namespace ClimberConstants
+
 namespace AutoConstants {
 
 // Only Constants here are the PID constants. Look in path planner for max veleocty/acceleration constants

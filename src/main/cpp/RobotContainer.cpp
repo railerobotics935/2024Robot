@@ -62,7 +62,7 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
   m_shooter.SetDefaultCommand(frc2::RunCommand(
     [this] {
       m_shooter.SetShooterMotorPower(-frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kOperatorLeftYIndex), 0.05));
-      m_shooter.SetShooterAngle((units::radian_t)0.7);
+      //m_shooter.SetShooterAngle((units::radian_t)0.7);
     }, {&m_shooter}
   ));
 
@@ -104,7 +104,7 @@ void RobotContainer::ConfigureButtonBindings() {
   robotRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetRobotRelative();}, {}));
   fieldRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetFieldRelative();}, {}));
   driveFacingGoalButton.ToggleOnTrue(DriveFacingGoal{&m_drive, &m_driveController}.ToPtr());
-  slowButton.ToggleOnTrue(SlowDrive{&m_drive, &m_driveController}.ToPtr());
+  //slowButton.ToggleOnTrue(SlowDrive{&m_drive, &m_driveController}.ToPtr());
   intakeButton.WhileTrue(SmartIntake{&m_intake, &m_stager}.ToPtr());
   outtakeButton.WhileTrue(SmartOuttake{&m_intake, &m_stager}.ToPtr());
   NTEShooterButton.WhileTrue(SmartShooter{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
@@ -116,7 +116,7 @@ void RobotContainer::ConfigureButtonBindings() {
   }, {&m_shooter}));
 
   farShooterButton.WhileTrue(frc2::cmd::Run([&] {
-    m_shooter.SetShooterAngle((units::radian_t)0.8);
+    m_shooter.SetShooterAngle((units::radian_t)0.75);
     m_shooter.SetShooterSpeed((units::revolutions_per_minute_t)8500);
   }, {&m_shooter}));
 

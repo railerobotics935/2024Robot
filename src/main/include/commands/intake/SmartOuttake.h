@@ -21,7 +21,6 @@ public:
   explicit SmartOuttake(IntakeSubsystem* intake, StagerSubsystem* stager);
 
   void Initialize() override;
-  bool IsFinished() override;
   void End(bool interrupted) override;
   
 private:

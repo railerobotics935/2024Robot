@@ -66,8 +66,8 @@ bool ElevatorSubsystem::ExampleCondition() {
 
 void ElevatorSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
-  nte_elevatorPosition.SetDouble(m_elevatorEncoder.GetPosition());
-  nte_elevatorVelocity.SetDouble(m_elevatorEncoder.GetVelocity());
+  //nte_elevatorPosition.SetDouble(m_elevatorEncoder.GetPosition());
+  //nte_elevatorVelocity.SetDouble(m_elevatorEncoder.GetVelocity());
 }
 
 void ElevatorSubsystem::SetElevatorPosition(units::meter_t extentionDistance) {

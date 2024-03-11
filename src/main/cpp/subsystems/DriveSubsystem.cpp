@@ -61,8 +61,8 @@ DriveSubsystem::DriveSubsystem()
                 {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
                 m_backLeft.GetPosition(), m_backRight.GetPosition()},
                 frc::Pose2d{(units::meter_t)3.0, (units::meter_t)3.0, -m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw)},
-                {0.05, 0.05, 0.05}, // Standard Deviation of the encoder position value
-                {0.7, 0.7, 0.7}} // Standard Deviation of vision pose esitmation
+                {0.05, 0.05, 0.001}, // Standard Deviation of the encoder position value
+                {0.2, 0.2, 0.05}} // Standard Deviation of vision pose esitmation
 {
   
 // Configure the AutoBuilder last
