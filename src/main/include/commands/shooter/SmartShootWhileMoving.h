@@ -15,8 +15,8 @@
 #include "Constants.h"
 
 
-class ShootWhileMoving  
-  : public frc2::CommandHelper<frc2::Command, ShootWhileMoving> {
+class SmartShootWhileMoving  
+  : public frc2::CommandHelper<frc2::Command, SmartShootWhileMoving> {
 public:
   /**
    * Command to shoot while moving. Uses information from the drivesubsystem to calculate a virtual goal
@@ -27,7 +27,7 @@ public:
    * @param opController Pointer to the operator controller
    * @param driveController Pointer to the driver controller
   */
-  explicit ShootWhileMoving(ShooterSubsystem* shooter, DriveSubsystem* drive, frc::XboxController* opController, frc::XboxController* driveController);
+  explicit SmartShootWhileMoving(ShooterSubsystem* shooter, DriveSubsystem* drive, frc::XboxController* opController, frc::XboxController* driveController);
 
   void Initialize() override;
   void Execute() override;

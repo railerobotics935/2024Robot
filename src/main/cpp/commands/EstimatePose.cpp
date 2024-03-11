@@ -6,7 +6,7 @@ EstimatePose::EstimatePose(DriveSubsystem* drive) : m_drive{drive} {/*No reqierm
 
 void EstimatePose::Execute() {
   // Add vision data if the robot is going slow enough
-  if (sqrt(pow((double)m_drive->GetRobotRelativeSpeeds().vx, 2) + pow((double)m_drive->GetRobotRelativeSpeeds().vy, 2)) < CameraConstants::kMaxEstimationSpeed) {
+  if (m_drive->GetLinearRobotSpeed() < CameraConstants::kMaxEstimationSpeed) {
     m_drive->EstimatePoseWithApriltag();
     printf("estimating\r\n");
   }

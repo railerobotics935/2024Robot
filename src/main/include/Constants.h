@@ -331,9 +331,10 @@ constexpr int kDriveFacingGoalButtonIndex = 3; // X
 // Operator controller 
 constexpr int kIntakeButtonIndex = 6; // RB
 constexpr int kOuttakeButtonIndex = 5; // LB
-constexpr int kShooterButtonIndex = 4; // Y
-constexpr int kShootGoodNoteButtonIndex = 3; // X
-constexpr int kShootBadNoteButtonIndex = 1; // A
+constexpr int kNTEShooterButton = 4; // Y
+constexpr int kAmpShooterButton = 3; // X
+constexpr int kCloseShooterButton = 1; // A
+constexpr int kFarShooterButton = 2; // B
 
 } // namespace ControllerConstants
 

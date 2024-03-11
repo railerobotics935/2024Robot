@@ -26,13 +26,17 @@
 
 #include "commands/drive/DriveWithController.h"
 #include "commands/drive/DriveFacingGoal.h"
-#include "commands/intake/SimpleIntake.h"
 #include "commands/drive/SlowDrive.h"
-#include "commands/shooter/ManualNteShooter.h"
+
+#include "commands/intake/SimpleIntake.h"
 #include "commands/intake/SmartIntake.h"
+
+#include "commands/shooter/ManualNteShooter.h"
 #include "commands/EstimatePose.h"
-#include "Constants.h"
+
+
 #include "subsystems/DriveSubsystem.h"
+#include "Constants.h"
 
 using namespace DriveConstants;
 using namespace pathplanner;
@@ -118,60 +122,12 @@ void RobotContainer::ConfigureButtonBindings() {
   }, {&m_shooter}));
 }
 
-  frc2::CommandPtr RobotContainer::GetRobotCommand() {
-    return EstimatePose{&m_drive}.ToPtr();
-  }
+// Currently Not in use. Estimate pose currently runs in the periodit cycle of drivetrain
+frc2::CommandPtr RobotContainer::GetRobotCommand() {
+  return EstimatePose{&m_drive}.ToPtr();
+}
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
-  
-  // Reset Odometry and only start with where path planner thinks the robot is
-  // This will go away once we use apriltags to update our robot pose during disabled
-  //m_drive.ResetOdometry(frc::Pose2d((units::meter_t)0.0, (units::meter_t)0.0, (units::radian_t)0.0));
-
   // Builds and returns auto commands from pathplanner
   return PathPlannerAuto(m_autoChooser.GetSelected()).ToPtr();
-
-// Basic wpilib trajectory follow
-#if 0
-  // Set up config for trajectory
-  frc::TrajectoryConfig config{AutoConstants::kMaxSpeed,
-                               AutoConstants::kMaxAcceleration};
-
-    frc::ProfiledPIDController<units::radians> thetaController{
-       5, 0, 0,
-        AutoConstants::kThetaControllerConstraints};
-
- // An example trajectory to follow.  All units in meters.
-  auto exampleTrajectory = frc::TrajectoryGenerator::GenerateTrajectory(
-      // Start at the origin facing the +X direction
-      frc::Pose2d{0_m, 0_m, 0_deg},
-      // Pass through these two interior waypoints, making an 's' curve path
-      {frc::Translation2d{1_m, -1_m}, frc::Translation2d{2_m, 1_m}, frc::Translation2d{3_m, 0_m}},
-      // End 3 meters straight ahead of where we started, facing forward
-      frc::Pose2d{0_m, 0_m, 180_deg},
-      // Pass the config
-      config);
-
-frc2::SwerveControllerCommand<4> swerveControllerCommand(
-    exampleTrajectory, [this]() { return m_drive.GetPose(); },
-
-    m_drive.m_driveKinematics,
-
-    frc::PIDController{AutoConstants::kPXController, 0, 0},
-    frc::PIDController{AutoConstants::kPYController, 0, 0}, thetaController,
-
-    [this](auto moduleStates) { m_drive.SetModuleStates(moduleStates); },
-
-    {&m_drive});
-
-// Reset odometry to the starting pose of the trajectory.
-m_drive.ResetOdometry(exampleTrajectory.InitialPose());
-
-// no auto
-return new frc2::SequentialCommandGroup(
-    std::move(swerveControllerCommand),
-    frc2::InstantCommand(
-        [this]() { m_drive.Drive(0_mps, 0_mps, 0_rad_per_s, false); }, {}));
-    
-#endif
 }

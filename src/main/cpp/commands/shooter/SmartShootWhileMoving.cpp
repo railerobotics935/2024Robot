@@ -1,8 +1,8 @@
 
-#include "commands/shooter/ShootWhileMoving.h"
+#include "commands/shooter/SmartShootWhileMoving.h"
 #include "utils/MathUtils.h"
 
-ShootWhileMoving::ShootWhileMoving(ShooterSubsystem* shooter, DriveSubsystem* drive, frc::XboxController* opController, frc::XboxController* driveController) {
+SmartShootWhileMoving::SmartShootWhileMoving(ShooterSubsystem* shooter, DriveSubsystem* drive, frc::XboxController* opController, frc::XboxController* driveController) {
   // Set Local pointer
   m_shooter = shooter;
   m_drive = drive;
@@ -14,9 +14,9 @@ ShootWhileMoving::ShootWhileMoving(ShooterSubsystem* shooter, DriveSubsystem* dr
 }
 
 // Right now nothing, but maybe somthing later
-void ShootWhileMoving::Initialize() {};
+void SmartShootWhileMoving::Initialize() {};
 
-void ShootWhileMoving::Execute() {
+void SmartShootWhileMoving::Execute() {
 
   // Get the distance and translation from the robot to the goal
   double robotToGoalDistance = MathUtils::RobotDistanceToGoal(m_drive->GetPose());
@@ -94,7 +94,7 @@ void ShootWhileMoving::Execute() {
   }
 }
 
-void ShootWhileMoving::End(bool interrupted) {
+void SmartShootWhileMoving::End(bool interrupted) {
   m_shooter->SetShooterAngle((units::radian_t)1.0);
   m_shooter->SetShooterSpeed((units::revolutions_per_minute_t)0.0);
   m_opController->SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);

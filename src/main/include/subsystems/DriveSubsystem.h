@@ -94,6 +94,11 @@ public:
   units::degree_t GetHeading() const;
 
   /**
+   * @return The speed of the robot
+  */
+  double GetLinearRobotSpeed();
+
+  /**
    * Zeroes the heading of the robot.
    */
   void ZeroHeading();

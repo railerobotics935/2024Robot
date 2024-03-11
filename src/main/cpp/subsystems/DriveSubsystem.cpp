@@ -145,7 +145,7 @@ void DriveSubsystem::Periodic() {
                     m_backLeft.GetPosition(), m_backRight.GetPosition()});
 
   // set odometry relative to the apriltag
-  if (sqrt(pow((double)GetRobotRelativeSpeeds().vx, 2) + pow((double)GetRobotRelativeSpeeds().vy, 2)) < CameraConstants::kMaxEstimationSpeed) {
+  if (GetLinearRobotSpeed() < CameraConstants::kMaxEstimationSpeed) {
     EstimatePoseWithApriltag();
     printf("estimating\r\n");
   }
@@ -410,6 +410,11 @@ void DriveSubsystem::SetModuleStates(
 
 units::degree_t DriveSubsystem::GetHeading() const {
   return -m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw);
+}
+
+double DriveSubsystem::GetLinearRobotSpeed() {
+  // get magnitude of robot speed vector
+  return sqrt(pow((double)GetRobotRelativeSpeeds().vx, 2) + pow((double)GetRobotRelativeSpeeds().vy, 2));
 }
 
 void DriveSubsystem::ZeroHeading() {
