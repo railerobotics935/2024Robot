@@ -22,6 +22,7 @@
 #include "subsystems/IntakeSubsystem.h"
 #include "subsystems/ShooterSubsystem.h"
 #include "subsystems/StagerSubsystem.h"
+#include "subsystems/ClimberSubsystem.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -34,7 +35,9 @@ class RobotContainer {
  public:
   RobotContainer();
 
-  frc2::CommandPtr GetRobotCommand();
+  /**
+   * @return The command for autonomous
+  */
   frc2::CommandPtr GetAutonomousCommand();
 
  private:
@@ -56,6 +59,8 @@ class RobotContainer {
   IntakeSubsystem m_intake;
   ShooterSubsystem m_shooter;
   StagerSubsystem m_stager;
+  ClimberSubsystem m_leftClimber{ClimberConstants::LeftClimber::kID, ClimberConstants::LeftClimber::kLimitSwitchPort};
+  ClimberSubsystem m_rightClimber{ClimberConstants::RightClimber::kID, ClimberConstants::RightClimber::kLimitSwitchPort};
 
   // Sendable chooser for auto
   frc::SendableChooser<std::string> m_autoChooser;

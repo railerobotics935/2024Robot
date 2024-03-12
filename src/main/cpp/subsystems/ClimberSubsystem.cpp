@@ -8,7 +8,7 @@
 
 using namespace ClimberConstants;
 
-ClimberSubsystem::ClimberSubsystem(int motorId, int LimitSwitchPort) : m_climberMotor{motorId, kMotorType}{
+ClimberSubsystem::ClimberSubsystem(int motorId, int limitSwitchPort) : m_climberMotor{motorId, kMotorType}, m_limitSwitch{limitSwitchPort} {
 
   // Burn flash only if desired - true set in constants
   #ifdef BURNCLIMBERSPARKMAX

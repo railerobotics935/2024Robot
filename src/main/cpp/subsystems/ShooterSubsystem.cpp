@@ -160,7 +160,7 @@ void ShooterSubsystem::SetIndivualShooterSpeed(units::revolutions_per_minute_t t
 }
 
 bool ShooterSubsystem::AtAngleSetpoint() {
-  if (abs(nte_pitchSetpoint.GetDouble(1.0) - m_pitchAbsoluteEncoder.GetPosition()) < 0.1) // in radians
+  if (abs(nte_pitchSetpoint.GetDouble(1.0) - m_pitchAbsoluteEncoder.GetPosition()) < 0.05) // in radians
     return true;
   else
     return false;

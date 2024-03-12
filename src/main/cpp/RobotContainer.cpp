@@ -47,7 +47,7 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
 
   // Initialize all of your commands and subsystems here
   // Configuring command bindings for pathplanner
-  NamedCommands::registerCommand("SimpleIntake", SimpleIntake{&m_intake}.ToPtr());
+  NamedCommands::registerCommand("Intake", SimpleIntake{&m_intake}.ToPtr());
   
   // Configure the button bindings
   ConfigureButtonBindings();
@@ -124,11 +124,6 @@ void RobotContainer::ConfigureButtonBindings() {
     m_shooter.SetShooterAngle((units::radian_t)1.05);
     m_shooter.SetIndivualShooterSpeed((units::revolutions_per_minute_t)200,(units::revolutions_per_minute_t)3300);
   }, {&m_shooter}));
-}
-
-// Currently Not in use. Estimate pose currently runs in the periodit cycle of drivetrain
-frc2::CommandPtr RobotContainer::GetRobotCommand() {
-  return EstimatePose{&m_drive}.ToPtr();
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {

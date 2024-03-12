@@ -25,6 +25,7 @@
 //#define BURNSHOOTERSPARKMAX 
 //#define BURNSTAGERSPARKMAX
 //#define BURNMODULESPARKMAX
+//#define BURNCLIMBERSPARKMAX
 
 /**
  * The Constants header provides a convenient place for teams to hold robot-wide
@@ -237,36 +238,6 @@ constexpr double kPitchOffset = 2.653 - (51.0 * std::numbers::pi/180.0);
 constexpr units::ampere_t kShooterMotorCurrentLimit = 40_A;
 constexpr units::ampere_t kBottomMotorCurrentLimit = 40_A;
 constexpr units::ampere_t kPitchMotorCurrentLimit = 20_A;
-
-} // namespace IntakeConstants
-
-namespace ElevatorConstants {
-// Elevator motor 
-constexpr int kElevatorID = 6;
-constexpr int kFollowerID = 5;
-constexpr rev::CANSparkLowLevel::MotorType kElevatorMotorType = rev::CANSparkLowLevel::MotorType::kBrushless;
-constexpr rev::CANSparkLowLevel::MotorType kFollowerMotorType = rev::CANSparkLowLevel::MotorType::kBrushless;
-
-// Calculations required for driving motor conversion factors and feed forward
-constexpr double kElevatorMotorFreeSpeedRps =
-    5676.0 / 60;  // NEO free speed is 5676 RPM
-
-// Setup conversion factor for Elevator encoders
-constexpr double kElevatorGearboxRatio = 4.0;
-constexpr double kSpoolDiameter = 7.62; // meters
-constexpr double kElevatorPositionFactor = (std::numbers::pi * kSpoolDiameter) / kElevatorGearboxRatio; // meters
-constexpr double kElevatorEncoderVelocityFactor = kElevatorPositionFactor / 60.0;  // meters per second
-
-// PID Constants for the pitch of the Elevator
-constexpr double kElevatorP = 1.0; 
-constexpr double kElevatorI = 0.0; 
-constexpr double kElevatorD = 0.0; 
-constexpr double kElevatorFF = 0.0;
-constexpr double kElevatorMin = -1.0;
-constexpr double kElevatorMax = 1.0;
-
-constexpr units::ampere_t kElevatorMotorCurrentLimit = 40_A;
-constexpr units::ampere_t kFollowerMotorCurrentLimit = 40_A;
 
 } // namespace IntakeConstants
 

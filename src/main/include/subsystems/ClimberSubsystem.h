@@ -9,6 +9,7 @@
 #include <rev/CANSparkMax.h>
 #include <units/length.h>
 #include <networktables/NetworkTableEntry.h>
+#include <frc/DigitalInput.h>
 
 class ClimberSubsystem : public frc2::SubsystemBase {
  public:
@@ -49,4 +50,7 @@ class ClimberSubsystem : public frc2::SubsystemBase {
   
   // Encoders motor controllers
   rev::SparkRelativeEncoder m_climberEncoder = m_climberMotor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor);
+
+  // Limit switch is a digital input in the DIO port (digital input output)
+  frc::DigitalInput m_limitSwitch;
 };
