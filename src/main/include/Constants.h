@@ -344,7 +344,7 @@ constexpr double kMinStandardDeviation = 0.4;
 constexpr double kMaxStandardDeviation = 0.5;
 
 // Max speed allowed for adding vidion measurments to the robot pose esitmator
-constexpr double kMaxEstimationSpeed = 1.5; // mps
+constexpr double kMaxEstimationSpeed = 0.25; // mps
 
 /**
  * @param distance The raw distance from the apriltag

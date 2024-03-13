@@ -48,15 +48,14 @@ ClimberSubsystem::ClimberSubsystem() {
   m_leftClimberDistance = nt_table->GetEntry("Left Climber/Distance Extended");
   m_rightCllimberLimitSwtich = nt_table->GetEntry("Right Climber/Limit Switch");
   m_rightClimberDistance = nt_table->GetEntry("Right Climber/Distance Extended");
-
 }
 
 bool ClimberSubsystem::LeftClimberAtBase() {
-  return !m_leftLimitSwitch.Get();
+  return m_leftLimitSwitch.Get();
 }
 
 bool ClimberSubsystem::RightClimberAtBase() {
-  return !m_rightLimitSwitch.Get();
+  return m_rightLimitSwitch.Get();
 }
 
 void ClimberSubsystem::Periodic() {
@@ -64,12 +63,29 @@ void ClimberSubsystem::Periodic() {
   m_leftClimberDistance.SetDouble(m_leftClimberEncoder.GetPosition());
   m_rightCllimberLimitSwtich.SetBoolean(RightClimberAtBase());
   m_rightClimberDistance.SetDouble(m_rightClimberEncoder.GetPosition());
+
+  if (LeftClimberAtBase())
+    m_leftClimberEncoder.SetPosition(0.0);
+  if (RightClimberAtBase())
+    m_rightClimberEncoder.SetPosition(0.0);
 }
 
 void ClimberSubsystem::SetClimberPower(double power) {
-  if (!LeftClimberAtBase())
+  if (power < 0.0 && m_leftClimberEncoder.GetPosition() < -6.2) {
+    m_leftClimberMotor.Set(0.0);
+    m_rightClimberMotor.Set(0.0);
+  }
+  else {
+  if (!LeftClimberAtBase() || power < 0.0)
     m_leftClimberMotor.Set(power);
-  if (!RightClimberAtBase())
+  else
+    m_leftClimberMotor.Set(0.0);
+  
+  if (!RightClimberAtBase() || power < 0.0)
     m_rightClimberMotor.Set(power);
+  else
+    m_rightClimberMotor.Set(0.0);
+  }
+  
 }
 

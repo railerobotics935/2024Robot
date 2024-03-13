@@ -20,7 +20,7 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.5
           }
         },
         {
@@ -32,13 +32,13 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.15
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "EndShooting"
+            "name": "SetFarShooterSpeeds"
           }
         },
         {
@@ -54,33 +54,14 @@
                       "data": {
                         "pathName": "Speaker2"
                       }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "2Speaker"
-                      }
                     }
                   ]
                 }
               },
               {
-                "type": "sequential",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "SmartIntake"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "SetShooterSpeeds"
-                      }
-                    }
-                  ]
+                  "name": "SmartIntake"
                 }
               }
             ]
@@ -95,13 +76,13 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.25
+            "waitTime": 0.15
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "EndShooting"
+            "name": "SetFarShooterSpeeds"
           }
         },
         {
@@ -115,13 +96,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Speaker1"
+                        "pathName": "21"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "1Speaker"
+                        "pathName": "12"
                       }
                     }
                   ]
@@ -135,12 +116,6 @@
                       "type": "named",
                       "data": {
                         "name": "SmartIntake"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "SetShooterSpeeds"
                       }
                     }
                   ]

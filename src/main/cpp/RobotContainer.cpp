@@ -44,6 +44,7 @@ using namespace DriveConstants;
 using namespace pathplanner;
 
 RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
+  m_revPDH.SetSwitchableChannel(false); //-------------------------------------------------------------------------------------
 
   // Initialize all of your commands and subsystems here
   // Configuring command bindings for pathplanner
@@ -51,6 +52,11 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
   NamedCommands::registerCommand("SmartIntake", SmartIntake{&m_intake, &m_stager}.ToPtr());
   NamedCommands::registerCommand("SetShooterSpeeds", frc2::cmd::RunOnce([&] {
     m_shooter.SetShooterAngle((units::radian_t)1.00);
+    m_shooter.SetShooterSpeed((units::revolutions_per_minute_t)8500);
+  }, {&m_shooter}));
+
+  NamedCommands::registerCommand("SetFarShooterSpeeds", frc2::cmd::RunOnce([&] {
+    m_shooter.SetShooterAngle((units::radian_t)0.73);
     m_shooter.SetShooterSpeed((units::revolutions_per_minute_t)8500);
   }, {&m_shooter}));
 
@@ -75,7 +81,7 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
   m_shooter.SetDefaultCommand(frc2::RunCommand(
     [this] {
       m_shooter.SetShooterMotorPower(-frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kOperatorLeftYIndex), 0.05));
-      //m_shooter.SetShooterAngle((units::radian_t)0.7);
+      m_shooter.SetShooterAngle((units::radian_t)0.8);
     }, {&m_shooter}
   ));
 
@@ -95,11 +101,11 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
   ));
 
   // Add auto name options
-  m_autoChooser.SetDefaultOption("Trapezoid Test", m_trapezoidTest);
-  m_autoChooser.AddOption("Forward 1m", m_forward1m);
-  m_autoChooser.AddOption("Left 1m", m_left1m);
-  m_autoChooser.AddOption("Test Intake", m_testIntake);
-  m_autoChooser.AddOption("Speaker21", m_speaker21);
+  m_autoChooser.SetDefaultOption("Speaker21", m_speaker21);
+  m_autoChooser.AddOption("Speaker21Far", m_speaker21Far);
+  m_autoChooser.AddOption("Speaker241", m_speaker241);
+  m_autoChooser.AddOption("Amp12", m_amp12);
+  m_autoChooser.AddOption("Speaker213", m_speaker213);
   frc::Shuffleboard::GetTab("Autonomous").Add(m_autoChooser);
 }
 
@@ -109,8 +115,8 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton resetButton(&m_driveController, ControllerConstants::kResetGyroButtonIndex); 
   frc2::JoystickButton robotRelativeButton(&m_driveController, ControllerConstants::kRobotRelativeButtonIndex);
   frc2::JoystickButton fieldRelativeButton(&m_driveController, ControllerConstants::kFieldRelativeButtonIndex); 
-  frc2::JoystickButton slowButton(&m_driveController, ControllerConstants::kSlowStateButtonIndex); 
-  frc2::JoystickButton driveFacingGoalButton(&m_driveController, ControllerConstants::kDriveFacingGoalButtonIndex);
+  //frc2::JoystickButton slowButton(&m_driveController, ControllerConstants::kSlowStateButtonIndex); 
+  //frc2::JoystickButton driveFacingGoalButton(&m_driveController, ControllerConstants::kDriveFacingGoalButtonIndex);
   frc2::JoystickButton intakeButton(&m_operatorController, ControllerConstants::kIntakeButtonIndex); 
   frc2::JoystickButton outtakeButton(&m_operatorController, ControllerConstants::kOuttakeButtonIndex); 
   frc2::JoystickButton closeShootButton(&m_operatorController, ControllerConstants::kCloseShooterButton);
@@ -124,7 +130,7 @@ void RobotContainer::ConfigureButtonBindings() {
   resetButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.ZeroHeading();}, {}));
   robotRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetRobotRelative();}, {}));
   fieldRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetFieldRelative();}, {}));
-  driveFacingGoalButton.ToggleOnTrue(DriveFacingGoal{&m_drive, &m_driveController}.ToPtr());
+  //driveFacingGoalButton.ToggleOnTrue(DriveFacingGoal{&m_drive, &m_driveController}.ToPtr());
   //slowButton.ToggleOnTrue(SlowDrive{&m_drive, &m_driveController}.ToPtr());
   intakeButton.WhileTrue(SmartIntake{&m_intake, &m_stager}.ToPtr());
   outtakeButton.WhileTrue(SmartOuttake{&m_intake, &m_stager}.ToPtr());
