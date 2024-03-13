@@ -59,8 +59,8 @@ class RobotContainer {
   IntakeSubsystem m_intake;
   ShooterSubsystem m_shooter;
   StagerSubsystem m_stager;
-  ClimberSubsystem m_leftClimber{ClimberConstants::LeftClimber::kID, ClimberConstants::LeftClimber::kLimitSwitchPort};
-  ClimberSubsystem m_rightClimber{ClimberConstants::RightClimber::kID, ClimberConstants::RightClimber::kLimitSwitchPort};
+  ClimberSubsystem m_leftClimber{ClimberConstants::LeftClimber::kID, ClimberConstants::LeftClimber::kLimitSwitchPort, true};
+  ClimberSubsystem m_rightClimber{ClimberConstants::RightClimber::kID, ClimberConstants::RightClimber::kLimitSwitchPort, false};
 
   // Sendable chooser for auto
   frc::SendableChooser<std::string> m_autoChooser;
@@ -70,5 +70,6 @@ class RobotContainer {
   std::string m_left1m = "Left1m";
   std::string m_trapezoidTest = "TrapazoidTest";
   std::string m_testIntake = "TestIntake";
+  std::string m_speaker21 = "Speaker21";
 
 };

@@ -20,7 +20,7 @@ class ClimberSubsystem : public frc2::SubsystemBase {
    * @param motorId CAN Id of the motor
    * @param LimitSwitchPort Port number of the limit switch
   */
-  ClimberSubsystem(int motorId, int LimitSwitchPort);
+  ClimberSubsystem(int motorId, int LimitSwitchPort, bool reversed);
 
 
   /**
@@ -42,6 +42,7 @@ class ClimberSubsystem : public frc2::SubsystemBase {
    * @param power Power to set the motor power
   */
   void SetClimberPower(double power);
+
 
  private:
 

@@ -25,7 +25,7 @@
 //#define BURNSHOOTERSPARKMAX 
 //#define BURNSTAGERSPARKMAX
 //#define BURNMODULESPARKMAX
-//#define BURNCLIMBERSPARKMAX
+#define BURNCLIMBERSPARKMAX
 
 /**
  * The Constants header provides a convenient place for teams to hold robot-wide
@@ -230,7 +230,7 @@ constexpr double kPitchMax = 0.5;
 
 // Limits so the shooter pitch can't be over extened
 constexpr double kMinPitchAngle = 0.5; // Radians
-constexpr double kMaxPitchAngle = 1.1; // Radians
+constexpr double kMaxPitchAngle = 1.25; // Radians
 
 // Offset for the pitch
 constexpr double kPitchOffset = 2.653 - (51.0 * std::numbers::pi/180.0);
@@ -244,17 +244,17 @@ constexpr units::ampere_t kPitchMotorCurrentLimit = 20_A;
 namespace ClimberConstants {
 
   namespace LeftClimber {
-    constexpr int kID = 2;
-    constexpr int kLimitSwitchPort = 0;
+    constexpr int kID = 14;
+    constexpr int kLimitSwitchPort = 9;
   }
 
   namespace RightClimber {
-    constexpr int kID = 3;
-    constexpr int kLimitSwitchPort = 1;
+    constexpr int kID = 13;
+    constexpr int kLimitSwitchPort = 8;
   }
 
-constexpr double kClimberGearRatio = 1.0;
-constexpr double kPositionFactor = 1.0 / kClimberGearRatio;
+constexpr double kClimberGearRatio = 36.0 * (60.0/37.0) * 3.0;
+constexpr double kPositionFactor = 4.0 * std::numbers::pi / kClimberGearRatio; // in meters
 constexpr double kVelocityFactor = kPositionFactor;
 
 constexpr units::ampere_t kMotorCurrentLimit = 40_A;
@@ -313,6 +313,8 @@ constexpr int kStagerIntakeTrigger = 3; // R Trigger
 constexpr int kStagerOuttakeTrigger = 2; //  L Trigger
 
 // Drive Controller
+constexpr int kExtendShooterButtonIndex = 6; // RB
+constexpr int kRetractShooterButtonIndex = 5; // LB
 constexpr int kFieldRelativeButtonIndex = 7; // CL
 constexpr int kRobotRelativeButtonIndex = 8; // CR
 constexpr int kSlowStateButtonIndex = 4; // Y

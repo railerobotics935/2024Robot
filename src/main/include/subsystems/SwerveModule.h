@@ -26,7 +26,7 @@
 
 class SwerveModule {
  public:
-  SwerveModule(const int drivingCANId, const int turningCANId, const double turingEncoderOffset);
+  SwerveModule(const int drivingCANId, const int turningCANId, const double turningEncoderOffset);
 
   frc::SwerveModuleState GetState();
 
@@ -55,7 +55,7 @@ class SwerveModule {
   rev::SparkPIDController m_drivingPIDController = m_drivingSparkMax.GetPIDController();
   rev::SparkPIDController m_turningPIDController = m_turningSparkMax.GetPIDController();
 
-  double m_turingEncoderOffset = 0.0;
+  double m_turningEncoderOffset = 0.0;
   frc::SwerveModuleState m_desiredState{units::meters_per_second_t{0.0},
                                         frc::Rotation2d()};
 };

@@ -12,6 +12,8 @@
 #include <wpi/fs.h>
 #include <wpi/array.h>
 
+#include <frc/geometry/Pose2d.h>
+
 #include <string.h>
 
 #define MAX_NUM_TAGS 16

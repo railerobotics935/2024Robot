@@ -13,7 +13,7 @@
 using namespace ModuleConstants;
 
 SwerveModule::SwerveModule(const int drivingCANId, const int turningCANId,
-                               const double turingEncoderOffset)
+                               const double turningEncoderOffset)
     : m_drivingSparkMax(drivingCANId, rev::CANSparkMax::MotorType::kBrushless),
       m_turningSparkMax(turningCANId, rev::CANSparkMax::MotorType::kBrushless) {
 
@@ -24,7 +24,7 @@ SwerveModule::SwerveModule(const int drivingCANId, const int turningCANId,
   printf("Flash was not burned on Swerve Module\r\n");
   #endif
 
-  m_turingEncoderOffset = turingEncoderOffset;
+  m_turningEncoderOffset = turningEncoderOffset;
   m_desiredState.angle =
       frc::Rotation2d(units::radian_t{m_turningAbsoluteEncoder.GetPosition()});
   m_drivingEncoder.SetPosition(0);
@@ -100,12 +100,12 @@ void SwerveModule::ConfigureSparkMax() {
 
 frc::SwerveModuleState SwerveModule::GetState() {
   return {units::meters_per_second_t{m_drivingEncoder.GetVelocity()},
-          units::radian_t{m_turningAbsoluteEncoder.GetPosition() - m_turingEncoderOffset}};
+          units::radian_t{m_turningAbsoluteEncoder.GetPosition() - m_turningEncoderOffset}};
 }
 
 frc::SwerveModulePosition SwerveModule::GetPosition() {
   return {units::meter_t{m_drivingEncoder.GetPosition()},
-          units::radian_t{m_turningAbsoluteEncoder.GetPosition() - m_turingEncoderOffset}};
+          units::radian_t{m_turningAbsoluteEncoder.GetPosition() - m_turningEncoderOffset}};
 }
 
 void SwerveModule::SetDesiredState(const frc::SwerveModuleState& desiredState){
@@ -114,7 +114,7 @@ void SwerveModule::SetDesiredState(const frc::SwerveModuleState& desiredState){
   correctedDesiredState.speed = desiredState.speed;
   correctedDesiredState.angle =
       desiredState.angle +
-      frc::Rotation2d(units::radian_t{m_turingEncoderOffset});
+      frc::Rotation2d(units::radian_t{m_turningEncoderOffset});
 
   // Optimize the reference state to avoid spinning further than 90 degrees.
   frc::SwerveModuleState optimizedDesiredState{frc::SwerveModuleState::Optimize(

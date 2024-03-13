@@ -20,6 +20,7 @@
 #include <units/angle.h>
 #include <units/velocity.h>
 #include <frc2/command/button/JoystickButton.h>
+#include <frc2/command/WaitCommand.h>
 
 #include "pathplanner/lib/commands/PathPlannerAuto.h"
 #include "pathplanner/lib/auto/NamedCommands.h"
@@ -47,7 +48,19 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
 
   // Initialize all of your commands and subsystems here
   // Configuring command bindings for pathplanner
-  NamedCommands::registerCommand("Intake", SimpleIntake{&m_intake}.ToPtr());
+  NamedCommands::registerCommand("SmartIntake", SmartIntake{&m_intake, &m_stager}.ToPtr());
+  NamedCommands::registerCommand("SetShooterSpeeds", frc2::cmd::RunOnce([&] {
+    m_shooter.SetShooterAngle((units::radian_t)1.00);
+    m_shooter.SetShooterSpeed((units::revolutions_per_minute_t)8500);
+  }, {&m_shooter}));
+
+  NamedCommands::registerCommand("StageForShooting", frc2::cmd::RunOnce([&] {
+    m_stager.SetMotorPower(1.0);
+  }, {&m_stager}));
+  NamedCommands::registerCommand("EndShooting", frc2::cmd::RunOnce([&] {
+    m_stager.SetMotorPower(0.0);
+    //m_shooter.SetShooterMotorPower(0.0);
+  }, {&m_stager, &m_shooter}));
   
   // Configure the button bindings
   ConfigureButtonBindings();
@@ -75,12 +88,24 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
     }, {&m_stager}
   ));
 
+  m_leftClimber.SetDefaultCommand(frc2::RunCommand(
+    [this] {
+      m_leftClimber.SetClimberPower(0.0);
+    }, {&m_leftClimber}
+  ));
+
+  m_rightClimber.SetDefaultCommand(frc2::RunCommand(
+    [this] {
+      m_rightClimber.SetClimberPower(0.0);
+    }, {&m_rightClimber}
+  ));
+
   // Add auto name options
   m_autoChooser.SetDefaultOption("Trapezoid Test", m_trapezoidTest);
   m_autoChooser.AddOption("Forward 1m", m_forward1m);
   m_autoChooser.AddOption("Left 1m", m_left1m);
   m_autoChooser.AddOption("Test Intake", m_testIntake);
-
+  m_autoChooser.AddOption("Speaker21", m_speaker21);
   frc::Shuffleboard::GetTab("Autonomous").Add(m_autoChooser);
 }
 
@@ -98,6 +123,8 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton farShooterButton(&m_operatorController, ControllerConstants::kFarShooterButton);
   frc2::JoystickButton ampShooterButton(&m_operatorController, ControllerConstants::kAmpShooterButton);
   frc2::JoystickButton NTEShooterButton(&m_operatorController, ControllerConstants::kNTEShooterButton);
+  frc2::JoystickButton extendClimberButton(&m_driveController, ControllerConstants::kExtendShooterButtonIndex);
+  frc2::JoystickButton retractClimberButton(&m_driveController, ControllerConstants::kRetractShooterButtonIndex);
 
   // Bind commands to button triggers
   resetButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.ZeroHeading();}, {}));
@@ -107,7 +134,7 @@ void RobotContainer::ConfigureButtonBindings() {
   //slowButton.ToggleOnTrue(SlowDrive{&m_drive, &m_driveController}.ToPtr());
   intakeButton.WhileTrue(SmartIntake{&m_intake, &m_stager}.ToPtr());
   outtakeButton.WhileTrue(SmartOuttake{&m_intake, &m_stager}.ToPtr());
-  NTEShooterButton.WhileTrue(SmartShooter{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
+  NTEShooterButton.WhileTrue(ManualNteShooter{&m_shooter, &m_operatorController}.ToPtr());//SmartShooter{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
 
   // Manual shooting buttons
   closeShootButton.WhileTrue(frc2::cmd::Run([&] {
@@ -124,6 +151,16 @@ void RobotContainer::ConfigureButtonBindings() {
     m_shooter.SetShooterAngle((units::radian_t)1.05);
     m_shooter.SetIndivualShooterSpeed((units::revolutions_per_minute_t)200,(units::revolutions_per_minute_t)3300);
   }, {&m_shooter}));
+
+  extendClimberButton.WhileTrue(frc2::cmd::Run([&] {
+    m_leftClimber.SetClimberPower(-1.0);
+    m_rightClimber.SetClimberPower(-1.0);
+  }, {&m_leftClimber, &m_rightClimber}));
+
+  retractClimberButton.WhileTrue(frc2::cmd::Run([&] {
+    m_leftClimber.SetClimberPower(1.0);
+    m_rightClimber.SetClimberPower(1.0);
+  }, {&m_leftClimber, &m_rightClimber}));
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {

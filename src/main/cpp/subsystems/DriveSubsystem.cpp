@@ -67,7 +67,7 @@ DriveSubsystem::DriveSubsystem()
   
 // Configure the AutoBuilder last
 AutoBuilder::configureHolonomic(
-    [this](){ return GetPose(); }, // Robot pose supplier
+    [this](){ return m_odometry.GetPose(); }, // Robot pose supplier
     [this](frc::Pose2d pose){ ResetOdometry(pose); }, // Method to reset odometry (will be called if your auto has a starting pose)
     [this](){ return GetRobotRelativeSpeeds(); }, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
     [this](frc::ChassisSpeeds speeds){ DriveWithChassisSpeeds(speeds); }, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
@@ -460,7 +460,7 @@ frc::ChassisSpeeds DriveSubsystem::GetFieldRelativeSpeeds()
 }
 
 void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
-  m_poseEstimator.ResetPosition(
+  m_odometry.ResetPosition(
       GetHeading(),
       {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
        m_backLeft.GetPosition(), m_backRight.GetPosition()},
