@@ -57,7 +57,7 @@ class ShooterSubsystem : public frc2::SubsystemBase {
    * @param topSpeed The desired speed for the top shooter in radians per second
    * @param bottomSpeed The desired speed for the bottom shooter in radians per second
   */
-  void SetIndivualShooterSpeed(units::revolutions_per_minute_t topSpeed, units::revolutions_per_minute_t bottomSpeed);
+  void SetIndividualShooterSpeed(units::revolutions_per_minute_t topSpeed, units::revolutions_per_minute_t bottomSpeed);
 
   /**
    * Gets the angle of shooter with the offset accounted for

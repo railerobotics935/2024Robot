@@ -37,7 +37,6 @@
 #include "commands/shooter/SmartShooting.h"
 #include "commands/EstimatePose.h"
 
-
 #include "subsystems/DriveSubsystem.h"
 #include "Constants.h"
 
@@ -48,6 +47,7 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
 
   // Initialize all of your commands and subsystems here
   // Configuring command bindings for pathplanner
+  // TODO: Create custom commands for all of these
   NamedCommands::registerCommand("SmartIntake", SmartIntake{&m_intake, &m_stager}.ToPtr());
   NamedCommands::registerCommand("SetShooterSpeeds", frc2::cmd::RunOnce([&] {
     m_shooter.SetShooterAngle((units::radian_t)1.00);
@@ -57,10 +57,10 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
   NamedCommands::registerCommand("StageForShooting", frc2::cmd::RunOnce([&] {
     m_stager.SetMotorPower(1.0);
   }, {&m_stager}));
+
   NamedCommands::registerCommand("EndShooting", frc2::cmd::RunOnce([&] {
     m_stager.SetMotorPower(0.0);
-    //m_shooter.SetShooterMotorPower(0.0);
-  }, {&m_stager, &m_shooter}));
+  }, {&m_stager}));
   
   // Configure the button bindings
   ConfigureButtonBindings();
@@ -88,16 +88,10 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
     }, {&m_stager}
   ));
 
-  m_leftClimber.SetDefaultCommand(frc2::RunCommand(
+  m_climber.SetDefaultCommand(frc2::RunCommand(
     [this] {
-      m_leftClimber.SetClimberPower(0.0);
-    }, {&m_leftClimber}
-  ));
-
-  m_rightClimber.SetDefaultCommand(frc2::RunCommand(
-    [this] {
-      m_rightClimber.SetClimberPower(0.0);
-    }, {&m_rightClimber}
+      m_climber.SetClimberPower(0.0);
+    }, {&m_climber}
   ));
 
   // Add auto name options
@@ -149,18 +143,16 @@ void RobotContainer::ConfigureButtonBindings() {
 
   ampShooterButton.WhileTrue(frc2::cmd::Run([&] {
     m_shooter.SetShooterAngle((units::radian_t)1.05);
-    m_shooter.SetIndivualShooterSpeed((units::revolutions_per_minute_t)200,(units::revolutions_per_minute_t)3300);
+    m_shooter.SetIndividualShooterSpeed((units::revolutions_per_minute_t)200,(units::revolutions_per_minute_t)3300);
   }, {&m_shooter}));
 
   extendClimberButton.WhileTrue(frc2::cmd::Run([&] {
-    m_leftClimber.SetClimberPower(-1.0);
-    m_rightClimber.SetClimberPower(-1.0);
-  }, {&m_leftClimber, &m_rightClimber}));
+    m_climber.SetClimberPower(-1.0);
+  }, {&m_climber}));
 
   retractClimberButton.WhileTrue(frc2::cmd::Run([&] {
-    m_leftClimber.SetClimberPower(1.0);
-    m_rightClimber.SetClimberPower(1.0);
-  }, {&m_leftClimber, &m_rightClimber}));
+    m_climber.SetClimberPower(1.0);
+  }, {&m_climber}));
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {

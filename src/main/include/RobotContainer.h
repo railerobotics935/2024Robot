@@ -59,9 +59,8 @@ class RobotContainer {
   IntakeSubsystem m_intake;
   ShooterSubsystem m_shooter;
   StagerSubsystem m_stager;
-  ClimberSubsystem m_leftClimber{ClimberConstants::LeftClimber::kID, ClimberConstants::LeftClimber::kLimitSwitchPort, true};
-  ClimberSubsystem m_rightClimber{ClimberConstants::RightClimber::kID, ClimberConstants::RightClimber::kLimitSwitchPort, false};
-
+  ClimberSubsystem m_climber;
+  
   // Sendable chooser for auto
   frc::SendableChooser<std::string> m_autoChooser;
 

@@ -131,7 +131,7 @@ void ShooterSubsystem::SetPitchMotorPower(double power) {
 void ShooterSubsystem::ManualNteShoot() {
   // Set shooter to angle and speed from shuffleboard
   SetShooterAngle((units::radian_t)nte_setpointAngleRadians.GetDouble(1.0));
-  SetIndivualShooterSpeed((units::revolutions_per_minute_t)nte_topSetpointSpeedRPM.GetDouble(0.0), (units::revolutions_per_minute_t)nte_bottomShooterSetpoint.GetDouble(0.0));
+  SetIndividualShooterSpeed((units::revolutions_per_minute_t)nte_topSetpointSpeedRPM.GetDouble(0.0), (units::revolutions_per_minute_t)nte_bottomShooterSetpoint.GetDouble(0.0));
 }
 
 void ShooterSubsystem::SetShooterAngle(units::radian_t angle) {
@@ -151,7 +151,7 @@ void ShooterSubsystem::SetShooterSpeed(units::revolutions_per_minute_t speed) {
   nte_topShooterSetpoint.SetDouble((double)speed);
 }
 
-void ShooterSubsystem::SetIndivualShooterSpeed(units::revolutions_per_minute_t topSpeed, units::revolutions_per_minute_t bottomSpeed) {
+void ShooterSubsystem::SetIndividualShooterSpeed(units::revolutions_per_minute_t topSpeed, units::revolutions_per_minute_t bottomSpeed) {
   // Set the setpoint as the input angle
   m_topShooterPIDController.SetReference((double)topSpeed, rev::CANSparkMax::ControlType::kVelocity);
   m_bottomShooterPIDController.SetReference((double)bottomSpeed, rev::CANSparkMax::ControlType::kVelocity);

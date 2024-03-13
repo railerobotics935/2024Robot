@@ -8,61 +8,68 @@
 
 using namespace ClimberConstants;
 
-ClimberSubsystem::ClimberSubsystem(int motorId, int limitSwitchPort, bool reversed) : m_climberMotor{motorId, kMotorType}, m_limitSwitch{limitSwitchPort} {
+ClimberSubsystem::ClimberSubsystem() {
 
   // Burn flash only if desired - true set in constants
   #ifdef BURNCLIMBERSPARKMAX
   // Restore deafults
-  m_climberMotor.RestoreFactoryDefaults();
-
+  m_leftClimberMotor.RestoreFactoryDefaults();
+  m_rightClimberMotor.RestoreFactoryDefaults();
+  
   // Set converstion factors for encoders
-  m_climberEncoder.SetPositionConversionFactor(kPositionFactor);
-  m_climberEncoder.SetVelocityConversionFactor(kVelocityFactor);
+  m_leftClimberEncoder.SetPositionConversionFactor(kPositionFactor);
+  m_leftClimberEncoder.SetVelocityConversionFactor(kVelocityFactor);
 
+  m_rightClimberEncoder.SetPositionConversionFactor(kPositionFactor);
+  m_rightClimberEncoder.SetVelocityConversionFactor(kVelocityFactor);
+  
   // Set Idle mode (what to do when not commanded at a speed)
-  m_climberMotor.SetIdleMode(rev::CANSparkBase::IdleMode::kBrake);
-  m_climberMotor.SetSmartCurrentLimit(kMotorCurrentLimit.value());
-  if (reversed)
-    m_climberMotor.SetInverted(true);
-  else
-    m_climberMotor.SetInverted(false);
+  m_leftClimberMotor.SetIdleMode(rev::CANSparkBase::IdleMode::kBrake);
+  m_rightClimberMotor.SetIdleMode(rev::CANSparkBase::IdleMode::kBrake);
+  m_leftClimberMotor.SetSmartCurrentLimit(kMotorCurrentLimit.value());
+  m_rightClimberMotor.SetSmartCurrentLimit(kMotorCurrentLimit.value());
+  
+  // Invert the left becasue its mirrored
+  m_leftClimberMotor.SetInverted(true);
 
-  m_climberMotor.BurnFlash();
+  m_leftClimberMotor.BurnFlash();
+  m_rightClimberMotor.BurnFlash();
 
   printf("Flash Burned on climber subsystem\r\n");
   #else
   printf("Flash was not burned on climber subsystem\r\n");
   #endif
+
+  // Initialize shuffleboard communication
+  auto nt_inst = nt::NetworkTableInstance::GetDefault();
+  auto nt_table = nt_inst.GetTable("Climber");
+
+  m_leftCllimberLimitSwtich = nt_table->GetEntry("Left Climber/Limit Switch");
+  m_leftClimberDistance = nt_table->GetEntry("Left Climber/Distance Extended");
+  m_rightCllimberLimitSwtich = nt_table->GetEntry("Right Climber/Limit Switch");
+  m_rightClimberDistance = nt_table->GetEntry("Right Climber/Distance Extended");
+
 }
 
-bool ClimberSubsystem::ExampleCondition() {
-  // Query some boolean state, such as a digital sensor.
-  return false;
+bool ClimberSubsystem::LeftClimberAtBase() {
+  return !m_leftLimitSwitch.Get();
 }
- /**
-  * 
-  * 
-  * 
-  * 
-  * LIMITSWITCH IS REVERSED
-  * 
-  * 
-  * 
-  * 
-  * 
- */
+
+bool ClimberSubsystem::RightClimberAtBase() {
+  return !m_rightLimitSwitch.Get();
+}
+
 void ClimberSubsystem::Periodic() {
-  if (m_limitSwitch.Get())
-    m_climberEncoder.SetPosition(0.0);
+  m_leftCllimberLimitSwtich.SetBoolean(LeftClimberAtBase());
+  m_leftClimberDistance.SetDouble(m_leftClimberEncoder.GetPosition());
+  m_rightCllimberLimitSwtich.SetBoolean(RightClimberAtBase());
+  m_rightClimberDistance.SetDouble(m_rightClimberEncoder.GetPosition());
 }
 
 void ClimberSubsystem::SetClimberPower(double power) {
-  if (!
-  
-  m_limitSwitch.Get()){
-    m_climberMotor.Set(power);
-  }
-  else
-    printf("Climber At Switch\r\n");
+  if (!LeftClimberAtBase())
+    m_leftClimberMotor.Set(power);
+  if (!RightClimberAtBase())
+    m_rightClimberMotor.Set(power);
 }
 

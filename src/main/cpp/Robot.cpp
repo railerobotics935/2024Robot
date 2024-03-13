@@ -14,55 +14,25 @@
  * List of items need to be compleated, list may change or be amended as 
  * we decide on adding new features
  * 
- * TODO: Erik is currenly working on
- *    TODO: Implement Voltage compensation
- *    TODO: Double check calculations for Calculating angle of robot to the goal
- *    TODO: Switch apriltag sensors to only during shooting/when we need it
- * 
- *    TODO: Finish binding buttons to controllers
- *      TODO: Change outtake speed to be conxtatn instead of axis
- *    TODO: Automatic shooting when ready
- * 
- * 
- * TODO: Create Pathplanner Auto
- *    VERIFY: Fix Gear ratios
- *    TODO: Tune PID controller for accurate positioning
- *    TODO: Regester Command for auto
- *    TODO: Create Autos using commands
+ * TODO: Before comp 1
+ *    TODO: Finish Climber subsystem
+ *    TODO: Disable anything we aren't using
+ *      TODO: If the robot still runs over, fix that
+ *    TODO: Work on more autos
  * 
  * TROUBLESHOOT: Create Apriltag recongition system 
+ *    TODO: Processing speed NEEDS to be faster
  *    TODO: Increase Stability in script
  *    TODO: Increase Stability in the robot
- *
- * TODO: Add Robot Code, an overview
- *    DONE: Convert to trapazoid robot (Honeybee)
- *    DONE: Split robot into subsystemsc
- *    TODO: Create commands for each action needed
- *    TODO: Map keybindings for actions
  * 
- * TODO: Elevator Subsystem CANCLED
- *    TODO: Create Basic functions
- *    DONE: Define Sensors
- *    TODO: Implement PID Controller
- *    TODO: Check inversion for follower moter
- * 
- * DONE: Basic Commands
- *    DONE: Convert command facorys to custom commands
- *      DONE: Intake command
- *      DONE: Shooting command
- *      DONE: Drive command
- *    DONE: Create joystick buttons to trigger commands
- * 
- * TODO: Other Commands
+ * LATER: Other Commands
  *    TODO: Standard Shoot
  *    TODO: Pathfind to Pose
  *    TODO: Shoot into Amp
  * 
- * TODO: Add Saftey Feautres
- *    TODO: linear Acturator
- *      TODO: Limit Switches?
- *      TODO: position limit?
- *      TODO: amp draw?
+ * DONE: Add Saftey Feautres
+ *    DONE: linear Acturator
+ *      DONE: position limit?
  * 
  * TODO: Create custom Command for shooting
  *    TODO: Create Auto aim/shoot command
@@ -101,9 +71,6 @@
  * TODO: Clean up code
  *    DONE: Fix indentation size
  *    TODO: Thoroughly comment code
- * 
- * List of Fully implemented sections of the code
- * DONE: Shooter Subsystem
  * 
  *  Team 935
 */
