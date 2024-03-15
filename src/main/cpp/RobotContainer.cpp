@@ -117,6 +117,7 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
   m_autoChooser.AddOption("Source3", m_source3);
   m_autoChooser.AddOption("Source32", m_source32);
   m_autoChooser.AddOption("ShootOne", m_shootOne);
+  m_autoChooser.AddOption("SourceTravel", m_sourceTravel);
   frc::Shuffleboard::GetTab("Autonomous").Add(m_autoChooser);
 }
 

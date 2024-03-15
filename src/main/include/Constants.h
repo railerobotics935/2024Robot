@@ -62,12 +62,12 @@ const units::meter_t kWheelBase =
 namespace DriveConstants {
 // Driving Parameters - Note that these are not the maximum capable speeds of
 // the robot, rather the allowed maximum speeds
-constexpr units::meters_per_second_t kMaxSpeed = 4.5_mps;
-constexpr units::radians_per_second_t kMaxAngularSpeed{1.75 * std::numbers::pi};
+constexpr units::meters_per_second_t kMaxSpeed = 4.3_mps;
+constexpr units::radians_per_second_t kMaxAngularSpeed{2.0 * std::numbers::pi};
 
 constexpr double kDirectionSlewRate = 6.0;   // radians per second
-constexpr double kMagnitudeSlewRate = 3.5;   // percent per second (1 = 100%)
-constexpr double kRotationalSlewRate = 3.0;  // percent per second (1 = 100%)
+constexpr double kMagnitudeSlewRate = 7.0;   // percent per second (1 = 100%)
+constexpr double kRotationalSlewRate = 8.0;  // percent per second (1 = 100%)
 
 // CAN Sparkmax id numbers
 constexpr int kFrontLeftDriveMotorPort = 22;
@@ -95,7 +95,7 @@ constexpr int kBackRightTurningEncoderPort = kBackRightTurningMotorPort;
 // subtract an additional pi to make the full range -pi to pi instead of 0 to 2pi
 constexpr double kFrontLeftDriveEncoderOffset = (1.9249 - (std::numbers::pi / 2));
 constexpr double kFrontRightDriveEncoderOffset = (3.2676); 
-constexpr double kBackLeftDriveEncoderOffset =  (2.0477 + std::numbers::pi); //(0.6988 + (std::numbers::pi / 2)); 
+constexpr double kBackLeftDriveEncoderOffset =  (2.0477); //(0.6988 + (std::numbers::pi / 2)); 
 constexpr double kBackRightDriveEncoderOffset = (3.8439 + (std::numbers::pi / 2)); //(2.0472 + (std::numbers::pi)); 
 
 constexpr auto kDriveBaseRadius = 0.46_m;

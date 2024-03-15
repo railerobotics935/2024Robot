@@ -13,7 +13,7 @@ SmartIntake::SmartIntake(IntakeSubsystem* intake, StagerSubsystem* stager) {
 }
 
 void SmartIntake::Initialize() {
-  m_intake->SetMotorPower(0.75);
+  m_intake->SetMotorPower(1.00);
   m_stager->SetMotorPower(0.5);
 }
 

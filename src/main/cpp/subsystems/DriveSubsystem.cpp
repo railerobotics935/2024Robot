@@ -244,6 +244,10 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
     ySpeedCommanded = ySpeed.value();
     m_currentRotation = rot.value();
   }
+  if (!m_fieldRelative) {
+    xSpeedCommanded = -xSpeedCommanded; 
+    ySpeedCommanded = -ySpeedCommanded; 
+  }
 
   // Convert the commanded speeds into the correct units for the drivetrain
   units::meters_per_second_t xSpeedDelivered =
@@ -468,20 +472,21 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
 }
 
 void DriveSubsystem::EstimatePoseWithApriltag() {
+  printf("ESTIMATE POSE WAS CALLED\r\n");
                 
   // Iterate through each tag, adding it to the pose estimator if it is tracked
-  for (int tag = 1; tag <= 16; tag++ ) { // Check each tag for each camera
+  //for (int tag = 1; tag <= 16; tag++ ) { // Check each tag for each camera
 
-    // Front Camera
-    if (m_frontCameraSensor.TagIsTracked(tag) && m_frontCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
-      m_poseEstimator.AddVisionMeasurement(m_frontCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_frontCameraSensor.GetTimestamp(tag));
-
-    // Back Left Camera
-    if (m_backLeftCameraSensor.TagIsTracked(tag) && m_backLeftCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
-      m_poseEstimator.AddVisionMeasurement(m_backLeftCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backLeftCameraSensor.GetTimestamp(tag));
-
-    // Back Right Camera
-    if (m_backRightCameraSensor.TagIsTracked(tag) && m_backRightCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
-      m_poseEstimator.AddVisionMeasurement(m_backRightCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backRightCameraSensor.GetTimestamp(tag));
-  }
+    //// Front Camera
+    //if (m_frontCameraSensor.TagIsTracked(tag) && m_frontCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
+    //  m_poseEstimator.AddVisionMeasurement(m_frontCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_frontCameraSensor.GetTimestamp(tag));
+//
+    //// Back Left Camera
+    //if (m_backLeftCameraSensor.TagIsTracked(tag) && m_backLeftCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
+    //  m_poseEstimator.AddVisionMeasurement(m_backLeftCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backLeftCameraSensor.GetTimestamp(tag));
+//
+    //// Back Right Camera
+    //if (m_backRightCameraSensor.TagIsTracked(tag) && m_backRightCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
+    //  m_poseEstimator.AddVisionMeasurement(m_backRightCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backRightCameraSensor.GetTimestamp(tag));
+  //}
 } 

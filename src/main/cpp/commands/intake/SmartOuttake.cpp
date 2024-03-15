@@ -13,7 +13,7 @@ SmartOuttake::SmartOuttake(IntakeSubsystem* intake, StagerSubsystem* stager) {
 }
 
 void SmartOuttake::Initialize() {
-  m_intake->SetMotorPower(-0.75);
+  m_intake->SetMotorPower(-1.0);
   m_stager->SetMotorPower(-0.5);
 }
 
