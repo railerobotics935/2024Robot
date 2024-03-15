@@ -44,7 +44,6 @@ namespace GameConstants {
   // Goal Position for the robot
   constexpr frc::Pose2d kRobotPoseForBlueAmp = {(units::meter_t)1.8415, (units::meter_t)7.2042, (units::radian_t)1.5 * std::numbers::pi}; // tag 6 minus one meter
   constexpr frc::Pose2d kRobotPoseForRedAmp = {(units::meter_t)14.700758, (units::meter_t)7.2042, (units::radian_t)1.5 * std::numbers::pi}; // tag 5 minus one meter
-  
 }
 
 namespace RobotConstants {
@@ -63,12 +62,12 @@ const units::meter_t kWheelBase =
 namespace DriveConstants {
 // Driving Parameters - Note that these are not the maximum capable speeds of
 // the robot, rather the allowed maximum speeds
-constexpr units::meters_per_second_t kMaxSpeed = 4.0_mps;
-constexpr units::radians_per_second_t kMaxAngularSpeed{1.25 * std::numbers::pi};
+constexpr units::meters_per_second_t kMaxSpeed = 4.5_mps;
+constexpr units::radians_per_second_t kMaxAngularSpeed{1.75 * std::numbers::pi};
 
 constexpr double kDirectionSlewRate = 6.0;   // radians per second
 constexpr double kMagnitudeSlewRate = 3.5;   // percent per second (1 = 100%)
-constexpr double kRotationalSlewRate = 4.0;  // percent per second (1 = 100%)
+constexpr double kRotationalSlewRate = 3.0;  // percent per second (1 = 100%)
 
 // CAN Sparkmax id numbers
 constexpr int kFrontLeftDriveMotorPort = 22;
@@ -222,8 +221,8 @@ constexpr double kBottomShooterMax = 1.0;
 
 // PID Constants for the pitch of shooter
 constexpr double kPitchP = 3.0;
-constexpr double kPitchI = 0.004;
-constexpr double kPitchD = 0.2;
+constexpr double kPitchI = 0.001;
+constexpr double kPitchD = 0.15;
 constexpr double kPitchFF = 0.0;
 constexpr double kPitchMin = -0.5;
 constexpr double kPitchMax = 0.5;
@@ -233,7 +232,7 @@ constexpr double kMinPitchAngle = 0.5; // Radians
 constexpr double kMaxPitchAngle = 1.25; // Radians
 
 // Offset for the pitch
-constexpr double kPitchOffset = 2.653 - (51.0 * std::numbers::pi/180.0);
+constexpr double kPitchOffset = 2.653 - (51.0 * std::numbers::pi / 180.0);
 
 constexpr units::ampere_t kShooterMotorCurrentLimit = 40_A;
 constexpr units::ampere_t kBottomMotorCurrentLimit = 40_A;
@@ -253,7 +252,7 @@ namespace ClimberConstants {
     constexpr int kLimitSwitchPort = 8;
   }
 
-constexpr double kClimberGearRatio = 36.0 * (60.0/37.0) * 3.0;
+constexpr double kClimberGearRatio = 36.0 * (60.0 / 37.0) * 3.0;
 constexpr double kPositionFactor = 4.0 * std::numbers::pi / kClimberGearRatio; // in meters
 constexpr double kVelocityFactor = kPositionFactor;
 
@@ -309,6 +308,7 @@ constexpr int kDriveRightYIndex = 5; // An input UP creates a NEGATIVE output
 constexpr int kDriveRightXIndex = 4; // An input RIGHT creates a NEGATIVE output
 
 constexpr int kOperatorLeftYIndex = 1; // An input UP creates a NEGATIVE output
+constexpr int kOperatorRightYIndex = 5; // An input UP creates a NEGATIVE output
 constexpr int kStagerIntakeTrigger = 3; // R Trigger
 constexpr int kStagerOuttakeTrigger = 2; //  L Trigger
 

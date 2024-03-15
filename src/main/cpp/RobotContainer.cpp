@@ -67,6 +67,11 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
   NamedCommands::registerCommand("EndShooting", frc2::cmd::RunOnce([&] {
     m_stager.SetMotorPower(0.0);
   }, {&m_stager}));
+
+  NamedCommands::registerCommand("StopEverything", frc2::cmd::RunOnce([&] {
+    m_stager.SetMotorPower(0.0);
+    m_shooter.SetShooterMotorPower(0.0);
+  }, {&m_shooter, &m_stager}));
   
   // Configure the button bindings
   ConfigureButtonBindings();
@@ -81,7 +86,7 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
   m_shooter.SetDefaultCommand(frc2::RunCommand(
     [this] {
       m_shooter.SetShooterMotorPower(-frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kOperatorLeftYIndex), 0.05));
-      m_shooter.SetShooterAngle((units::radian_t)0.8);
+      m_shooter.SetShooterAngle((units::radian_t)0.7);
     }, {&m_shooter}
   ));
 
@@ -104,8 +109,14 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
   m_autoChooser.SetDefaultOption("Speaker21", m_speaker21);
   m_autoChooser.AddOption("Speaker21Far", m_speaker21Far);
   m_autoChooser.AddOption("Speaker241", m_speaker241);
-  m_autoChooser.AddOption("Amp12", m_amp12);
   m_autoChooser.AddOption("Speaker213", m_speaker213);
+  m_autoChooser.AddOption("Speaker23", m_speaker23);
+  m_autoChooser.AddOption("Speaker2", m_speaker2); 
+  m_autoChooser.AddOption("Amp12", m_amp12);
+  m_autoChooser.AddOption("Amp1", m_amp1);
+  m_autoChooser.AddOption("Source3", m_source3);
+  m_autoChooser.AddOption("Source32", m_source32);
+  m_autoChooser.AddOption("ShootOne", m_shootOne);
   frc::Shuffleboard::GetTab("Autonomous").Add(m_autoChooser);
 }
 
@@ -134,7 +145,7 @@ void RobotContainer::ConfigureButtonBindings() {
   //slowButton.ToggleOnTrue(SlowDrive{&m_drive, &m_driveController}.ToPtr());
   intakeButton.WhileTrue(SmartIntake{&m_intake, &m_stager}.ToPtr());
   outtakeButton.WhileTrue(SmartOuttake{&m_intake, &m_stager}.ToPtr());
-  NTEShooterButton.WhileTrue(ManualNteShooter{&m_shooter, &m_operatorController}.ToPtr());//SmartShooter{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
+  //NTEShooterButton.WhileTrue(ManualNteShooter{&m_shooter, &m_operatorController}.ToPtr());//SmartShooter{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
 
   // Manual shooting buttons
   closeShootButton.WhileTrue(frc2::cmd::Run([&] {
@@ -148,8 +159,13 @@ void RobotContainer::ConfigureButtonBindings() {
   }, {&m_shooter}));
 
   ampShooterButton.WhileTrue(frc2::cmd::Run([&] {
-    m_shooter.SetShooterAngle((units::radian_t)1.05);
-    m_shooter.SetIndividualShooterSpeed((units::revolutions_per_minute_t)200,(units::revolutions_per_minute_t)3300);
+    m_shooter.SetShooterAngle((units::radian_t)1.1);
+    m_shooter.SetIndividualShooterSpeed((units::revolutions_per_minute_t)100,(units::revolutions_per_minute_t)4500);
+  }, {&m_shooter}));
+  
+  NTEShooterButton.WhileTrue(frc2::cmd::Run([&] {
+    m_shooter.SetShooterAngle((units::radian_t)1.0);
+    m_shooter.SetIndividualShooterSpeed((units::revolutions_per_minute_t)150,(units::revolutions_per_minute_t)3700);
   }, {&m_shooter}));
 
   extendClimberButton.WhileTrue(frc2::cmd::Run([&] {

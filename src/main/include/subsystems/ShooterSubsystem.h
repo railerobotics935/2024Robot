@@ -51,7 +51,7 @@ class ShooterSubsystem : public frc2::SubsystemBase {
   */
   void SetShooterSpeed(units::revolutions_per_minute_t speed);
 
-  /**
+  /**s
    * Sets the Shooter speeds using closed loop control on the SparkMax
    * 
    * @param topSpeed The desired speed for the top shooter in radians per second

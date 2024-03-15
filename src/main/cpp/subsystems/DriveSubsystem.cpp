@@ -146,10 +146,10 @@ void DriveSubsystem::Periodic() {
 
   // set odometry relative to the apriltag
   if (GetLinearRobotSpeed() < CameraConstants::kMaxEstimationSpeed && GetTurnRate() < 10.0) {
-    EstimatePoseWithApriltag();
+    //EstimatePoseWithApriltag();
   }
-  m_poseEstimator.Update(-m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw), 
-                      {m_frontLeft.GetPosition(), m_frontRight.GetPosition(), m_backLeft.GetPosition(), m_backRight.GetPosition()});
+  //m_poseEstimator.Update(-m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw), 
+  //                    {m_frontLeft.GetPosition(), m_frontRight.GetPosition(), m_backLeft.GetPosition(), m_backRight.GetPosition()});
                     
   nte_fl_real_angle.SetDouble((double)m_frontLeft.GetState().angle.Radians());
   nte_fr_real_angle.SetDouble((double)m_frontRight.GetState().angle.Radians());

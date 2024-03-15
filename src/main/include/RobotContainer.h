@@ -70,5 +70,11 @@ class RobotContainer {
   std::string m_speaker21Far = "Speaker21Far";
   std::string m_speaker241 = "Speaker241";
   std::string m_speaker213 = "Speaker213";
+  std::string m_speaker23 = "Speaker23";
+  std::string m_amp1 = "Amp1";
+  std::string m_shootOne = "ShootOne";
+  std::string m_source3 = "Source3";
+  std::string m_source32 = "Source32";
+  std::string m_speaker2 = "Speaker2";  
 
 };
