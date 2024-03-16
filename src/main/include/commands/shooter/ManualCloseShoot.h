@@ -30,13 +30,18 @@ public:
                        units::revolutions_per_minute_t topShooterSpeed, 
                        units::revolutions_per_minute_t bottomShooterSpeed);
 
-  void Execute() override;
+  void Initialize() override;
   void End(bool interrupted) override;
 
 private:
 // Declare local subsystems
 ShooterSubsystem* m_shooter;
 frc::XboxController* m_opController;
+
+// Shooting values
+units::radian_t m_pitchAngle; 
+units::revolutions_per_minute_t m_topShooterSpeed;
+units::revolutions_per_minute_t m_bottomShooterSpeed;
 
 // Declare network table entries
 nt::NetworkTableEntry nte_setpointSpeedRPM;

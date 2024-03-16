@@ -35,7 +35,8 @@
 
 #include "commands/shooter/ManualNteShooter.h"
 #include "commands/shooter/SmartShooting.h"
-#include "commands/EstimatePose.h"
+#include "commands/shooter/ManualCloseShoot.h"
+#include "commands/shooter/ManualFarShoot.h"
 
 #include "subsystems/DriveSubsystem.h"
 #include "Constants.h"
@@ -50,15 +51,8 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
   // Configuring command bindings for pathplanner
   // TODO: Create custom commands for all of these
   NamedCommands::registerCommand("SmartIntake", SmartIntake{&m_intake, &m_stager}.ToPtr());
-  NamedCommands::registerCommand("SetShooterSpeeds", frc2::cmd::RunOnce([&] {
-    m_shooter.SetShooterAngle((units::radian_t)1.00);
-    m_shooter.SetShooterSpeed((units::revolutions_per_minute_t)8500);
-  }, {&m_shooter}));
-
-  NamedCommands::registerCommand("SetFarShooterSpeeds", frc2::cmd::RunOnce([&] {
-    m_shooter.SetShooterAngle((units::radian_t)0.73);
-    m_shooter.SetShooterSpeed((units::revolutions_per_minute_t)8500);
-  }, {&m_shooter}));
+  NamedCommands::registerCommand("SetShooterSpeeds", ManualCloseShoot{&m_shooter}.ToPtr());
+  NamedCommands::registerCommand("SetFarShooterSpeeds", ManualFarShoot{&m_shooter}.ToPtr());
 
   NamedCommands::registerCommand("StageForShooting", frc2::cmd::RunOnce([&] {
     m_stager.SetMotorPower(1.0);
@@ -149,16 +143,10 @@ void RobotContainer::ConfigureButtonBindings() {
   //NTEShooterButton.WhileTrue(ManualNteShooter{&m_shooter, &m_operatorController}.ToPtr());//SmartShooter{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
 
   // Manual shooting buttons
-  closeShootButton.WhileTrue(frc2::cmd::Run([&] {
-    m_shooter.SetShooterAngle((units::radian_t)1.00);
-    m_shooter.SetShooterSpeed((units::revolutions_per_minute_t)8500);
-  }, {&m_shooter}));
+  closeShootButton.WhileTrue(ManualCloseShoot{&m_shooter}.ToPtr());
+  farShooterButton.WhileTrue(ManualFarShoot{&m_shooter}.ToPtr());
 
-  farShooterButton.WhileTrue(frc2::cmd::Run([&] {
-    m_shooter.SetShooterAngle((units::radian_t)0.75);
-    m_shooter.SetShooterSpeed((units::revolutions_per_minute_t)8500);
-  }, {&m_shooter}));
-
+  /*
   ampShooterButton.WhileTrue(frc2::cmd::Run([&] {
     m_shooter.SetShooterAngle((units::radian_t)1.1);
     m_shooter.SetIndividualShooterSpeed((units::revolutions_per_minute_t)100,(units::revolutions_per_minute_t)4500);
@@ -168,6 +156,7 @@ void RobotContainer::ConfigureButtonBindings() {
     m_shooter.SetShooterAngle((units::radian_t)1.0);
     m_shooter.SetIndividualShooterSpeed((units::revolutions_per_minute_t)150,(units::revolutions_per_minute_t)3700);
   }, {&m_shooter}));
+  */
 
   extendClimberButton.WhileTrue(frc2::cmd::Run([&] {
     m_climber.SetClimberPower(-1.0);
