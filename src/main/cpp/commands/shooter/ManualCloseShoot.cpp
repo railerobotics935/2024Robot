@@ -2,7 +2,6 @@
 #include "commands/shooter/ManualCloseShoot.h"
 
 ManualCloseShoot::ManualCloseShoot(ShooterSubsystem* shooter) : m_shooter{shooter} {
-
   // Add requierment for subsystem
   AddRequirements(m_shooter);
 }

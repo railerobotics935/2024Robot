@@ -25,7 +25,7 @@
 //#define BURNSHOOTERSPARKMAX 
 //#define BURNSTAGERSPARKMAX
 //#define BURNMODULESPARKMAX
-#define BURNCLIMBERSPARKMAX
+//#define BURNCLIMBERSPARKMAX
 
 /**
  * The Constants header provides a convenient place for teams to hold robot-wide

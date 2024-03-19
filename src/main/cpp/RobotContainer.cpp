@@ -51,8 +51,15 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
   // Configuring command bindings for pathplanner
   // TODO: Create custom commands for all of these
   NamedCommands::registerCommand("SmartIntake", SmartIntake{&m_intake, &m_stager}.ToPtr());
-  NamedCommands::registerCommand("SetShooterSpeeds", ManualCloseShoot{&m_shooter}.ToPtr());
-  NamedCommands::registerCommand("SetFarShooterSpeeds", ManualFarShoot{&m_shooter}.ToPtr());
+  NamedCommands::registerCommand("SetShooterSpeeds", frc2::cmd::RunOnce([&] {
+    m_shooter.SetShooterAngle((units::radian_t)1.0);
+    m_shooter.SetShooterSpeed((units::revolutions_per_minute_t)8500.0);
+  }, {&m_shooter}));
+  
+  NamedCommands::registerCommand("SetFarShooterSpeeds", frc2::cmd::RunOnce([&] {
+    m_shooter.SetShooterAngle((units::radian_t)0.7);
+    m_shooter.SetShooterSpeed((units::revolutions_per_minute_t)8500.0);
+  }, {&m_shooter}));
 
   NamedCommands::registerCommand("StageForShooting", frc2::cmd::RunOnce([&] {
     m_stager.SetMotorPower(1.0);
