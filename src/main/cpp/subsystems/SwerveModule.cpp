@@ -19,9 +19,9 @@ SwerveModule::SwerveModule(const int drivingCANId, const int turningCANId,
 
   #ifdef BURNMODULESPARKMAX 
   ConfigureSparkMax();
-  printf("Flash Burned on Swerve Module\r\n");
+  std::cout << "Flash Burned on Swerve Module\r\n";
   #else
-  printf("Flash was not burned on Swerve Module\r\n");
+  std::cout << "Flash was not burned on Swerve Module\r\n";
   #endif
 
   m_turningEncoderOffset = turningEncoderOffset;

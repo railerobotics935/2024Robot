@@ -472,7 +472,7 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
 }
 
 void DriveSubsystem::EstimatePoseWithApriltag() {
-  //printf("ESTIMATE POSE WAS CALLED\r\n");
+  //std::cout << "ESTIMATE POSE WAS CALLED\r\n";
                 
   // Iterate through each tag, adding it to the pose estimator if it is tracked
   for (int tag = 1; tag <= 16; tag++ ) { // Check each tag for each camera

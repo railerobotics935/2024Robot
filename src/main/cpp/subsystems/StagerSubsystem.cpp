@@ -29,9 +29,9 @@ StagerSubsystem::StagerSubsystem() : m_stagerMotor{StagerConstants::kMotorID, St
   m_stagerMotor.BurnFlash();
   m_stagerFollower.BurnFlash();
 
-  printf("Flash Burned on shooter subsystem\r\n");
+  std::cout << "Flash Burned on shooter subsystem\r\n";
   #else
-  printf("Flash was not burned on shooter subsystem\r\n");
+  std::cout << "Flash was not burned on shooter subsystem\r\n";
   #endif
 
   // Initialize shuffleboard communication

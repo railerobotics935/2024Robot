@@ -35,9 +35,9 @@ ClimberSubsystem::ClimberSubsystem() {
   m_leftClimberMotor.BurnFlash();
   m_rightClimberMotor.BurnFlash();
 
-  printf("Flash Burned on climber subsystem\r\n");
+  std::cout << "Flash Burned on climber subsystem\r\n";
   #else
-  printf("Flash was not burned on climber subsystem\r\n");
+  std::cout << "Flash was not burned on climber subsystem\r\n";
   #endif
 
   // Initialize shuffleboard communication
