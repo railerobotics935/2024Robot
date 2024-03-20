@@ -21,6 +21,10 @@ void DriveToAmp::Initialize() {
 
   // I think this step might have to be done manualy, isntead of createing besizer poitns from poses, create them manualy
   // link to the c++ pathplanner documentation is in the header file
+
+  #ifdef PRINTDEBUG
+    std::cout << "DriveToAmp Initialized\r\n";
+  #endif
 }
 
 void DriveToAmp::Execute() {
@@ -35,5 +39,9 @@ bool DriveToAmp::IsFinished() {
 
 void DriveToAmp::End(bool interrupted) {
   // used to reset things to zero
+
+  #ifdef PRINTDEBUG
+    std::cout << "DriveToAmp Ended\r\n";
+  #endif
 
 }

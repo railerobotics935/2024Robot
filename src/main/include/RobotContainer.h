@@ -24,6 +24,8 @@
 #include "subsystems/StagerSubsystem.h"
 #include "subsystems/ClimberSubsystem.h"
 
+#include "commands/drive/DriveWithController.h"
+
 /**
  * This class is where the bulk of the robot should be declared.  Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -60,6 +62,8 @@ class RobotContainer {
   ShooterSubsystem m_shooter;
   StagerSubsystem m_stager;
   ClimberSubsystem m_climber;
+
+  DriveWithController m_driveCommand{&m_drive, &m_driveController};
   
   // Sendable chooser for auto
   frc::SendableChooser<std::string> m_autoChooser;

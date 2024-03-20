@@ -38,6 +38,9 @@
 #include "commands/shooter/ManualCloseShoot.h"
 #include "commands/shooter/ManualFarShoot.h"
 
+#include "commands/climber/ExtendClimber.h"
+#include "commands/climber/RetractClimber.h"
+
 #include "subsystems/DriveSubsystem.h"
 #include "Constants.h"
 
@@ -45,7 +48,7 @@ using namespace DriveConstants;
 using namespace pathplanner;
 
 RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
-  m_revPDH.SetSwitchableChannel(false); //-------------------------------------------------------------------------------------
+  m_revPDH.SetSwitchableChannel(true); //-------------------------------------------------------------------------------------
 
   // Initialize all of your commands and subsystems here
   // Configuring command bindings for pathplanner
@@ -80,14 +83,14 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
   // Set up default drive command
   // The left stick controls translation of the robot.
   // Turning is controlled by the X axis of the right stick.
-  m_drive.SetDefaultCommand(DriveWithController{&m_drive, &m_driveController}.ToPtr());
+  m_drive.SetDefaultCommand(std::move(m_driveCommand));
   
   m_intake.SetDefaultCommand(frc2::RunCommand([this] {m_intake.SetMotorPower(0.0);}, {&m_intake}));
 
   m_shooter.SetDefaultCommand(frc2::RunCommand(
     [this] {
       m_shooter.SetShooterMotorPower(-frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kOperatorLeftYIndex), 0.05));
-      m_shooter.SetShooterAngle((units::radian_t)0.7);
+      //m_shooter.SetShooterAngle((units::radian_t)0.7);
     }, {&m_shooter}
   ));
 
@@ -147,6 +150,8 @@ void RobotContainer::ConfigureButtonBindings() {
   //slowButton.ToggleOnTrue(SlowDrive{&m_drive, &m_driveController}.ToPtr());
   intakeButton.WhileTrue(SmartIntake{&m_intake, &m_stager}.ToPtr());
   outtakeButton.WhileTrue(SmartOuttake{&m_intake, &m_stager}.ToPtr());
+  extendClimberButton.WhileTrue(ExtendClimber{&m_climber}.ToPtr());
+  retractClimberButton.WhileTrue(RetractClimber{&m_climber}.ToPtr());
   //NTEShooterButton.WhileTrue(ManualNteShooter{&m_shooter, &m_operatorController}.ToPtr());//SmartShooter{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
 
   // Manual shooting buttons
@@ -165,13 +170,6 @@ void RobotContainer::ConfigureButtonBindings() {
   }, {&m_shooter}));
   */
 
-  extendClimberButton.WhileTrue(frc2::cmd::Run([&] {
-    m_climber.SetClimberPower(-1.0);
-  }, {&m_climber}));
-
-  retractClimberButton.WhileTrue(frc2::cmd::Run([&] {
-    m_climber.SetClimberPower(1.0);
-  }, {&m_climber}));
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {

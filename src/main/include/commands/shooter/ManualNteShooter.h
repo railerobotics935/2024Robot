@@ -23,6 +23,7 @@ public:
   */
   explicit ManualNteShooter(ShooterSubsystem* shooter, frc::XboxController* opController);
 
+  void Initialize() override;
   void Execute() override;
   void End(bool interrupted) override;
 

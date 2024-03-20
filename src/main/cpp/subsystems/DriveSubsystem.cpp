@@ -146,10 +146,10 @@ void DriveSubsystem::Periodic() {
 
   // set odometry relative to the apriltag
   if (GetLinearRobotSpeed() < CameraConstants::kMaxEstimationSpeed && GetTurnRate() < 10.0) {
-    //EstimatePoseWithApriltag();
+    EstimatePoseWithApriltag();
   }
-  //m_poseEstimator.Update(-m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw), 
-  //                    {m_frontLeft.GetPosition(), m_frontRight.GetPosition(), m_backLeft.GetPosition(), m_backRight.GetPosition()});
+  m_poseEstimator.Update(-m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw), 
+                      {m_frontLeft.GetPosition(), m_frontRight.GetPosition(), m_backLeft.GetPosition(), m_backRight.GetPosition()});
                     
   nte_fl_real_angle.SetDouble((double)m_frontLeft.GetState().angle.Radians());
   nte_fr_real_angle.SetDouble((double)m_frontRight.GetState().angle.Radians());
@@ -472,15 +472,15 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
 }
 
 void DriveSubsystem::EstimatePoseWithApriltag() {
-  printf("ESTIMATE POSE WAS CALLED\r\n");
+  //printf("ESTIMATE POSE WAS CALLED\r\n");
                 
   // Iterate through each tag, adding it to the pose estimator if it is tracked
-  //for (int tag = 1; tag <= 16; tag++ ) { // Check each tag for each camera
+  for (int tag = 1; tag <= 16; tag++ ) { // Check each tag for each camera
 
-    //// Front Camera
-    //if (m_frontCameraSensor.TagIsTracked(tag) && m_frontCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
-    //  m_poseEstimator.AddVisionMeasurement(m_frontCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_frontCameraSensor.GetTimestamp(tag));
-//
+    // Front Camera
+    if (m_frontCameraSensor.TagIsTracked(tag) && m_frontCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
+      m_poseEstimator.AddVisionMeasurement(m_frontCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_frontCameraSensor.GetTimestamp(tag));
+
     //// Back Left Camera
     //if (m_backLeftCameraSensor.TagIsTracked(tag) && m_backLeftCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
     //  m_poseEstimator.AddVisionMeasurement(m_backLeftCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backLeftCameraSensor.GetTimestamp(tag));
@@ -488,5 +488,5 @@ void DriveSubsystem::EstimatePoseWithApriltag() {
     //// Back Right Camera
     //if (m_backRightCameraSensor.TagIsTracked(tag) && m_backRightCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
     //  m_poseEstimator.AddVisionMeasurement(m_backRightCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backRightCameraSensor.GetTimestamp(tag));
-  //}
+  }
 } 

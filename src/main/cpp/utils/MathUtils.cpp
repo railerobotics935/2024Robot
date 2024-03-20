@@ -5,7 +5,7 @@
 #include <frc/apriltag/AprilTagFieldLayout.h>
 #include <wpi/fs.h>
 #include <frc/Filesystem.h>
-
+#include <iostream>
 
 #include "utils/MathUtils.h"
 
@@ -17,6 +17,8 @@ double MathUtils::SignedSquare(double input) {
 }
 
 frc::Translation2d MathUtils::TranslationToGoal(frc::Pose2d robotPose) {
+  std::cout << "EXPENSIVE FUNCTION CALLED\r\n";
+  /*
   // Create path to deploy directory
   fs::path deployDirectory{frc::filesystem::GetDeployDirectory() + "/2024-crescendo.json"};
   // Initialize variables
@@ -30,9 +32,10 @@ frc::Translation2d MathUtils::TranslationToGoal(frc::Pose2d robotPose) {
     // Get position of center of red speaker
     centerOfSpeaker = fieldLayout.GetTagPose(4).value().ToPose2d(); 
   }
+  */
   
   // Find Translation of robot
-  return robotPose.operator-(centerOfSpeaker).Translation();
+  return frc::Translation2d{};//robotPose.operator-(centerOfSpeaker).Translation();
 }
 
 double MathUtils::RobotDistanceToGoal(frc::Pose2d robotPose) {
@@ -45,5 +48,4 @@ double MathUtils::RobotDistanceToGoal(frc::Pose2d robotPose) {
 frc::Rotation2d MathUtils::AngleToGoal(frc::Translation2d targetTranslation) {
   // do math
   return frc::Rotation2d{(units::radian_t)std::atan(((double)targetTranslation.Y())/((double)targetTranslation.X()))}.operator+((units::degree_t)180.0);
-  
 }

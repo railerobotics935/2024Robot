@@ -13,7 +13,9 @@ SlowDrive::SlowDrive(DriveSubsystem* drive, frc::XboxController* driveController
 
 void SlowDrive::Initialize() {
   // Run once when command is scheduled
-  printf("SlowDrive Initialized\r\n");
+#ifdef PRINTDEBUG
+  std::cout << "SlowDrive Initialized\r\n";
+#endif
 }
 
 void SlowDrive::Execute() {
@@ -35,6 +37,8 @@ bool SlowDrive::IsFinished() {
 
 void SlowDrive::End(bool interupted) {
   // Runs once when the command is removed from the command scheduler
-  printf("SlowDrive ended\r\n");
+#ifdef PRINTDEBUG
+  std::cout << "SlowDrive ended\r\n";
+#endif
   m_drive->Drive((units::meters_per_second_t)0.0, (units::meters_per_second_t)0.0, (units::radians_per_second_t)0.0, true);
 }

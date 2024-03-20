@@ -13,7 +13,9 @@ SmartIntake::SmartIntake(IntakeSubsystem* intake, StagerSubsystem* stager) {
 }
 
 void SmartIntake::Initialize() {
-  printf("SmartIntake Initialize\r\n");
+#ifdef PRINTDEBUG
+  std::cout << "SmartIntake Initialize\r\n";
+#endif
   m_intake->SetMotorPower(1.00);
   m_stager->SetMotorPower(0.5);
 }
@@ -25,9 +27,10 @@ bool SmartIntake::IsFinished() {
   else
     return false;
 }
-
 void SmartIntake::End(bool interrupted) {
   m_intake->SetMotorPower(0.0);
   m_stager->SetMotorPower(0.0);
-  printf("SmartIntake End\r\n");
+#ifdef PRINTDEBUG
+  std::cout << "SmartIntake End\r\n";
+#endif
 }

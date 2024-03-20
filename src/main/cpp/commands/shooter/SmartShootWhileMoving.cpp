@@ -14,7 +14,11 @@ SmartShootWhileMoving::SmartShootWhileMoving(ShooterSubsystem* shooter, DriveSub
 }
 
 // Right now nothing, but maybe somthing later
-void SmartShootWhileMoving::Initialize() {};
+void SmartShootWhileMoving::Initialize() {
+#ifdef PRINTDEBUG
+  std::cout << "SmartShootWhileMoving Initialized\r\n";
+#endif
+};
 
 void SmartShootWhileMoving::Execute() {
 
@@ -95,6 +99,9 @@ void SmartShootWhileMoving::Execute() {
 }
 
 void SmartShootWhileMoving::End(bool interrupted) {
+#ifdef PRINTDEBUG
+  std::cout << "SmartShootWhileMoving Ended\r\n";
+#endif
   m_shooter->SetShooterAngle((units::radian_t)1.0);
   m_shooter->SetShooterSpeed((units::revolutions_per_minute_t)0.0);
   m_opController->SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);

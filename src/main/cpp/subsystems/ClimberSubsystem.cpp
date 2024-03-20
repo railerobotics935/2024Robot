@@ -42,6 +42,7 @@ ClimberSubsystem::ClimberSubsystem() {
 
   // Initialize shuffleboard communication
   auto nt_inst = nt::NetworkTableInstance::GetDefault();
+  
   auto nt_table = nt_inst.GetTable("Climber");
 
   m_leftCllimberLimitSwtich = nt_table->GetEntry("Left Climber/Limit Switch");
@@ -86,6 +87,5 @@ void ClimberSubsystem::SetClimberPower(double power) {
   else
     m_rightClimberMotor.Set(0.0);
   }
-  
 }
 

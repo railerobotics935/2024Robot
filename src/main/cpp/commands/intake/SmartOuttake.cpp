@@ -13,11 +13,17 @@ SmartOuttake::SmartOuttake(IntakeSubsystem* intake, StagerSubsystem* stager) {
 }
 
 void SmartOuttake::Initialize() {
+#ifdef PRINTDEBUG
+  std::cout << "SmartOuttake Initialized\r\n";
+#endif
   m_intake->SetMotorPower(-1.0);
   m_stager->SetMotorPower(-0.5);
 }
 
 void SmartOuttake::End(bool interrupted) {
+#ifdef PRINTDEBUG
+  std::cout << "SmartOuttake Ended\r\n";
+#endif
   m_intake->SetMotorPower(0.0);
   m_stager->SetMotorPower(0.0);
 }

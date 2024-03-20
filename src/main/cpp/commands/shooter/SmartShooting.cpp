@@ -4,6 +4,9 @@
 #include "utils/MathUtils.h"
 
 SmartShooter::SmartShooter(ShooterSubsystem* shooter, DriveSubsystem* drive, frc::XboxController* opController, frc::XboxController* driveController) {
+#ifdef PRINTDEBUG
+  std::cout << "SmartShooting Initialized\r\n";
+#endif
   // Set Local pointer
   m_shooter = shooter;
   m_drive = drive;
@@ -71,4 +74,8 @@ void SmartShooter::End(bool interrupted) {
   m_opController->SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
   m_driveController->SetRumble(frc::GenericHID::RumbleType::kBothRumble, 0.0);
   m_drive->Drive((units::meters_per_second_t)0.0, (units::meters_per_second_t)0.0, (units::radians_per_second_t)0.0, true);
+
+#ifdef PRINTDEBUG
+  std::cout << "SmartShooting Ended\r\n";
+#endif
 }

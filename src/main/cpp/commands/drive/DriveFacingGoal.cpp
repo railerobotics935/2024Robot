@@ -14,7 +14,9 @@ DriveFacingGoal::DriveFacingGoal(DriveSubsystem* drive, frc::XboxController* dri
 void DriveFacingGoal::Initialize() {
   // Run once when command is scheduled
   m_gyroOffset = ((double)m_drive->GetPose().Rotation().Radians()) - ((double)m_drive->GetHeading() * std::numbers::pi / 180.0);
-  printf("DriveFacingGoal Initialized\r\n");
+#ifdef PRINTDEBUG
+  std::cout << "DriveFacingGoal Initialized\r\n";
+#endif
 }
 
 void DriveFacingGoal::Execute() {
@@ -35,7 +37,9 @@ void DriveFacingGoal::Execute() {
 
 void DriveFacingGoal::End(bool interrupted) {
   // Runs once when the command is removed from the command scheduler
-  printf("DriveFacingGoal ended\r\n");
+#ifdef PRINTDEBUG
+  std::cout << "DriveFacingGoal ended\r\n";
+#endif
   m_driveController->SetRumble(frc::GenericHID::RumbleType::kBothRumble,0.0);
   m_drive->Drive((units::meters_per_second_t)0.0, (units::meters_per_second_t)0.0, (units::radians_per_second_t)0.0, true);
 }

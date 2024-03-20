@@ -13,7 +13,9 @@ DriveWithController::DriveWithController(DriveSubsystem* drive, frc::XboxControl
 
 void DriveWithController::Initialize() {
   // Run once when command is scheduled
-  printf("DriveWithController Initialized\r\n");
+#ifdef PRINTDEBUG
+  std::cout << "DriveWithController Initialized\r\n";
+#endif
 }
 
 void DriveWithController::Execute() {
@@ -35,6 +37,8 @@ bool DriveWithController::IsFinished() {
 
 void DriveWithController::End(bool interrupted) {
   // Runs once when the command is removed from the command scheduler
-  printf("DriveWithController ended\r\n");
+#ifdef PRINTDEBUG
+  std::cout << "DriveWithController Ended\r\n";
+#endif
   m_drive->Drive((units::meters_per_second_t)0.0, (units::meters_per_second_t)0.0, (units::radians_per_second_t)0.0, true);
 }
