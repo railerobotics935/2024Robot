@@ -29,10 +29,13 @@
 #include "commands/drive/DriveFacingGoal.h"
 #include "commands/drive/SlowDrive.h"
 
+#include "commands/intake/ManualStager.h"
 #include "commands/intake/SimpleIntake.h"
 #include "commands/intake/SmartIntake.h"
 #include "commands/intake/SmartOuttake.h"
+#include "commands/intake/StopIntake.h"
 
+#include "commands/shooter/DefaultShooter.h"
 #include "commands/shooter/ManualNteShooter.h"
 #include "commands/shooter/SmartShooting.h"
 #include "commands/shooter/ManualCloseShoot.h"
@@ -40,12 +43,22 @@
 
 #include "commands/climber/ExtendClimber.h"
 #include "commands/climber/RetractClimber.h"
+#include "commands/climber/StopClimber.h"
 
 #include "subsystems/DriveSubsystem.h"
 #include "Constants.h"
 
 using namespace DriveConstants;
 using namespace pathplanner;
+
+/**
+ * Idea:
+ * 
+ * m_drive.SetDefaultCommand(std::move(m_driveCommand));
+ *   
+ * it says it works, but it hasen't been tested yet. I don't know how different it
+ * is, if it is better or not
+*/
 
 RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
   m_revPDH.SetSwitchableChannel(true); //-------------------------------------------------------------------------------------
@@ -83,31 +96,12 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
   // Set up default drive command
   // The left stick controls translation of the robot.
   // Turning is controlled by the X axis of the right stick.
-  m_drive.SetDefaultCommand(std::move(m_driveCommand));
-  
-  m_intake.SetDefaultCommand(frc2::RunCommand([this] {m_intake.SetMotorPower(0.0);}, {&m_intake}));
-
-  m_shooter.SetDefaultCommand(frc2::RunCommand(
-    [this] {
-      m_shooter.SetShooterMotorPower(-frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kOperatorLeftYIndex), 0.05));
-      //m_shooter.SetShooterAngle((units::radian_t)0.7);
-    }, {&m_shooter}
-  ));
-
-  m_stager.SetDefaultCommand(frc2::RunCommand(
-    [this] {
-      if (frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kStagerIntakeTrigger), 0.05) != 0)
-        m_stager.SetMotorPower(-frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kStagerIntakeTrigger), 0.05));
-      else
-        m_stager.SetMotorPower(frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kStagerOuttakeTrigger), 0.05));
-    }, {&m_stager}
-  ));
-
-  m_climber.SetDefaultCommand(frc2::RunCommand(
-    [this] {
-      m_climber.SetClimberPower(0.0);
-    }, {&m_climber}
-  ));
+  //m_drive.SetDefaultCommand(std::move(m_driveCommand));
+  m_drive.SetDefaultCommand(DriveWithController{&m_drive, &m_driveController}.ToPtr());
+  m_intake.SetDefaultCommand(StopIntake{&m_intake}.ToPtr());
+  m_shooter.SetDefaultCommand(DefaultShooter{&m_shooter}.ToPtr());
+  m_stager.SetDefaultCommand(ManualStager{&m_stager, &m_operatorController}.ToPtr());
+  m_climber.SetDefaultCommand(StopClimber{&m_climber}.ToPtr());
 
   // Add auto name options
   m_autoChooser.SetDefaultOption("Speaker21", m_speaker21);
