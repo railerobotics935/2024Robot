@@ -25,6 +25,12 @@
 #include "pathplanner/lib/commands/PathPlannerAuto.h"
 #include "pathplanner/lib/auto/NamedCommands.h"
 
+#include "commands/auto/SetCloseShooterSpeeds.h"
+#include "commands/auto/SetFarShooterSpeeds.h"
+#include "commands/auto/StageForShooting.h"
+#include "commands/auto/StopEverything.h"
+#include "commands/auto/StopStager.h"
+
 #include "commands/drive/DriveWithController.h"
 #include "commands/drive/DriveFacingGoal.h"
 #include "commands/drive/SlowDrive.h"
@@ -67,19 +73,10 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
   // Configuring command bindings for pathplanner
   // TODO: Create custom commands for all of these
   NamedCommands::registerCommand("SmartIntake", SmartIntake{&m_intake, &m_stager}.ToPtr());
-  NamedCommands::registerCommand("SetShooterSpeeds", frc2::cmd::RunOnce([&] {
-    m_shooter.SetShooterAngle((units::radian_t)1.0);
-    m_shooter.SetShooterSpeed((units::revolutions_per_minute_t)8500.0);
-  }, {&m_shooter}));
-  
-  NamedCommands::registerCommand("SetFarShooterSpeeds", frc2::cmd::RunOnce([&] {
-    m_shooter.SetShooterAngle((units::radian_t)0.7);
-    m_shooter.SetShooterSpeed((units::revolutions_per_minute_t)8500.0);
-  }, {&m_shooter}));
+  NamedCommands::registerCommand("SetShooterSpeeds", SetCloseShooterSpeeds{&m_shooter}.ToPtr());
+  NamedCommands::registerCommand("SetFarShooterSpeeds", SetFarShooterSpeeds{&m_shooter}.ToPtr());
 
-  NamedCommands::registerCommand("StageForShooting", frc2::cmd::RunOnce([&] {
-    m_stager.SetMotorPower(1.0);
-  }, {&m_stager}));
+  NamedCommands::registerCommand("StageForShooting", StageForShooting{&m_stager}.ToPtr());
 
   NamedCommands::registerCommand("EndShooting", frc2::cmd::RunOnce([&] {
     m_stager.SetMotorPower(0.0);
