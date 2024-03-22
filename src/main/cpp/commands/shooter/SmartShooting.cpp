@@ -1,7 +1,6 @@
 
 #include "commands/shooter/SmartShooting.h"
 #include "commands/drive/DriveFacingGoal.h"
-#include "utils/MathUtils.h"
 
 SmartShooter::SmartShooter(ShooterSubsystem* shooter, DriveSubsystem* drive, frc::XboxController* opController, frc::XboxController* driveController) {
 #ifdef PRINTDEBUG
@@ -29,13 +28,13 @@ void SmartShooter::Execute() {
   //const auto ySpeed = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveLeftXIndex), 0.05);
   //
   //// Drive while facing the goal
-  //m_drive->DriveFacingGoal(units::meters_per_second_t{MathUtils::SignedSquare(xSpeed)},
-  //  units::meters_per_second_t{MathUtils::SignedSquare(ySpeed)},
-  //  MathUtils::AngleToGoal(MathUtils::TranslationToGoal(m_drive->GetPose())), 
+  //m_drive->DriveFacingGoal(units::meters_per_second_t{m_drive->SignedSquare(xSpeed)},
+  //  units::meters_per_second_t{m_drive->SignedSquare(ySpeed)},
+  //  m_drive->AngleToGoal(m_drive->TranslationToGoal(m_drive->GetPose())), 
   //  true);
 
   // Set Shooter to correct angle based on the distance fo the robot
-  m_distanceToShooter = MathUtils::RobotDistanceToGoal(m_drive->GetPose());
+  m_distanceToShooter = m_drive->RobotDistanceToGoal(m_drive->GetPose());
   m_shooter->SetShooterAngle((units::radian_t)ShootingCalculations::GetAngleFromDistance(m_distanceToShooter));
   m_shooter->SetShooterSpeed((units::radians_per_second_t)ShootingCalculations::GetSpeedFromDistance(m_distanceToShooter));
 

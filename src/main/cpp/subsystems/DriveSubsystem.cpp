@@ -24,7 +24,6 @@
 
 #include "Constants.h"
 #include "utils/SwerveUtils.h"
-#include "utils/MathUtils.h"
 
 using namespace DriveConstants;
 
@@ -177,7 +176,7 @@ void DriveSubsystem::Periodic() {
   //m_robotAngleController.SetD(nte_kd.GetDouble(0.05));
 
   // Update robot distance from goal
-  nte_robot_distance_to_goal.SetDouble((double)MathUtils::RobotDistanceToGoal(m_poseEstimator.GetEstimatedPosition()));
+  nte_robot_distance_to_goal.SetDouble((double)RobotDistanceToGoal(m_poseEstimator.GetEstimatedPosition()));
 }
 
 void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
@@ -476,7 +475,9 @@ void DriveSubsystem::EstimatePoseWithApriltag() {
                 
   // Iterate through each tag, adding it to the pose estimator if it is tracked
   for (int tag = 1; tag <= 16; tag++ ) { // Check each tag for each camera
-
+    /**
+     * TODO: Add m_timer.GetFPGATimestamp() for each tag to debug how long the pose estimator takes on each tag
+    */
     // Front Camera
     if (m_frontCameraSensor.TagIsTracked(tag) && m_frontCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
       m_poseEstimator.AddVisionMeasurement(m_frontCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_frontCameraSensor.GetTimestamp(tag));
@@ -490,3 +491,38 @@ void DriveSubsystem::EstimatePoseWithApriltag() {
     //  m_poseEstimator.AddVisionMeasurement(m_backRightCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backRightCameraSensor.GetTimestamp(tag));
   }
 } 
+
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+// Utility math functions
+// ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+double DriveSubsystem::SignedSquare(double input) {
+  if (input < 0.0)
+    return -std::pow(input, 2);
+  else
+    return std::pow(input, 2);
+}
+
+frc::Translation2d DriveSubsystem::TranslationToGoal(frc::Pose2d robotPose) {
+  
+  // Determine the speaker position based on allience color
+  if (frc::DriverStation::GetAlliance() == frc::DriverStation::Alliance::kBlue) {
+    // Get position of center of blue speaker
+    centerOfSpeaker = fieldLayout.GetTagPose(7).value().ToPose2d(); 
+  } else {
+    // Get position of center of red speaker
+    centerOfSpeaker = fieldLayout.GetTagPose(4).value().ToPose2d(); 
+  }
+  
+  // Find Translation of robot
+  return robotPose.operator-(centerOfSpeaker).Translation();
+}
+
+double DriveSubsystem::RobotDistanceToGoal(frc::Pose2d robotPose) {
+  //Find the distance between the robot and the goal
+  return std::sqrt(std::pow((double)TranslationToGoal(robotPose).X(), 2) + std::pow((double)TranslationToGoal(robotPose).Y(), 2));
+}
+
+frc::Rotation2d DriveSubsystem::AngleToGoal(frc::Translation2d targetTranslation) {
+  // do math
+  return frc::Rotation2d{(units::radian_t)std::atan(((double)targetTranslation.Y())/((double)targetTranslation.X()))}.operator+((units::degree_t)180.0);
+}

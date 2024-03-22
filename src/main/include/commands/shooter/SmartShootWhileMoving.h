@@ -40,4 +40,15 @@ private:
   frc::XboxController* m_opController;
   frc::XboxController* m_driveController;
 
+
+  // Local variables to hold things
+  double m_robotToGoalDistance;
+  frc::Translation2d m_GoalTranslation; 
+  frc::Translation2d m_dynamicTargetTranslation;
+  frc::Translation2d m_robotToDynamicTargetTranslation;
+  double m_dynamicTargetDistance;
+  double m_robot_vx;
+  double m_robot_vy;
+  double m_shootingTime;
+
 };

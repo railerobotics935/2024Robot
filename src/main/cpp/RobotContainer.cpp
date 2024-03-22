@@ -75,11 +75,8 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
   NamedCommands::registerCommand("SmartIntake", SmartIntake{&m_intake, &m_stager}.ToPtr());
   NamedCommands::registerCommand("SetShooterSpeeds", SetCloseShooterSpeeds{&m_shooter}.ToPtr());
   NamedCommands::registerCommand("SetFarShooterSpeeds", SetFarShooterSpeeds{&m_shooter}.ToPtr());
-
   NamedCommands::registerCommand("StageForShooting", StageForShooting{&m_stager}.ToPtr());
-
   NamedCommands::registerCommand("EndShooting", StopStager{&m_stager}.ToPtr());
-
   NamedCommands::registerCommand("StopEverything", StopEverything{&m_stager, &m_shooter}.ToPtr());
   
   // Configure the button bindings

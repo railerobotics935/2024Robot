@@ -161,7 +161,39 @@ public:
   */
   void EstimatePoseWithApriltag();
 
-  frc2::CommandPtr ConfigureModuleControllers();
+  /**
+   * Takes an input value and squares it, but retains the sign. IE negative
+   * numbers will remain negative.
+   * 
+   * @param input is the number to perform the transform on
+   * @return the transformed input value
+  */
+  double SignedSquare(double input);
+
+  /**
+   * Finds transformation of robot in relation to the goal. 
+   * 
+   * @param robotPose is the position of the robot on the field
+   * @return the transformation of the robot
+  */
+  frc::Translation2d TranslationToGoal(frc::Pose2d robotPose);
+
+  /**
+   * Turns translation2d given by TranslationToGoal to distance between the robot and 
+   * goal in meters.
+   * 
+   * @param robotTransformation is the transformation given by TranslationToGoal
+   * @return the distance to the goal in meters
+  */
+  double RobotDistanceToGoal(frc::Pose2d robotPose);
+
+  /**
+   * Finds the angle of the robot in relation to the goal. 
+   * 
+   * @param targetTranslation is the position of the robot on the field
+   * @return the rotation of the robot
+  */
+  frc::Rotation2d AngleToGoal(frc::Translation2d targetTranslation);
 
   frc::SwerveDriveKinematics<4> m_driveKinematics{
     frc::Translation2d{RobotConstants::kWheelBase / 2, RobotConstants::kShooterSideWidth / 2},
@@ -244,4 +276,12 @@ private:
 
   // Variables to internialy keep track of drive state
   bool m_fieldRelative = true;
+
+  // Create path to deploy directory
+  fs::path deployDirectory{frc::filesystem::GetDeployDirectory() + "/2024-crescendo.json"};
+  
+  // Initialize variables
+  frc::AprilTagFieldLayout fieldLayout{deployDirectory.string()}; 
+  frc::Pose2d centerOfSpeaker{};
+
 };
