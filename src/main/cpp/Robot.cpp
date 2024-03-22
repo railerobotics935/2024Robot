@@ -14,11 +14,8 @@
  * List of items need to be compleated, list may change or be amended as 
  * we decide on adding new features
  * 
- * TODO: Before comp 1
- *    TODO: Finish Climber subsystem
- *    TODO: Disable anything we aren't using
- *      TODO: If the robot still runs over, fix that
- *    TODO: Work on more autos
+ * TODO: Before comp 2
+ *    TODO: Add deadzone for filtering the apriltag angle for commands sensitive to the robot angle.
  * 
  * TROUBLESHOOT: Create Apriltag recongition system 
  *    TODO: Processing speed NEEDS to be faster
@@ -63,10 +60,6 @@
  *    DONE: Command Bindings get stuck with controller switches
  *    FIXED: Chooser to deterime if we need to burn the flash on the motorcontrollers
  *    TODO: Fix warning about construction fo motorcontrollers using constant values
- *    TODO: Make gyro inverstion clener and safe
- *    TODO: Scale the vision X and Y standard deviation by distance from the tag 
- *    DONE: Convert shooter units to rpm from radians per second
- *    TODO: Fix Apriltag Sensor method names
  * 
  * TODO: Clean up code
  *    DONE: Fix indentation size

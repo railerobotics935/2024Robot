@@ -3,9 +3,7 @@
 #include "commands/drive/DriveFacingGoal.h"
 
 SmartShooter::SmartShooter(ShooterSubsystem* shooter, DriveSubsystem* drive, frc::XboxController* opController, frc::XboxController* driveController) {
-#ifdef PRINTDEBUG
-  std::cout << "SmartShooting Initialized\r\n";
-#endif
+
   // Set Local pointer
   m_shooter = shooter;
   m_drive = drive;
@@ -18,6 +16,9 @@ SmartShooter::SmartShooter(ShooterSubsystem* shooter, DriveSubsystem* drive, frc
 
 // Right now nothing, but maybe somthing later
 void SmartShooter::Initialize() {
+#ifdef PRINTDEBUG
+  std::cout << "SmartShooting Initialized\r\n";
+#endif
   // DriveFacingGoal{m_drive, m_driveController}.ToPtr();
 };
 

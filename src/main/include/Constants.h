@@ -29,6 +29,7 @@
 //#define BURNCLIMBERSPARKMAX
 
 #define PRINTDEBUG
+#define DEBUGPOSEESTIMATION
 
 /**
  * The Constants header provides a convenient place for teams to hold robot-wide

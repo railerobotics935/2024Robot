@@ -117,9 +117,13 @@ AutoBuilder::configureHolonomic(
   nte_ki = nt_table->GetEntry("SwerveDrive/PID/KI");
   nte_kd = nt_table->GetEntry("SwerveDrive/PID/KD"); 
 
-  nte_kp.SetDouble(4.5);
-  nte_ki.SetDouble(0.002);
-  nte_kd.SetDouble(0.05);
+  nte_debugTimeForPoseEstimation = nt_table->GetEntry("Debug Values/Pose Estimation");
+  nte_debugTimeForAddVistionData = nt_table->GetEntry("Debug Values/Add Vision Data");  
+  nte_numberOfTagsAdded = nt_table->GetEntry("Debug Values/Number Of Tags Processed");
+
+  //nte_kp.SetDouble(4.5);
+  //nte_ki.SetDouble(0.002);
+  //nte_kd.SetDouble(0.05);
 
   nte_robot_distance_to_goal = nt_table->GetEntry("Pose Estimation/Distance to Goal");
   
@@ -127,6 +131,8 @@ AutoBuilder::configureHolonomic(
   frc::Shuffleboard::GetTab("Field").Add(m_field);
 
   m_robotAngleController.EnableContinuousInput(0, (std::numbers::pi * 2));
+
+  m_timer.Restart();
 }
 
 // Returns true is the allience selected is red
@@ -143,13 +149,21 @@ void DriveSubsystem::Periodic() {
                     {m_frontLeft.GetPosition(), m_frontRight.GetPosition(), 
                     m_backLeft.GetPosition(), m_backRight.GetPosition()});
 
+  m_poseEstimator.Update(-m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw), 
+                      {m_frontLeft.GetPosition(), m_frontRight.GetPosition(), m_backLeft.GetPosition(), m_backRight.GetPosition()});
+
   // set odometry relative to the apriltag
   if (GetLinearRobotSpeed() < CameraConstants::kMaxEstimationSpeed && GetTurnRate() < 10.0) {
     EstimatePoseWithApriltag();
   }
-  m_poseEstimator.Update(-m_gyro.GetAngle(frc::ADIS16470_IMU::kYaw), 
-                      {m_frontLeft.GetPosition(), m_frontRight.GetPosition(), m_backLeft.GetPosition(), m_backRight.GetPosition()});
+
                     
+  //m_robotAngleController.SetP(nte_kp.GetDouble(4.5));
+  //m_robotAngleController.SetI(nte_ki.GetDouble(0.002));
+  //m_robotAngleController.SetD(nte_kd.GetDouble(0.05));
+}
+
+void DriveSubsystem::UpdateNTE() {
   nte_fl_real_angle.SetDouble((double)m_frontLeft.GetState().angle.Radians());
   nte_fr_real_angle.SetDouble((double)m_frontRight.GetState().angle.Radians());
   nte_bl_real_angle.SetDouble((double)m_backLeft.GetState().angle.Radians());
@@ -171,12 +185,9 @@ void DriveSubsystem::Periodic() {
   // Set robot position to shuffleboard field
   m_field.SetRobotPose(m_poseEstimator.GetEstimatedPosition());
 
-  //m_robotAngleController.SetP(nte_kp.GetDouble(4.5));
-  //m_robotAngleController.SetI(nte_ki.GetDouble(0.002));
-  //m_robotAngleController.SetD(nte_kd.GetDouble(0.05));
-
   // Update robot distance from goal
   nte_robot_distance_to_goal.SetDouble((double)RobotDistanceToGoal(m_poseEstimator.GetEstimatedPosition()));
+
 }
 
 void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
@@ -471,25 +482,59 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
 }
 
 void DriveSubsystem::EstimatePoseWithApriltag() {
-  //std::cout << "ESTIMATE POSE WAS CALLED\r\n";
-                
+#ifdef DEBUGPOSEESTIMATION
+  double startEstiamtionTime = (double)m_timer.GetFPGATimestamp();
+  int numberOfValidTags = 0;
+#endif
   // Iterate through each tag, adding it to the pose estimator if it is tracked
   for (int tag = 1; tag <= 16; tag++ ) { // Check each tag for each camera
-    /**
-     * TODO: Add m_timer.GetFPGATimestamp() for each tag to debug how long the pose estimator takes on each tag
-    */
-    // Front Camera
-    if (m_frontCameraSensor.TagIsTracked(tag) && m_frontCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
-      m_poseEstimator.AddVisionMeasurement(m_frontCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_frontCameraSensor.GetTimestamp(tag));
 
-    //// Back Left Camera
-    //if (m_backLeftCameraSensor.TagIsTracked(tag) && m_backLeftCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
-    //  m_poseEstimator.AddVisionMeasurement(m_backLeftCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backLeftCameraSensor.GetTimestamp(tag));
-//
-    //// Back Right Camera
-    //if (m_backRightCameraSensor.TagIsTracked(tag) && m_backRightCameraSensor.GetTimestamp(tag) > (units::second_t)0.0)
-    //  m_poseEstimator.AddVisionMeasurement(m_backRightCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backRightCameraSensor.GetTimestamp(tag));
+    // Front Camera
+    if (m_frontCameraSensor.TagIsTracked(tag) && m_frontCameraSensor.GetTimestamp(tag) > (units::second_t)0.0){
+      #ifdef DEBUGPOSEESTIMATION
+      double startEstiamtionTime2 = (double)m_timer.GetFPGATimestamp();
+      #endif
+
+      m_poseEstimator.AddVisionMeasurement(m_frontCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_frontCameraSensor.GetTimestamp(tag));
+      
+      #ifdef DEBUGPOSEESTIMATION
+      nte_debugTimeForAddVistionData.SetDouble((double)m_timer.GetFPGATimestamp() - startEstiamtionTime2);
+      numberOfValidTags++;
+      #endif
+    }
+
+    // Back Left Camera
+    if (m_backLeftCameraSensor.TagIsTracked(tag) && m_backLeftCameraSensor.GetTimestamp(tag) > (units::second_t)0.0) {
+      #ifdef DEBUGPOSEESTIMATION
+      double startEstiamtionTime2 = (double)m_timer.GetFPGATimestamp();
+      #endif
+      
+      m_poseEstimator.AddVisionMeasurement(m_backLeftCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backLeftCameraSensor.GetTimestamp(tag));
+      
+      #ifdef DEBUGPOSEESTIMATION
+      nte_debugTimeForAddVistionData.SetDouble((double)m_timer.GetFPGATimestamp() - startEstiamtionTime2);
+      numberOfValidTags++;
+      #endif
+    }
+
+    // Back Right Camera
+    if (m_backRightCameraSensor.TagIsTracked(tag) && m_backRightCameraSensor.GetTimestamp(tag) > (units::second_t)0.0) {
+      #ifdef DEBUGPOSEESTIMATION
+      double startEstiamtionTime2 = (double)m_timer.GetFPGATimestamp();
+      #endif
+      
+      m_poseEstimator.AddVisionMeasurement(m_backRightCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backRightCameraSensor.GetTimestamp(tag));
+      
+      #ifdef DEBUGPOSEESTIMATION
+      nte_debugTimeForAddVistionData.SetDouble((double)m_timer.GetFPGATimestamp() - startEstiamtionTime2);
+      numberOfValidTags++;
+      #endif
+    }
   }
+#ifdef DEBUGPOSEESTIMATION
+  nte_numberOfTagsAdded.SetInteger(numberOfValidTags);
+  nte_debugTimeForPoseEstimation.SetDouble((double)m_timer.GetFPGATimestamp() - startEstiamtionTime);
+#endif
 } 
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------

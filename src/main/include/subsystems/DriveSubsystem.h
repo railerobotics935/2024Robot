@@ -20,6 +20,7 @@
 #include <frc/estimator/SwerveDrivePoseEstimator.h>
 #include <frc/controller/PIDController.h>
 #include <frc2/command/PIDSubsystem.h>
+#include <frc/Timer.h>
 
 #include "Constants.h"
 #include "SwerveModule.h"
@@ -38,6 +39,11 @@ public:
    * Will be called periodically whenever the CommandScheduler runs.
    */
   void Periodic() override;
+
+  /**
+   * Updates all of the network table entries
+  */
+  void UpdateNTE();
 
   /**
    * Drives the robot at given x, y and theta speeds. Speeds range from [-1, 1]
@@ -236,9 +242,15 @@ private:
 
   nt::NetworkTableEntry nte_robot_distance_to_goal;
 
+  nt::NetworkTableEntry nte_debugTimeForPoseEstimation;
+  nt::NetworkTableEntry nte_debugTimeForAddVistionData;
+  nt::NetworkTableEntry nte_numberOfTagsAdded;
+
   frc::Field2d m_field;
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
+
+  frc::Timer m_timer;
 
   SwerveModule m_frontLeft;
   SwerveModule m_frontRight;
@@ -279,7 +291,7 @@ private:
 
   // Create path to deploy directory
   fs::path deployDirectory{frc::filesystem::GetDeployDirectory() + "/2024-crescendo.json"};
-  
+
   // Initialize variables
   frc::AprilTagFieldLayout fieldLayout{deployDirectory.string()}; 
   frc::Pose2d centerOfSpeaker{};
