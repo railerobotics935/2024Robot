@@ -78,14 +78,9 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
 
   NamedCommands::registerCommand("StageForShooting", StageForShooting{&m_stager}.ToPtr());
 
-  NamedCommands::registerCommand("EndShooting", frc2::cmd::RunOnce([&] {
-    m_stager.SetMotorPower(0.0);
-  }, {&m_stager}));
+  NamedCommands::registerCommand("EndShooting", StopStager{&m_stager}.ToPtr());
 
-  NamedCommands::registerCommand("StopEverything", frc2::cmd::RunOnce([&] {
-    m_stager.SetMotorPower(0.0);
-    m_shooter.SetShooterMotorPower(0.0);
-  }, {&m_shooter, &m_stager}));
+  NamedCommands::registerCommand("StopEverything", StopEverything{&m_stager, &m_shooter}.ToPtr());
   
   // Configure the button bindings
   ConfigureButtonBindings();

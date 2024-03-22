@@ -14,7 +14,7 @@ public:
    * Creates a new SimpleIntake.
    *
    * @param intake The pointer to the intake subsystem
-   * @param opController The pointer to the drive controller
+   * @param opController The pointer to the operator controller
    */
   explicit SimpleIntake(IntakeSubsystem* intake);
 

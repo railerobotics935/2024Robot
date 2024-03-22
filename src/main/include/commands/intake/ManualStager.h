@@ -14,7 +14,7 @@ public:
    * Creates a new ManualStager.
    *
    * @param stager The pointer to the intake subsystem
-   * @param operatorController the pointer to the oporator controller
+   * @param operatorController the pointer to the operator controller
    */
   explicit ManualStager(StagerSubsystem* stager, frc::XboxController* operatorController);
 
