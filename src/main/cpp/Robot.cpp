@@ -51,7 +51,7 @@
  *      TODO: Able to set speed and angle early, but only rotate robot when almost ready to shoot to keep our options open
  *      DONE: Add M2etond to DriveSubsystem to still move using controller inputs, but stay at a commanded angle
  *      DONE: Add method to see if the pid controlle for the rotation of the robot is at the correct location
- *      DONE: Convert from time to acceptiable distance, so it is based on speed
+ *      DONE: Convert from tigitme to acceptiable distance, so it is based on speed
  * 
  * TODO: Improvements
  *    DONE: Work on fixing the abolute encoder problem with the swerve

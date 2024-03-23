@@ -40,20 +40,29 @@ OakDLiteSensor::OakDLiteSensor(std::string cameraName, frc::Pose3d cameraPose3d,
 
 }
 
-frc::Translation2d OakDLiteSensor::GetFieldRelativeTranslation(int object) {
+frc::Translation2d OakDLiteSensor::GetRobotRelativeTranslation(int object) {
   // Grab Translation3d values in an vector
-  std::vector<double> translationArr = nte_location[object].GetDoubleArray(std::vector<double>());
+  m_translationArr = nte_location[object].GetDoubleArray(std::vector<double>());
 
   // Create Transform3d object for object position relative to robot
-  frc::Translation3d rawTranslation{(units::meter_t)translationArr[0], (units::meter_t)translationArr[1], (units::meter_t)translationArr[2]};
+  m_rawTranslation = {(units::meter_t)m_translationArr[0], (units::meter_t)m_translationArr[1], (units::meter_t)m_translationArr[2]};
   
   // Convert translation into standard for the robot
-  frc::Translation3d convertedTranslation = frc::CoordinateSystem::Convert(rawTranslation, 
+   m_convertedTranslation = frc::CoordinateSystem::Convert(m_rawTranslation, 
                                 frc::CoordinateSystem::EDN(), 
                                 frc::CoordinateSystem::NWU());
-  
+
   // Correcting and adding translations to get final translation of the object 
-  return convertedTranslation.ToTranslation2d().operator+(m_cameraPose3d.ToPose2d().Translation()).RotateBy(-m_poseEstimator->GetEstimatedPosition().Rotation()).operator+(m_poseEstimator->GetEstimatedPosition().Translation());
+  return m_convertedTranslation.ToTranslation2d().RotateBy(m_cameraPose3d.ToPose2d().Rotation()).operator+(m_cameraPose3d.ToPose2d().Translation());
+}
+
+frc::Translation2d OakDLiteSensor::GetFieldRelativePosition(int object) {
+  return m_poseEstimator->GetEstimatedPosition().Translation().operator+( // Robot translation
+         GetRobotRelativeTranslation(object).RotateBy(frc::Rotation2d{(units::radian_t)std::numbers::pi}.operator-(m_poseEstimator->GetEstimatedPosition().Rotation()))); // Object translation rotated to make it field relative
+}
+
+frc::Translation2d OakDLiteSensor::GetFieldRelativeTranslation(int object) {
+  return GetRobotRelativeTranslation(object).RotateBy(frc::Rotation2d{(units::radian_t)std::numbers::pi}.operator-(m_poseEstimator->GetEstimatedPosition().Rotation())); // Object translation rotated to make it field relative
 }
 
 bool OakDLiteSensor::ObjectIsTracked(int object) {

@@ -26,7 +26,19 @@ public:
 
   /**
    * @param object The ID number for the object wanted to identify
-   * @return The Field Relative Translation 2d
+   * @return The Robot Relative Translation 2d
+  */
+  frc::Translation2d GetRobotRelativeTranslation(int object);
+
+  /**
+   * @param object The ID number for the object wanted to identify
+   * @return The Field Relative position (as a Translation 2d) based on pose estimation
+  */
+  frc::Translation2d GetFieldRelativePosition(int object);
+
+  /**
+   * @param object The ID number for the object wanted to identify
+   * @return The Field Relative Translation 2d based on pose estimation
   */
   frc::Translation2d GetFieldRelativeTranslation(int object);
 
@@ -58,4 +70,11 @@ private:
   frc::Pose3d m_cameraPose3d;
   frc::SwerveDrivePoseEstimator<4>* m_poseEstimator;
   frc::Transform2d m_cameraTransform2d;
+
+  // Processing variables to hold things
+  std::vector<double> m_translationArr;
+  frc::Translation3d m_rawTranslation;
+  frc::Translation3d m_convertedTranslation;
+  std::vector<int> m_robotObjects;
+  std::vector<int> m_noteObjects;
 };
