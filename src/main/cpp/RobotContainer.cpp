@@ -86,11 +86,11 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
   // The left stick controls translation of the robot.
   // Turning is controlled by the X axis of the right stick.
   //m_drive.SetDefaultCommand(std::move(m_driveCommand));
-  //m_drive.SetDefaultCommand(DriveWithController{&m_drive, &m_driveController}.ToPtr());
-  //m_intake.SetDefaultCommand(StopIntake{&m_intake}.ToPtr());
-  //m_shooter.SetDefaultCommand(DefaultShooter{&m_shooter}.ToPtr());
-  //m_stager.SetDefaultCommand(ManualStager{&m_stager, &m_operatorController}.ToPtr());
-  //m_climber.SetDefaultCommand(StopClimber{&m_climber}.ToPtr());
+  m_drive.SetDefaultCommand(DriveWithController{&m_drive, &m_driveController}.ToPtr());
+  m_intake.SetDefaultCommand(StopIntake{&m_intake}.ToPtr());
+  m_shooter.SetDefaultCommand(DefaultShooter{&m_shooter}.ToPtr());
+  m_stager.SetDefaultCommand(ManualStager{&m_stager, &m_operatorController}.ToPtr());
+  m_climber.SetDefaultCommand(StopClimber{&m_climber}.ToPtr());
 
   // Add auto name options
   m_autoChooser.SetDefaultOption("Speaker21", m_speaker21);
@@ -109,7 +109,7 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
 }
 
 void RobotContainer::ConfigureButtonBindings() {
-/*
+
   // Create new button bindings
   frc2::JoystickButton resetButton(&m_driveController, ControllerConstants::kResetGyroButtonIndex); 
   frc2::JoystickButton robotRelativeButton(&m_driveController, ControllerConstants::kRobotRelativeButtonIndex);

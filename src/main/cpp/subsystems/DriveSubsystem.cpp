@@ -155,6 +155,7 @@ void DriveSubsystem::Periodic() {
   // set odometry relative to the apriltag
   EstimatePoseWithApriltag();
   
+  UpdateNTE();
 
   m_field.SetRobotPose(m_poseEstimator.GetEstimatedPosition());
 
