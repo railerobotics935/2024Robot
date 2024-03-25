@@ -377,6 +377,12 @@ namespace BackRightCamera {
     const frc::Pose3d kPose3d{kTranlation3d, kRotation3d};
 } // namespace BackRightCamera
 
+namespace OakDLiteCamera {
+    const frc::Translation3d kTranlation3d{(units::meter_t)-0.250, (units::meter_t)0.0, (units::meter_t)0.2286};
+    const frc::Rotation3d kRotation3d{(units::radian_t)0.0, (units::radian_t)0.0, (units::radian_t)std::numbers::pi};
+    const frc::Pose3d kPose3d{kTranlation3d, kRotation3d};
+} // namespace BackRightCamera
+
 } // namespace CameraConstants
 
 namespace ShootingCalculations {

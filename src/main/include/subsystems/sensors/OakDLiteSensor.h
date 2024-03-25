@@ -43,6 +43,12 @@ public:
   frc::Translation2d GetFieldRelativeTranslation(int object);
 
   /**
+   * @param object The ID nubmer for the object wanted to identify
+   * @return The distance in Meters the object is from the center fo the robot
+  */
+  double GetDistanceFromRobot(int object);
+
+  /**
    * @return True if the object is tracked
   */
   bool ObjectIsTracked(int object);

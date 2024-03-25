@@ -65,6 +65,10 @@ frc::Translation2d OakDLiteSensor::GetFieldRelativeTranslation(int object) {
   return GetRobotRelativeTranslation(object).RotateBy(frc::Rotation2d{(units::radian_t)std::numbers::pi}.operator-(m_poseEstimator->GetEstimatedPosition().Rotation())); // Object translation rotated to make it field relative
 }
 
+double OakDLiteSensor::GetDistanceFromRobot(int object) {
+  return std::sqrt(std::pow((double)GetRobotRelativeTranslation(object).X(), 2) + std::pow((double)GetRobotRelativeTranslation(object).Y(), 2));
+}
+
 bool OakDLiteSensor::ObjectIsTracked(int object) {
   // If object is tracked, return true, else return false
   if (nte_status[object].GetString("LOST") == "TRACKED")

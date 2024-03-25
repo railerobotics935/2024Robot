@@ -17,8 +17,8 @@ void VisionIntake::Initialize() {
 #ifdef PRINTDEBUG
   std::cout << "VisionIntake Initialize\r\n";
 #endif
-  m_intake->SetMotorPower(1.00);
-  m_stager->SetMotorPower(0.5);
+  // run command to get best note id
+
 }
 
 bool VisionIntake::IsFinished() {

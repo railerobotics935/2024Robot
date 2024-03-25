@@ -1,6 +1,8 @@
 
 #pragma once
 
+#include <vector>
+
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
 #include <frc/XboxController.h>
@@ -25,9 +27,13 @@ public:
   void Initialize() override;
   bool IsFinished() override;
   void End(bool interrupted) override;
-  
+
 private:
+
   IntakeSubsystem* m_intake;
   StagerSubsystem* m_stager;
   DriveSubsystem* m_drive;
+
+  int m_bestNoteId;
+
 };

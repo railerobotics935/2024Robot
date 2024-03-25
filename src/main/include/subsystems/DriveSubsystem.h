@@ -25,6 +25,7 @@
 #include "Constants.h"
 #include "SwerveModule.h"
 #include "sensors/ApriltagSensor.h"
+#include "sensors/OakDLiteSensor.h"
 
 class DriveSubsystem : public frc2::SubsystemBase {
 public:
@@ -168,6 +169,13 @@ public:
   void EstimatePoseWithApriltag();
 
   /**
+   * Used internaly to determine whitch note the camera may see to travel too
+   * 
+   * @returns the id of the best note
+  */
+  int GetBestNoteId();
+
+  /**
    * Takes an input value and squares it, but retains the sign. IE negative
    * numbers will remain negative.
    * 
@@ -259,12 +267,6 @@ private:
 
   // The gyro sensor
   frc::ADIS16470_IMU m_gyro{frc::ADIS16470_IMU::IMUAxis::kZ, frc::ADIS16470_IMU::IMUAxis::kY, frc::ADIS16470_IMU::IMUAxis::kX};
-
-  // Apriltag sensor 
-  ApriltagSensor m_frontCameraSensor{"FrontCam", CameraConstants::FrontCamera::kPose3d};
-  ApriltagSensor m_backLeftCameraSensor{"BackLeftCam", CameraConstants::BackLeftCamera::kPose3d};
-  ApriltagSensor m_backRightCameraSensor{"BackRightCam", CameraConstants::BackRightCamera::kPose3d};
-
   // Odometry class for tracking robot pose
   // 4 defines the number of modules
   frc::SwerveDriveOdometry<4> m_odometry;
@@ -296,4 +298,14 @@ private:
   frc::AprilTagFieldLayout fieldLayout{deployDirectory.string()}; 
   frc::Pose2d centerOfSpeaker{};
 
+  // Apriltag sensor 
+  ApriltagSensor m_frontCameraSensor{"FrontCam", CameraConstants::FrontCamera::kPose3d};
+  ApriltagSensor m_backLeftCameraSensor{"BackLeftCam", CameraConstants::BackLeftCamera::kPose3d};
+  ApriltagSensor m_backRightCameraSensor{"BackRightCam", CameraConstants::BackRightCamera::kPose3d};
+  OakDLiteSensor m_OakDLiteCameraSensor{"OakDLiteCam", CameraConstants::OakDLiteCamera::kPose3d, &m_poseEstimator};
+
+  // Processing variables for the 
+  int m_bestNoteId;
+  std::vector<int> m_listOfNotes;
+  std::vector<int> m_listOfRobots;
 };

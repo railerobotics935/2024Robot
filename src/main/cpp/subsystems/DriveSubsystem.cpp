@@ -537,6 +537,36 @@ void DriveSubsystem::EstimatePoseWithApriltag() {
 #endif
 } 
 
+int DriveSubsystem::GetBestNoteId() {
+  // Step 1: Get List of Notes and Robots
+  m_listOfNotes.clear();
+  m_listOfRobots.clear();
+  for (int i = 0; i < 16; i++) {
+    if (m_OakDLiteCameraSensor.ObjectIsNote(i) && m_OakDLiteCameraSensor.ObjectIsTracked(i))
+      m_listOfNotes.push_back(i);
+    else if (!m_OakDLiteCameraSensor.ObjectIsNote(i) && m_OakDLiteCameraSensor.ObjectIsTracked(i))
+      m_listOfRobots.push_back(i);    
+  }
+
+  // Step 2: (optional) eleminate any notes too close to robots
+
+  // Step 3: Determine Closest Note and update class value
+  if (m_listOfNotes.size() > 0) {
+    double minDistanceFromRobot = 100000000.0;
+    for (int i = 0; i < m_listOfNotes.size(); i++) {
+      if (m_OakDLiteCameraSensor.GetDistanceFromRobot(i) < minDistanceFromRobot) {
+        minDistanceFromRobot = m_OakDLiteCameraSensor.GetDistanceFromRobot(i);
+        m_bestNoteId = i;
+      }
+    }
+    // return the good note
+    return m_bestNoteId;
+  }
+  // If no Notes, return -1
+  else
+    return -1;
+}
+
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Utility math functions
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
