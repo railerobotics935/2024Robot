@@ -89,7 +89,13 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
   m_drive.SetDefaultCommand(DriveWithController{&m_drive, &m_driveController}.ToPtr());
   m_intake.SetDefaultCommand(StopIntake{&m_intake}.ToPtr());
   m_shooter.SetDefaultCommand(DefaultShooter{&m_shooter}.ToPtr());
-  m_stager.SetDefaultCommand(ManualStager{&m_stager, &m_operatorController}.ToPtr());
+  m_stager.SetDefaultCommand(frc2::cmd::Run([&] {
+    if (frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kStagerIntakeTrigger), 0.05) != 0.0)
+    m_stager.SetMotorPower(-frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kStagerIntakeTrigger), 0.05));
+  else
+    m_stager.SetMotorPower(frc::ApplyDeadband(m_operatorController.GetRawAxis(ControllerConstants::kStagerOuttakeTrigger), 0.05));
+  }, {&m_stager}));
+
   m_climber.SetDefaultCommand(StopClimber{&m_climber}.ToPtr());
 
   // Add auto name options
@@ -141,7 +147,7 @@ void RobotContainer::ConfigureButtonBindings() {
   closeShootButton.WhileTrue(ManualCloseShoot{&m_shooter}.ToPtr());
   farShooterButton.WhileTrue(ManualFarShoot{&m_shooter}.ToPtr());
 
-  /*
+  
   ampShooterButton.WhileTrue(frc2::cmd::Run([&] {
     m_shooter.SetShooterAngle((units::radian_t)1.1);
     m_shooter.SetIndividualShooterSpeed((units::revolutions_per_minute_t)100,(units::revolutions_per_minute_t)4500);
@@ -151,7 +157,7 @@ void RobotContainer::ConfigureButtonBindings() {
     m_shooter.SetShooterAngle((units::radian_t)1.0);
     m_shooter.SetIndividualShooterSpeed((units::revolutions_per_minute_t)150,(units::revolutions_per_minute_t)3700);
   }, {&m_shooter}));
-  */
+  
 
 }
 

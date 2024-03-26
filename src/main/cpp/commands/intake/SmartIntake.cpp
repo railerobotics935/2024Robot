@@ -22,7 +22,7 @@ void SmartIntake::Initialize() {
 
 bool SmartIntake::IsFinished() {
   if (m_stager->NoteLoaded()) {
-    //return true;
+    return true;
   }
   else
     return false;

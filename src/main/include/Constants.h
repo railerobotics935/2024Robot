@@ -24,7 +24,7 @@
 
 // Turn this off when there is no new constants need to be burned onto motorcontrollers
 //#define BURNSHOOTERSPARKMAX 
-//#define BURNSTAGERSPARKMAX
+#define BURNSTAGERSPARKMAX
 //#define BURNMODULESPARKMAX
 //#define BURNCLIMBERSPARKMAX
 
@@ -236,7 +236,7 @@ constexpr double kMinPitchAngle = 0.5; // Radians
 constexpr double kMaxPitchAngle = 1.25; // Radians
 
 // Offset for the pitch
-constexpr double kPitchOffset = 2.653 - (51.0 * std::numbers::pi / 180.0);
+constexpr double kPitchOffset = 0.0;
 
 constexpr units::ampere_t kShooterMotorCurrentLimit = 40_A;
 constexpr units::ampere_t kBottomMotorCurrentLimit = 40_A;

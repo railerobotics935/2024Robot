@@ -23,6 +23,8 @@ StagerSubsystem::StagerSubsystem() : m_stagerMotor{StagerConstants::kMotorID, St
   m_stagerMotor.EnableVoltageCompensation(RobotConstants::kVoltageCompentationValue);
   m_stagerFollower.EnableVoltageCompensation(RobotConstants::kVoltageCompentationValue);
 
+  m_stagerMotor.SetInverted(true);
+
   // Set follwers and inversted state
   m_stagerFollower.Follow(m_stagerMotor, true);
 
