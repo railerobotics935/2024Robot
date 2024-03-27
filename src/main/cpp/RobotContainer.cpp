@@ -89,7 +89,7 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
   m_drive.SetDefaultCommand(DriveWithController{&m_drive, &m_driveController}.ToPtr());
   m_intake.SetDefaultCommand(StopIntake{&m_intake}.ToPtr());
   m_shooter.SetDefaultCommand(DefaultShooter{&m_shooter}.ToPtr());
-  m_stager.SetDefaultCommand(ManualStager{&m_stager}.ToPtr());
+  m_stager.SetDefaultCommand(ManualStager{&m_stager, &m_operatorController}.ToPtr());
   m_climber.SetDefaultCommand(StopClimber{&m_climber}.ToPtr());
 
   // Add auto name options

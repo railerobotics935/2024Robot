@@ -554,7 +554,7 @@ int DriveSubsystem::GetBestNoteId() {
   // Step 3: Determine Closest Note and update class value
   if (m_listOfNotes.size() > 0) {
     double minDistanceFromRobot = 100000000.0;
-    for (int i = 0; i < m_listOfNotes.size(); i++) {
+    for (int i = 0; i < (int)m_listOfNotes.size(); i++) {
       if (m_OakDLiteCameraSensor.GetDistanceFromRobot(i) < minDistanceFromRobot) {
         minDistanceFromRobot = m_OakDLiteCameraSensor.GetDistanceFromRobot(i);
         m_bestNoteId = i;
@@ -571,19 +571,19 @@ int DriveSubsystem::GetBestNoteId() {
 // Functions that pass values from sensor forward. 
 // TODO: Rewrite some of these to process in a sepretate subsystem - vision
 frc::Translation2d DriveSubsystem::GetRobotRelativeTranslation(int object) {
-  return m_OakDLiteCameraSensor->GetRobotRelativeTranslation(object);
+  return m_OakDLiteCameraSensor.GetRobotRelativeTranslation(object);
 }
 
 frc::Translation2d DriveSubsystem::GetFieldRelativeTranslation(int object) {
-  return m_OakDLiteCameraSensor->GetFieldRelativeTranslation(object);
+  return m_OakDLiteCameraSensor.GetFieldRelativeTranslation(object);
 }
 
 frc::Translation2d DriveSubsystem::GetRobotTranslationFieldReleative(int object) {
-  return m_OakDLiteCameraSensor->GetRobotTranslationFieldReleative(object);
+  return m_OakDLiteCameraSensor.GetRobotTranslationFieldReleative(object);
 }
 
 double DriveSubsystem::GetDistanceFromRobot(int object) {
-  return m_OakDLiteCameraSensor->GetDistanceFromRobot(object);
+  return m_OakDLiteCameraSensor.GetDistanceFromRobot(object);
 }
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------

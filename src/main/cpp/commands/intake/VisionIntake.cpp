@@ -19,7 +19,7 @@ void VisionIntake::Initialize() {
 #endif
   m_pathPoses.clear();
   // run command to get best note id and grab the pose at the same time
-  m_pathPoses = {m_drive->GetPose(), frc::Pose2d{m_drive->GetFieldRelativeTranslation(m_drive->GetBestNoteId()), m_drive->GetPose().GetRotation()}};
+  m_pathPoses = {m_drive->GetPose(), frc::Pose2d{m_drive->GetFieldRelativeTranslation(m_drive->GetBestNoteId()), m_drive->GetPose().Rotation()}};
 
 
 }
