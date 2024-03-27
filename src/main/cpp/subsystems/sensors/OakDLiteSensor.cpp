@@ -56,12 +56,12 @@ frc::Translation2d OakDLiteSensor::GetRobotRelativeTranslation(int object) {
   return m_convertedTranslation.ToTranslation2d().RotateBy(m_cameraPose3d.ToPose2d().Rotation()).operator+(m_cameraPose3d.ToPose2d().Translation());
 }
 
-frc::Translation2d OakDLiteSensor::GetFieldRelativePosition(int object) {
+frc::Translation2d OakDLiteSensor::GetFieldRelativeTranslation(int object) {
   return m_poseEstimator->GetEstimatedPosition().Translation().operator+( // Robot translation
          GetRobotRelativeTranslation(object).RotateBy(frc::Rotation2d{(units::radian_t)std::numbers::pi}.operator-(m_poseEstimator->GetEstimatedPosition().Rotation()))); // Object translation rotated to make it field relative
 }
 
-frc::Translation2d OakDLiteSensor::GetFieldRelativeTranslation(int object) {
+frc::Translation2d OakDLiteSensor::GetRobotTranslationFieldReleative(int object) {
   return GetRobotRelativeTranslation(object).RotateBy(frc::Rotation2d{(units::radian_t)std::numbers::pi}.operator-(m_poseEstimator->GetEstimatedPosition().Rotation())); // Object translation rotated to make it field relative
 }
 

@@ -17,7 +17,10 @@ void VisionIntake::Initialize() {
 #ifdef PRINTDEBUG
   std::cout << "VisionIntake Initialize\r\n";
 #endif
-  // run command to get best note id
+  m_pathPoses.clear();
+  // run command to get best note id and grab the pose at the same time
+  m_pathPoses = {m_drive->GetPose(), frc::Pose2d{m_drive->GetFieldRelativeTranslation(m_drive->GetBestNoteId()), m_drive->GetPose().GetRotation()}};
+
 
 }
 

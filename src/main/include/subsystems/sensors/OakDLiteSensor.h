@@ -32,22 +32,22 @@ public:
 
   /**
    * @param object The ID number for the object wanted to identify
-   * @return The Field Relative position (as a Translation 2d) based on pose estimation
+   * @return The Field Relative Translation based on pose estimation
   */
-  frc::Translation2d GetFieldRelativePosition(int object);
+  frc::Translation2d GetFieldRelativeTranslation(int object);
 
   /**
    * @param object The ID number for the object wanted to identify
-   * @return The Field Relative Translation 2d based on pose estimation
+   * @return The Note Translation to the robot relative 
   */
-  frc::Translation2d GetFieldRelativeTranslation(int object);
+  frc::Translation2d GetRobotTranslationFieldReleative(int object);
 
   /**
    * @param object The ID nubmer for the object wanted to identify
    * @return The distance in Meters the object is from the center fo the robot
   */
   double GetDistanceFromRobot(int object);
-
+  
   /**
    * @return True if the object is tracked
   */

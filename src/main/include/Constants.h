@@ -24,12 +24,12 @@
 
 // Turn this off when there is no new constants need to be burned onto motorcontrollers
 //#define BURNSHOOTERSPARKMAX 
-#define BURNSTAGERSPARKMAX
+//#define BURNSTAGERSPARKMAX
 //#define BURNMODULESPARKMAX
 //#define BURNCLIMBERSPARKMAX
 
-#define PRINTDEBUG
-#define DEBUGPOSEESTIMATION
+//#define PRINTDEBUG
+//#define DEBUGPOSEESTIMATION
 
 /**
  * The Constants header provides a convenient place for teams to hold robot-wide

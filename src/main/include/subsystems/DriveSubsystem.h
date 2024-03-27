@@ -168,12 +168,43 @@ public:
   */
   void EstimatePoseWithApriltag();
 
+//------------------------------------------------------------------------------------------------------------------------------------
+// Oak-D Lite Camera Sensor helper methods
+//------------------------------------------------------------------------------------------------------------------------------------
   /**
    * Used internaly to determine whitch note the camera may see to travel too
    * 
    * @returns the id of the best note
   */
   int GetBestNoteId();
+
+  /**
+   * @param object The ID number for the object wanted to identify
+   * @return The Robot Relative Translation 2d
+  */
+  frc::Translation2d GetRobotRelativeTranslation(int object);
+
+  /**
+   * @param object The ID number for the object wanted to identify
+   * @return The Field Relative Translation based on pose estimation
+  */
+  frc::Translation2d GetFieldRelativeTranslation(int object);
+
+  /**
+   * @param object The ID number for the object wanted to identify
+   * @return The Note Translation to the robot relative 
+  */
+  frc::Translation2d GetRobotTranslationFieldReleative(int object);
+
+  /**
+   * @param object The ID nubmer for the object wanted to identify
+   * @return The distance in Meters the object is from the center fo the robot
+  */
+  double GetDistanceFromRobot(int object);
+
+//------------------------------------------------------------------------------------------------------------------------------------
+// Math Utils Helper Methods
+//------------------------------------------------------------------------------------------------------------------------------------
 
   /**
    * Takes an input value and squares it, but retains the sign. IE negative

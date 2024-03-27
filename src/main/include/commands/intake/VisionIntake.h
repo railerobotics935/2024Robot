@@ -35,5 +35,6 @@ private:
   DriveSubsystem* m_drive;
 
   int m_bestNoteId;
-
+  std::vector<frc::Pose2d> m_pathPoses;
+  std::vector<frc::Translation2d> m_bezierPoints;
 };
