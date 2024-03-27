@@ -11,6 +11,9 @@ void ManualStager::Initialize() {
 #ifdef PRINTDEBUG
   std::cout << "ManualStager Initialized\r\n";
 #endif
+}
+
+void ManualStager::Execute() {
   if (frc::ApplyDeadband(m_operatorController->GetRawAxis(ControllerConstants::kStagerIntakeTrigger), 0.05) != 0.0)
     m_stager->SetMotorPower(-frc::ApplyDeadband(m_operatorController->GetRawAxis(ControllerConstants::kStagerIntakeTrigger), 0.05));
   else

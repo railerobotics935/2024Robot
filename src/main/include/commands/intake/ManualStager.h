@@ -19,6 +19,7 @@ public:
   explicit ManualStager(StagerSubsystem* stager, frc::XboxController* operatorController);
 
   void Initialize() override;
+  void Execute() override;
   void End(bool interrupted) override;
   
 private:
