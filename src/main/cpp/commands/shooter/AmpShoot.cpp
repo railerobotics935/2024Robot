@@ -11,17 +11,17 @@ void AmpShoot::Initialize() {
 #ifdef PRINTDEBUG
   std::cout << "AmpShoot Initialized\r\n";
 #endif
-  m_shooter->SetShooterAngle((units::radian_t)1.7);
+  m_shooter->SetPitchMotorPower(0.35);
   m_shooter->SetIndividualShooterSpeed((units::revolutions_per_minute_t)1600, (units::revolutions_per_minute_t)300);
 }
 
 void AmpShoot::Execute() {
-  if ((double)m_shooter->GetShooterAngle() > std::numbers::pi/2)
-    m_stager->SetMotorPower(-1.0);
+  if ((double)m_shooter->GetShooterAngle() > 1.57)
+    m_stager->SetMotorPower(1.0);
 }
 
 bool AmpShoot::IsFinished() {
-  if ((double)m_shooter->GetShooterAngle() > 1.72)
+  if ((double)m_shooter->GetShooterAngle() > 1.7)
     return true;
   else
     return false;
