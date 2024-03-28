@@ -2,7 +2,7 @@
 #include <pathplanner/lib/auto/AutoBuilder.h>
 
 #include "commands/intake/VisionIntake.h"
-#include "commands/intake/SmartIntake"
+#include "commands/intake/SmartIntake.h"
 
 VisionIntake::VisionIntake(IntakeSubsystem* intake, StagerSubsystem* stager, DriveSubsystem* drive) {
   /* Initilize local copys of pointers
@@ -12,7 +12,7 @@ VisionIntake::VisionIntake(IntakeSubsystem* intake, StagerSubsystem* stager, Dri
 
   // Add reqierments for the command
   AddRequirements(m_intake);
-  AddRequirements(m_stager);*/
+  AddRequirements(m_stager);
 
   // run command to get best note id and grab the pose at the same time
   m_pathPoses = {m_drive->GetPose(), frc::Pose2d{m_drive->GetFieldRelativeTranslation(m_drive->GetBestNoteId()), m_drive->GetPose().Rotation()}};
@@ -27,7 +27,7 @@ VisionIntake::VisionIntake(IntakeSubsystem* intake, StagerSubsystem* stager, Dri
   AddCommands(
     AutoBuilder::FollowPathWithEvents(path),
     SmartIntake(m_intake, m_stager)
-  );
+  ); */
 }
 
 // Removed because

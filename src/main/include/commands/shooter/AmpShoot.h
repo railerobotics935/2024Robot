@@ -8,7 +8,7 @@
 #include <networktables/NetworkTableInstance.h>
 
 #include "subsystems/ShooterSubsystem.h"
-#include "subsystmes/StagerSubsystme.h"
+#include "subsystems/StagerSubsystem.h"
 
 /**
  * Command to take shooter speed and angle from nte and set the robot to shoot it

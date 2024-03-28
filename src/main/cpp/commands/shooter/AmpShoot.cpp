@@ -16,11 +16,11 @@ void AmpShoot::Initialize() {
 }
 
 void AmpShoot::Execute() {
-  if ((double)m_shooter->GetShooterAngle() > std::number::pi/2)
+  if ((double)m_shooter->GetShooterAngle() > std::numbers::pi/2)
     m_stager->SetMotorPower(-1.0);
 }
 
-void AmpShoot::IsFinished() {
+bool AmpShoot::IsFinished() {
   if ((double)m_shooter->GetShooterAngle() > 1.72)
     return true;
   else
