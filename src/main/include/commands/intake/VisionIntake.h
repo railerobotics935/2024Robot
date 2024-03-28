@@ -11,7 +11,7 @@
 #include "subsystems/IntakeSubsystem.h"
 #include "subsystems/StagerSubsystem.h"
 #include "subsystems/DriveSubsystem.h"
-
+/*
 class VisionIntake
   : public frc2::CommandHelper<frc2::ParallelCommandGroup, VisionIntake> {
 public:
@@ -21,7 +21,7 @@ public:
    * @param intake The pointer to the intake subsystem
    * @param stager The pointer to the intake subsystem
    * @param drive The pointer to the drive subsystem
-   */
+   *
   explicit VisionIntake(IntakeSubsystem* intake, StagerSubsystem* stager, DriveSubsystem* drive);
 
 private:
@@ -33,4 +33,6 @@ private:
   int m_bestNoteId;
   std::vector<frc::Pose2d> m_pathPoses;
   std::vector<frc::Translation2d> m_bezierPoints;
+  std::optional<frc2::CommandPtr> m_pathCommand;
 };
+*/

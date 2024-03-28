@@ -27,6 +27,7 @@
 
 #include "subsystems/DriveSubsystem.h"
 #include "Constants.h"
+#include "commands/shooter/AmpShoot.h"
 
 using namespace DriveConstants;
 using namespace pathplanner;
@@ -114,12 +115,9 @@ void RobotContainer::ConfigureButtonBindings() {
   closeShootButton.WhileTrue(ManualCloseShoot{&m_shooter}.ToPtr());
   farShooterButton.WhileTrue(ManualFarShoot{&m_shooter}.ToPtr());
 
+  ampShooterButton.WhileTrue(AmpShoot{&m_shooter, &m_stager}.ToPtr());
+
   /*
-  ampShooterButton.WhileTrue(frc2::cmd::Run([&] {
-    m_shooter.SetShooterAngle((units::radian_t)1.1);
-    m_shooter.SetIndividualShooterSpeed((units::revolutions_per_minute_t)100,(units::revolutions_per_minute_t)4500);
-  }, {&m_shooter}));
-  
   NTEShooterButton.WhileTrue(frc2::cmd::Run([&] {
     m_shooter.SetShooterAngle((units::radian_t)1.0);
     m_shooter.SetIndividualShooterSpeed((units::revolutions_per_minute_t)150,(units::revolutions_per_minute_t)3700);
