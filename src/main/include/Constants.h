@@ -233,10 +233,10 @@ constexpr double kPitchMax = 0.5;
 
 // Limits so the shooter pitch can't be over extened
 constexpr double kMinPitchAngle = 0.5; // Radians
-constexpr double kMaxPitchAngle = 1.25; // Radians
+constexpr double kMaxPitchAngle = 1.7; // Radians
 
 // Offset for the pitch
-constexpr double kPitchOffset = 0.0;
+constexpr double kPitchOffset = 4.413 - (std::numbers::pi / 2);
 
 constexpr units::ampere_t kShooterMotorCurrentLimit = 40_A;
 constexpr units::ampere_t kBottomMotorCurrentLimit = 40_A;
@@ -245,6 +245,7 @@ constexpr units::ampere_t kPitchMotorCurrentLimit = 20_A;
 } // namespace IntakeConstants
 
 namespace ClimberConstants {
+
 
   namespace LeftClimber {
     constexpr int kID = 14;

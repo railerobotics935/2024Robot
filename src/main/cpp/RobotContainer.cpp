@@ -91,7 +91,7 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
   m_shooter.SetDefaultCommand(DefaultShooter{&m_shooter}.ToPtr());
   m_stager.SetDefaultCommand(ManualStager{&m_stager, &m_operatorController}.ToPtr());
   m_climber.SetDefaultCommand(StopClimber{&m_climber}.ToPtr());
-
+  
   // Add auto name options
   m_autoChooser.SetDefaultOption("Speaker21", m_speaker21);
   m_autoChooser.AddOption("Speaker21Far", m_speaker21Far);
