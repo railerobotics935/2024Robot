@@ -134,6 +134,10 @@ void ShooterSubsystem::ManualNteShoot() {
   SetIndividualShooterSpeed((units::revolutions_per_minute_t)nte_topSetpointSpeedRPM.GetDouble(0.0), (units::revolutions_per_minute_t)nte_bottomShooterSetpoint.GetDouble(0.0));
 }
 
+double ShooterSubsystem::GetShooterAngle() {
+  return m_pitchAbsoluteEncoder.GetPosition();
+}
+
 void ShooterSubsystem::SetShooterAngle(units::radian_t angle) {
   // Set the setpoint as the input angle
   if ((double)angle > kMaxPitchAngle)
