@@ -1,5 +1,5 @@
 
-#include "commands/shooter/SmartShooting.h"
+#include "commands/shooter/SmartShooter.h"
 #include "commands/drive/DriveFacingGoal.h"
 
 SmartShooter::SmartShooter(ShooterSubsystem* shooter, DriveSubsystem* drive, frc::XboxController* opController, frc::XboxController* driveController) {

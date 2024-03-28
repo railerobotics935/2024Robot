@@ -25,32 +25,6 @@
 #include "pathplanner/lib/commands/PathPlannerAuto.h"
 #include "pathplanner/lib/auto/NamedCommands.h"
 
-#include "commands/auto/SetCloseShooterSpeeds.h"
-#include "commands/auto/SetFarShooterSpeeds.h"
-#include "commands/auto/StageForShooting.h"
-#include "commands/auto/StopEverything.h"
-#include "commands/auto/StopStager.h"
-
-#include "commands/drive/DriveWithController.h"
-#include "commands/drive/DriveFacingGoal.h"
-#include "commands/drive/SlowDrive.h"
-
-#include "commands/intake/ManualStager.h"
-#include "commands/intake/SimpleIntake.h"
-#include "commands/intake/SmartIntake.h"
-#include "commands/intake/SmartOuttake.h"
-#include "commands/intake/StopIntake.h"
-
-#include "commands/shooter/DefaultShooter.h"
-#include "commands/shooter/ManualNteShooter.h"
-#include "commands/shooter/SmartShooting.h"
-#include "commands/shooter/ManualCloseShoot.h"
-#include "commands/shooter/ManualFarShoot.h"
-
-#include "commands/climber/ExtendClimber.h"
-#include "commands/climber/RetractClimber.h"
-#include "commands/climber/StopClimber.h"
-
 #include "subsystems/DriveSubsystem.h"
 #include "Constants.h"
 
@@ -85,8 +59,7 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
   // Set up default drive command
   // The left stick controls translation of the robot.
   // Turning is controlled by the X axis of the right stick.
-  //m_drive.SetDefaultCommand(std::move(m_driveCommand));
-  m_drive.SetDefaultCommand(DriveWithController{&m_drive, &m_driveController}.ToPtr());
+  m_drive.SetDefaultCommand(std::move(m_driveWithController));
   m_intake.SetDefaultCommand(StopIntake{&m_intake}.ToPtr());
   m_shooter.SetDefaultCommand(DefaultShooter{&m_shooter}.ToPtr());
   m_stager.SetDefaultCommand(ManualStager{&m_stager, &m_operatorController}.ToPtr());
