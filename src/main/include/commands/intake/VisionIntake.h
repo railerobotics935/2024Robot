@@ -5,6 +5,7 @@
 
 #include <frc2/command/Command.h>
 #include <frc2/command/CommandHelper.h>
+#include <frc2/command/ParallelCommandGroup.h>
 #include <frc/XboxController.h>
 
 #include "subsystems/IntakeSubsystem.h"
@@ -12,7 +13,7 @@
 #include "subsystems/DriveSubsystem.h"
 
 class VisionIntake
-  : public frc2::CommandHelper<frc2::Command, VisionIntake> {
+  : public frc2::CommandHelper<frc2::ParallelCommandGroup, VisionIntake> {
 public:
   /**
    * Creates a new VisionIntake.
@@ -20,13 +21,8 @@ public:
    * @param intake The pointer to the intake subsystem
    * @param stager The pointer to the intake subsystem
    * @param drive The pointer to the drive subsystem
-   * @param opController The pointer to the drive controller
    */
   explicit VisionIntake(IntakeSubsystem* intake, StagerSubsystem* stager, DriveSubsystem* drive);
-
-  void Initialize() override;
-  bool IsFinished() override;
-  void End(bool interrupted) override;
 
 private:
 
