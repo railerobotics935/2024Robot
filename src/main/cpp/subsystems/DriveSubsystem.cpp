@@ -363,6 +363,10 @@ void DriveSubsystem::DriveFacingGoal(units::meters_per_second_t xSpeed,
     ySpeedCommanded = ySpeed.value();
     m_currentRotation = m_robotAngleController.Calculate((double)GetPose().Rotation().Radians(), (double)rotation.Radians());
   }
+  if (!m_fieldRelative) {
+    xSpeedCommanded = -xSpeedCommanded; 
+    ySpeedCommanded = -ySpeedCommanded; 
+  }
 
   // Put limits so we don't go over the rotation speed limit
   if (m_currentRotation > 1.0)

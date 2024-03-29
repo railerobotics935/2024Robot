@@ -25,6 +25,6 @@ namespace ShootingCalculations {
   }  
   
   double GetTimeFromDistnace(double distance) {
-    return 0.0; // in Seconds
+    return (0.0917 * distance) + 0.0786; // in Seconds
   }
 }

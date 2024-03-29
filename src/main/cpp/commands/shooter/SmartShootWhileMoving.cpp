@@ -71,7 +71,7 @@ void SmartShootWhileMoving::Execute() {
   const auto xSpeed = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveLeftYIndex), 0.05);
   const auto ySpeed = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveLeftXIndex), 0.05);
 
-  m_drive->DriveFacingGoal((units::meters_per_second_t)xSpeed, (units::meters_per_second_t)ySpeed, m_drive->AngleToGoal(m_robotToDynamicTargetTranslation), true);
+  m_drive->DriveFacingGoal((units::meters_per_second_t)m_drive->SignedSquare(xSpeed), (units::meters_per_second_t)m_drive->SignedSquare(ySpeed), m_drive->AngleToGoal(m_robotToDynamicTargetTranslation), true);
   
   // Rumble controllers if at the setpoints
   if (m_shooter->AtSpeedSetpoint() && m_shooter->AtAngleSetpoint()) {

@@ -29,6 +29,8 @@
 #include "Constants.h"
 #include "commands/shooter/AmpShoot.h"
 
+#include "commands/shooter/SmartShootWhileMoving.h"
+
 using namespace DriveConstants;
 using namespace pathplanner;
 
@@ -103,15 +105,16 @@ void RobotContainer::ConfigureButtonBindings() {
   resetButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.ZeroHeading();}, {}));
   robotRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetRobotRelative();}, {}));
   fieldRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetFieldRelative();}, {}));
-  driveFacingGoalButton.WhileTrue(DriveFacingGoal{&m_drive, &m_driveController}.ToPtr());
+  //driveFacingGoalButton.WhileTrue(DriveFacingGoal{&m_drive, &m_driveController}.ToPtr());
+  driveFacingGoalButton.WhileTrue(SmartShootWhileMoving{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
   intakeButton.WhileTrue(SmartIntake{&m_intake, &m_stager}.ToPtr());
   outtakeButton.WhileTrue(SmartOuttake{&m_intake, &m_stager}.ToPtr());
   extendClimberButton.WhileTrue(ExtendClimber{&m_climber}.ToPtr());
   retractClimberButton.WhileTrue(RetractClimber{&m_climber}.ToPtr());
   NTEShooterButton.WhileTrue(ManualNteShooter{&m_shooter, &m_operatorController}.ToPtr());//SmartShooter{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
 
-  driveToAmpButton.OnTrue(m_drive.DriveToAmp());
-  
+  //driveToAmpButton.OnTrue(m_drive.DriveToAmp());
+
   // Manual shooting buttons
   //closeShootButton.WhileTrue(ManualCloseShoot{&m_shooter}.ToPtr());
   closeShootButton.WhileTrue(SmartShooter{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
