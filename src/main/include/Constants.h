@@ -47,8 +47,8 @@ namespace GameConstants {
   constexpr units::meter_t kNoteOutsideDiameter = 0.3556_m; // in meters
 
   // Goal Position for the robot
-  constexpr frc::Pose2d kRobotPoseForBlueAmp = {(units::meter_t)1.8415, (units::meter_t)7.2042, (units::radian_t)1.5 * std::numbers::pi}; // tag 6 minus one meter
-  constexpr frc::Pose2d kRobotPoseForRedAmp = {(units::meter_t)14.700758, (units::meter_t)7.2042, (units::radian_t)1.5 * std::numbers::pi}; // tag 5 minus one meter
+  constexpr frc::Pose2d kRobotPoseForBlueAmp = {(units::meter_t)1.8415, (units::meter_t)7.6042, (units::radian_t)1.5 * std::numbers::pi}; // tag 6 minus 0.4 meter
+  constexpr frc::Pose2d kRobotPoseForRedAmp = {(units::meter_t)14.700758, (units::meter_t)7.6042, (units::radian_t)1.5 * std::numbers::pi}; // tag 5 minus 0.4 meter
 }
 
 namespace RobotConstants {
@@ -323,8 +323,8 @@ constexpr int kExtendShooterButtonIndex = 6; // RB
 constexpr int kRetractShooterButtonIndex = 5; // LB
 constexpr int kFieldRelativeButtonIndex = 7; // CL
 constexpr int kRobotRelativeButtonIndex = 8; // CR
-constexpr int kSlowStateButtonIndex = 4; // Y
-constexpr int kFastStateButtonIndex = 1; // A
+//constexpr int kSlowStateButtonIndex = 4; // Y
+constexpr int kDriveToAmpButtonIndex = 1; // A
 constexpr int kResetGyroButtonIndex = 2; // B
 constexpr int kDriveFacingGoalButtonIndex = 3; // X
 

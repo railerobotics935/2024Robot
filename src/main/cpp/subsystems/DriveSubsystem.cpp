@@ -66,7 +66,7 @@ DriveSubsystem::DriveSubsystem()
   
 // Configure the AutoBuilder last
 AutoBuilder::configureHolonomic(
-    [this](){ return m_odometry.GetPose(); }, // Robot pose supplier
+    [this](){ return GetPose(); }, // Robot pose supplier
     [this](frc::Pose2d pose){ ResetOdometry(pose); }, // Method to reset odometry (will be called if your auto has a starting pose)
     [this](){ return GetRobotRelativeSpeeds(); }, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
     [this](frc::ChassisSpeeds speeds){ DriveWithChassisSpeeds(speeds); }, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
@@ -487,6 +487,11 @@ void DriveSubsystem::ResetOdometry(frc::Pose2d pose) {
       {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
        m_backLeft.GetPosition(), m_backRight.GetPosition()},
       pose);
+  m_poseEstimator.ResetPosition(      
+      GetHeading(),
+      {m_frontLeft.GetPosition(), m_frontRight.GetPosition(),
+       m_backLeft.GetPosition(), m_backRight.GetPosition()},
+      pose);
 }
 
 void DriveSubsystem::EstimatePoseWithApriltag() {
@@ -591,6 +596,30 @@ frc::Translation2d DriveSubsystem::GetRobotTranslationFieldReleative(int object)
 
 double DriveSubsystem::GetDistanceFromRobot(int object) {
   return m_OakDLiteCameraSensor.GetDistanceFromRobot(object);
+}
+
+frc2::CommandPtr DriveSubsystem::DriveToAmp() {
+    // Create poses based on robot position and where the goal is
+  if (frc::DriverStation::GetAlliance() == frc::DriverStation::Alliance::kBlue) {
+    m_bezierPoints = {GetPose().Translation(), frc::Translation2d{GameConstants::kRobotPoseForBlueAmp.Translation().X(), (GameConstants::kRobotPoseForBlueAmp.Translation().Y() - (units::meter_t)1.0)}, 
+                      frc::Translation2d{GameConstants::kRobotPoseForBlueAmp.Translation().X(),(GameConstants::kRobotPoseForBlueAmp.Translation().Y() - (units::meter_t)1.0)},  frc::Translation2d{GameConstants::kRobotPoseForBlueAmp.Translation().X(), (GameConstants::kRobotPoseForRedAmp.Translation().Y())}};
+    //m_fieldPoses = {GetPose(), GameConstants::kRobotPoseForBlueAmp};
+  }
+  else {
+    m_bezierPoints = {GetPose().Translation(), frc::Translation2d{GameConstants::kRobotPoseForRedAmp.Translation().X(), (GameConstants::kRobotPoseForRedAmp.Translation().Y() - (units::meter_t)1.0)}, 
+                      frc::Translation2d{GameConstants::kRobotPoseForBlueAmp.Translation().X(), (GameConstants::kRobotPoseForRedAmp.Translation().Y() - (units::meter_t)1.0)}, frc::Translation2d{GameConstants::kRobotPoseForBlueAmp.Translation().X(), (GameConstants::kRobotPoseForRedAmp.Translation().Y())}};
+    //m_fieldPoses = {GetPose(), GameConstants::kRobotPoseForRedAmp};
+  }
+
+  // Create path
+  auto path = std::make_shared<pathplanner::PathPlannerPath>(
+      m_bezierPoints,
+      pathplanner::PathConstraints(2.5_mps, 3.0_mps_sq, 360_deg_per_s, 720_deg_per_s_sq), // The constraints for this path. If using a differential drivetrain, the angular constraints have no effect.
+      pathplanner::GoalEndState(0.0_mps, frc::Rotation2d{(units::radian_t)-std::numbers::pi/2}) // Goal end state. You can set a holonomic rotation here. If using a differential drivetrain, the rotation will have no effect.
+  );
+
+  // create bezier points out of them
+  return pathplanner::AutoBuilder::followPathWithEvents(path);
 }
 
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------

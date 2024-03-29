@@ -168,6 +168,11 @@ public:
   */
   void EstimatePoseWithApriltag();
 
+  /** 
+   * Returns a pathplanner command to drive to the amp using pose estimation
+  */
+  frc2::CommandPtr DriveToAmp();
+
 //------------------------------------------------------------------------------------------------------------------------------------
 // Oak-D Lite Camera Sensor helper methods
 //------------------------------------------------------------------------------------------------------------------------------------
@@ -339,4 +344,11 @@ private:
   int m_bestNoteId;
   std::vector<int> m_listOfNotes;
   std::vector<int> m_listOfRobots;
+
+// Drive to amp command
+  // Field poess and array to hold bezier points
+  std::vector<frc::Pose2d> m_fieldPoses;
+  std::vector<frc::Translation2d> m_bezierPoints;
+  
 };
+
