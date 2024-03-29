@@ -103,7 +103,7 @@ void RobotContainer::ConfigureButtonBindings() {
   resetButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.ZeroHeading();}, {}));
   robotRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetRobotRelative();}, {}));
   fieldRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetFieldRelative();}, {}));
-  driveFacingGoalButton.ToggleOnTrue(DriveFacingGoal{&m_drive, &m_driveController}.ToPtr());
+  driveFacingGoalButton.ToggleOnTrue(std::move(m_driveFacingGoal));
   //slowButton.ToggleOnTrue(SlowDrive{&m_drive, &m_driveController}.ToPtr());
   intakeButton.WhileTrue(SmartIntake{&m_intake, &m_stager}.ToPtr());
   outtakeButton.WhileTrue(SmartOuttake{&m_intake, &m_stager}.ToPtr());

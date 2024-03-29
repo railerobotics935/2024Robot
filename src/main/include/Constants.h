@@ -23,13 +23,14 @@
 #include <iostream>
 
 // Turn this off when there is no new constants need to be burned onto motorcontrollers
-#define BURNSHOOTERSPARKMAX 
+//#define BURNSHOOTERSPARKMAX 
 //#define BURNSTAGERSPARKMAX
 //#define BURNMODULESPARKMAX
 //#define BURNCLIMBERSPARKMAX
 
 #define PRINTDEBUG
 //#define DEBUGPOSEESTIMATION
+//#define
 
 /**
  * The Constants header provides a convenient place for teams to hold robot-wide

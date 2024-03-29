@@ -107,9 +107,9 @@ ShooterSubsystem::ShooterSubsystem(double shooterAngleOffset) : m_topShooterMoto
 
 void ShooterSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
-  nte_topShooterSpeed.SetDouble((double)m_topShooterEncoder.GetVelocity());
-  nte_bottomShooterSpeed.SetDouble((double)m_bottomShooterEncoder.GetVelocity());
-  nte_pitchAngle.SetDouble((double)m_pitchAbsoluteEncoder.GetPosition());
+  //nte_topShooterSpeed.SetDouble((double)m_topShooterEncoder.GetVelocity());
+  //nte_bottomShooterSpeed.SetDouble((double)m_bottomShooterEncoder.GetVelocity());
+  //nte_pitchAngle.SetDouble((double)m_pitchAbsoluteEncoder.GetPosition());
 }
 
 void ShooterSubsystem::SetShooterMotorPower(double power) {

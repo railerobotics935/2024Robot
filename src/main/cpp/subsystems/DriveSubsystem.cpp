@@ -121,9 +121,9 @@ AutoBuilder::configureHolonomic(
   nte_debugTimeForAddVistionData = nt_table->GetEntry("Debug Values/Add Vision Data");  
   nte_numberOfTagsAdded = nt_table->GetEntry("Debug Values/Number Of Tags Processed");
 
-  nte_kp.SetDouble(2.5);
-  nte_ki.SetDouble(0.002);
-  nte_kd.SetDouble(0.05);
+  //nte_kp.SetDouble(2.5);
+  //nte_ki.SetDouble(0.002);
+  //nte_kd.SetDouble(0.05);
 
   nte_robot_distance_to_goal = nt_table->GetEntry("Pose Estimation/Distance to Goal");
   
@@ -156,13 +156,13 @@ void DriveSubsystem::Periodic() {
   if (GetLinearRobotSpeed() < 1.0 && GetTurnRate() < 10.0)
     EstimatePoseWithApriltag();
   
-  UpdateNTE();
+  //UpdateNTE();
 
   m_field.SetRobotPose(m_poseEstimator.GetEstimatedPosition());
 
-  m_robotAngleController.SetP(nte_kp.GetDouble(4.5));
-  m_robotAngleController.SetI(nte_ki.GetDouble(0.002));
-  m_robotAngleController.SetD(nte_kd.GetDouble(0.05));
+  //m_robotAngleController.SetP(nte_kp.GetDouble(4.5));
+  //m_robotAngleController.SetI(nte_ki.GetDouble(0.002));
+  //m_robotAngleController.SetD(nte_kd.GetDouble(0.05));
 }
 
 void DriveSubsystem::UpdateNTE() {
@@ -287,14 +287,14 @@ void DriveSubsystem::Drive(units::meters_per_second_t xSpeed,
   m_backRight.SetDesiredState(br);
 
   // Network table entries
-  nte_fl_set_angle.SetDouble((double)fl.angle.Radians());
-  nte_fr_set_angle.SetDouble((double)fr.angle.Radians());
-  nte_bl_set_angle.SetDouble((double)bl.angle.Radians());
-  nte_br_set_angle.SetDouble((double)br.angle.Radians());
-  nte_fl_set_speed.SetDouble((double)fl.speed);
-  nte_fr_set_speed.SetDouble((double)fr.speed);
-  nte_bl_set_speed.SetDouble((double)bl.speed);
-  nte_br_set_speed.SetDouble((double)br.speed);
+  //nte_fl_set_angle.SetDouble((double)fl.angle.Radians());
+  //nte_fr_set_angle.SetDouble((double)fr.angle.Radians());
+  //nte_bl_set_angle.SetDouble((double)bl.angle.Radians());
+  //nte_br_set_angle.SetDouble((double)br.angle.Radians());
+  //nte_fl_set_speed.SetDouble((double)fl.speed);
+  //nte_fr_set_speed.SetDouble((double)fr.speed);
+  //nte_bl_set_speed.SetDouble((double)bl.speed);
+  //nte_br_set_speed.SetDouble((double)br.speed);
   
 }
 
@@ -396,14 +396,14 @@ void DriveSubsystem::DriveFacingGoal(units::meters_per_second_t xSpeed,
   m_backRight.SetDesiredState(br);
 
   // Network table entries
-  nte_fl_set_angle.SetDouble((double)fl.angle.Radians());
-  nte_fr_set_angle.SetDouble((double)fr.angle.Radians());
-  nte_bl_set_angle.SetDouble((double)bl.angle.Radians());
-  nte_br_set_angle.SetDouble((double)br.angle.Radians());
-  nte_fl_set_speed.SetDouble((double)fl.speed);
-  nte_fr_set_speed.SetDouble((double)fr.speed);
-  nte_bl_set_speed.SetDouble((double)bl.speed);
-  nte_br_set_speed.SetDouble((double)br.speed);
+  //nte_fl_set_angle.SetDouble((double)fl.angle.Radians());
+  //nte_fr_set_angle.SetDouble((double)fr.angle.Radians());
+  //nte_bl_set_angle.SetDouble((double)bl.angle.Radians());
+  //nte_br_set_angle.SetDouble((double)br.angle.Radians());
+  //nte_fl_set_speed.SetDouble((double)fl.speed);
+  //nte_fr_set_speed.SetDouble((double)fr.speed);
+  //nte_bl_set_speed.SetDouble((double)bl.speed);
+  //nte_br_set_speed.SetDouble((double)br.speed);
  }
 
 bool DriveSubsystem::AtAngleSetpoint() {

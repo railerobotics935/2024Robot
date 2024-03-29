@@ -122,5 +122,6 @@ class RobotContainer {
   ExtendClimber m_extendClimber{&m_climber};
   RetractClimber m_retractClimber{&m_climber};
   StopClimber m_stopClimber{&m_climber};
+  DriveFacingGoal m_driveFacingGoal{&m_drive, &m_driveController};
 
 };

@@ -49,11 +49,11 @@ StagerSubsystem::StagerSubsystem() : m_stagerMotor{StagerConstants::kMotorID, St
 }
 
 void StagerSubsystem::Periodic() {
-  nte_color.SetBoolean(NoteLoaded());
-  nte_colorBlue.SetDouble((double)m_colorSensor.GetColor().blue);
-  nte_colorRed.SetDouble((double)m_colorSensor.GetColor().red);
-  nte_colorGreen.SetDouble((double)m_colorSensor.GetColor().green);
-  nte_proximity.SetDouble((double)m_colorSensor.GetProximity());
+  //nte_color.SetBoolean(NoteLoaded());
+  //nte_colorBlue.SetDouble((double)m_colorSensor.GetColor().blue);
+  //nte_colorRed.SetDouble((double)m_colorSensor.GetColor().red);
+  //nte_colorGreen.SetDouble((double)m_colorSensor.GetColor().green);
+  //nte_proximity.SetDouble((double)m_colorSensor.GetProximity());
 }
 
 void StagerSubsystem::SetMotorPower(double power) {

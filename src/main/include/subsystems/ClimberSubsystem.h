@@ -51,6 +51,11 @@ class ClimberSubsystem : public frc2::SubsystemBase {
   */
   void SetIndividualClimberPower(double power);
 
+  /**
+   * Updates NetworkTableEntries
+  */
+  void UpdateNTE();
+
  private:
 
   nt::NetworkTableEntry m_leftCllimberLimitSwtich;

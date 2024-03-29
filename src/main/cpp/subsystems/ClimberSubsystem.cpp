@@ -60,15 +60,19 @@ bool ClimberSubsystem::RightClimberAtBase() {
 }
 
 void ClimberSubsystem::Periodic() {
-  m_leftCllimberLimitSwtich.SetBoolean(LeftClimberAtBase());
-  m_leftClimberDistance.SetDouble(m_leftClimberEncoder.GetPosition());
-  m_rightCllimberLimitSwtich.SetBoolean(RightClimberAtBase());
-  m_rightClimberDistance.SetDouble(m_rightClimberEncoder.GetPosition());
+  //UpdateNTE();
 
   if (LeftClimberAtBase())
     m_leftClimberEncoder.SetPosition(0.0);
   if (RightClimberAtBase())
     m_rightClimberEncoder.SetPosition(0.0);
+}
+
+void ClimberSubsystem::UpdateNTE() {
+  m_leftCllimberLimitSwtich.SetBoolean(LeftClimberAtBase());
+  m_leftClimberDistance.SetDouble(m_leftClimberEncoder.GetPosition());
+  m_rightCllimberLimitSwtich.SetBoolean(RightClimberAtBase());
+  m_rightClimberDistance.SetDouble(m_rightClimberEncoder.GetPosition());
 }
 
 void ClimberSubsystem::SetClimberPower(double power) {
