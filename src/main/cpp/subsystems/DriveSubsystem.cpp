@@ -121,9 +121,9 @@ AutoBuilder::configureHolonomic(
   nte_debugTimeForAddVistionData = nt_table->GetEntry("Debug Values/Add Vision Data");  
   nte_numberOfTagsAdded = nt_table->GetEntry("Debug Values/Number Of Tags Processed");
 
-  //nte_kp.SetDouble(4.5);
-  //nte_ki.SetDouble(0.002);
-  //nte_kd.SetDouble(0.05);
+  nte_kp.SetDouble(2.5);
+  nte_ki.SetDouble(0.002);
+  nte_kd.SetDouble(0.05);
 
   nte_robot_distance_to_goal = nt_table->GetEntry("Pose Estimation/Distance to Goal");
   
@@ -153,15 +153,16 @@ void DriveSubsystem::Periodic() {
                       {m_frontLeft.GetPosition(), m_frontRight.GetPosition(), m_backLeft.GetPosition(), m_backRight.GetPosition()});
 
   // set odometry relative to the apriltag
-  EstimatePoseWithApriltag();
+  if (GetLinearRobotSpeed() < 1.0 && GetTurnRate() < 10.0)
+    EstimatePoseWithApriltag();
   
   UpdateNTE();
 
   m_field.SetRobotPose(m_poseEstimator.GetEstimatedPosition());
 
-  //m_robotAngleController.SetP(nte_kp.GetDouble(4.5));
-  //m_robotAngleController.SetI(nte_ki.GetDouble(0.002));
-  //m_robotAngleController.SetD(nte_kd.GetDouble(0.05));
+  m_robotAngleController.SetP(nte_kp.GetDouble(4.5));
+  m_robotAngleController.SetI(nte_ki.GetDouble(0.002));
+  m_robotAngleController.SetD(nte_kd.GetDouble(0.05));
 }
 
 void DriveSubsystem::UpdateNTE() {
@@ -353,15 +354,21 @@ void DriveSubsystem::DriveFacingGoal(units::meters_per_second_t xSpeed,
     xSpeedCommanded = m_currentTranslationMag * cos(m_currentTranslationDir);
     ySpeedCommanded = m_currentTranslationMag * sin(m_currentTranslationDir);
     m_currentRotation = m_rotLimiter.Calculate(m_robotAngleController.Calculate(
-      (double)(GetHeading() * std::numbers::pi / 180.0), (double)rotation.Radians()));
+      (double)GetPose().Rotation().Radians(), (double)rotation.Radians()));
       //(double)(GetHeading() * std::numbers::pi / 180.0), (double)rotation.Radians()));
 
   } 
   else {
     xSpeedCommanded = xSpeed.value();
     ySpeedCommanded = ySpeed.value();
-    m_currentRotation = m_robotAngleController.Calculate((double)(GetHeading() * std::numbers::pi / 180.0), (double)rotation.Radians());
+    m_currentRotation = m_robotAngleController.Calculate((double)GetPose().Rotation().Radians(), (double)rotation.Radians());
   }
+
+  // Put limits so we don't go over the rotation speed limit
+  if (m_currentRotation > 1.0)
+    m_currentRotation = 1.0;
+  if (m_currentRotation < -1.0)
+    m_currentRotation = -1.0;
 
   // Convert the commanded speeds into the correct units for the drivetrain
   units::meters_per_second_t xSpeedDelivered =
@@ -369,7 +376,7 @@ void DriveSubsystem::DriveFacingGoal(units::meters_per_second_t xSpeed,
   units::meters_per_second_t ySpeedDelivered =
       ySpeedCommanded * DriveConstants::kMaxSpeed;
   units::radians_per_second_t rotDelivered =
-      m_currentRotation * DriveConstants::kMaxAngularSpeed;
+      m_currentRotation * (units::radians_per_second_t)(30.0 / (2 * std::numbers::pi)); // could limit this to go a slower speed
 
   auto states = m_driveKinematics.ToSwerveModuleStates(
       m_fieldRelative
@@ -489,14 +496,14 @@ void DriveSubsystem::EstimatePoseWithApriltag() {
 #endif
   // Iterate through each tag, adding it to the pose estimator if it is tracked
   for (int tag = 1; tag <= 16; tag++ ) { // Check each tag for each camera
-
+  //int tag = 7;
     // Front Camera
     if (m_frontCameraSensor.TagIsTracked(tag) && m_frontCameraSensor.GetTimestamp(tag) > (units::second_t)0.0){
       #ifdef DEBUGPOSEESTIMATION
       double startEstiamtionTime2 = (double)m_timer.GetFPGATimestamp();
       #endif
 
-      m_poseEstimator.AddVisionMeasurement(m_frontCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_frontCameraSensor.GetTimestamp(tag));
+      m_poseEstimator.AddVisionMeasurement(m_frontCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_frontCameraSensor.GetTimestamp(tag), m_frontCameraSensor.GetStandardDeviations(tag));
       
       #ifdef DEBUGPOSEESTIMATION
       nte_debugTimeForAddVistionData.SetDouble((double)m_timer.GetFPGATimestamp() - startEstiamtionTime2);
@@ -510,7 +517,7 @@ void DriveSubsystem::EstimatePoseWithApriltag() {
       double startEstiamtionTime2 = (double)m_timer.GetFPGATimestamp();
       #endif
       
-      m_poseEstimator.AddVisionMeasurement(m_backLeftCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backLeftCameraSensor.GetTimestamp(tag));
+      m_poseEstimator.AddVisionMeasurement(m_backLeftCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backLeftCameraSensor.GetTimestamp(tag), m_backLeftCameraSensor.GetStandardDeviations(tag));
       
       #ifdef DEBUGPOSEESTIMATION
       nte_debugTimeForAddVistionData.SetDouble((double)m_timer.GetFPGATimestamp() - startEstiamtionTime2);
@@ -524,7 +531,7 @@ void DriveSubsystem::EstimatePoseWithApriltag() {
       double startEstiamtionTime2 = (double)m_timer.GetFPGATimestamp();
       #endif
       
-      m_poseEstimator.AddVisionMeasurement(m_backRightCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backRightCameraSensor.GetTimestamp(tag));
+      m_poseEstimator.AddVisionMeasurement(m_backRightCameraSensor.GetFieldRelativePose(tag).ToPose2d(), m_backRightCameraSensor.GetTimestamp(tag), m_backRightCameraSensor.GetStandardDeviations(tag));
       
       #ifdef DEBUGPOSEESTIMATION
       nte_debugTimeForAddVistionData.SetDouble((double)m_timer.GetFPGATimestamp() - startEstiamtionTime2);

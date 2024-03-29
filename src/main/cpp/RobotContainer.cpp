@@ -61,10 +61,10 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
   // The left stick controls translation of the robot.
   // Turning is controlled by the X axis of the right stick.
   m_drive.SetDefaultCommand(std::move(m_driveWithController));
-  m_intake.SetDefaultCommand(StopIntake{&m_intake}.ToPtr());
-  m_shooter.SetDefaultCommand(DefaultShooter{&m_shooter}.ToPtr());
-  m_stager.SetDefaultCommand(ManualStager{&m_stager, &m_operatorController}.ToPtr());
-  m_climber.SetDefaultCommand(StopClimber{&m_climber}.ToPtr());
+  m_intake.SetDefaultCommand(std::move(m_stopIntake));
+  m_shooter.SetDefaultCommand(std::move(m_defaultShooter));
+  m_stager.SetDefaultCommand(std::move(m_manualStager));
+  m_climber.SetDefaultCommand(std::move(m_stopClimber));
   
   // Add auto name options
   m_autoChooser.SetDefaultOption("Speaker21", m_speaker21);
@@ -89,7 +89,7 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton robotRelativeButton(&m_driveController, ControllerConstants::kRobotRelativeButtonIndex);
   frc2::JoystickButton fieldRelativeButton(&m_driveController, ControllerConstants::kFieldRelativeButtonIndex); 
   //frc2::JoystickButton slowButton(&m_driveController, ControllerConstants::kSlowStateButtonIndex); 
-  //frc2::JoystickButton driveFacingGoalButton(&m_driveController, ControllerConstants::kDriveFacingGoalButtonIndex);
+  frc2::JoystickButton driveFacingGoalButton(&m_driveController, ControllerConstants::kDriveFacingGoalButtonIndex);
   frc2::JoystickButton intakeButton(&m_operatorController, ControllerConstants::kIntakeButtonIndex); 
   frc2::JoystickButton outtakeButton(&m_operatorController, ControllerConstants::kOuttakeButtonIndex); 
   frc2::JoystickButton closeShootButton(&m_operatorController, ControllerConstants::kCloseShooterButton);
@@ -103,7 +103,7 @@ void RobotContainer::ConfigureButtonBindings() {
   resetButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.ZeroHeading();}, {}));
   robotRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetRobotRelative();}, {}));
   fieldRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetFieldRelative();}, {}));
-  //driveFacingGoalButton.ToggleOnTrue(DriveFacingGoal{&m_drive, &m_driveController}.ToPtr());
+  driveFacingGoalButton.ToggleOnTrue(DriveFacingGoal{&m_drive, &m_driveController}.ToPtr());
   //slowButton.ToggleOnTrue(SlowDrive{&m_drive, &m_driveController}.ToPtr());
   intakeButton.WhileTrue(SmartIntake{&m_intake, &m_stager}.ToPtr());
   outtakeButton.WhileTrue(SmartOuttake{&m_intake, &m_stager}.ToPtr());

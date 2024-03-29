@@ -12,7 +12,7 @@ DriveFacingGoal::DriveFacingGoal(DriveSubsystem* drive, frc::XboxController* dri
 
 void DriveFacingGoal::Initialize() {
   // Run once when command is scheduled
-  m_gyroOffset = ((double)m_drive->GetPose().Rotation().Radians()) - ((double)m_drive->GetHeading() * std::numbers::pi / 180.0);
+  //m_gyroOffset = ((double)m_drive->GetPose().Rotation().Radians()) - ((double)m_drive->GetHeading() * std::numbers::pi / 180.0); USED FOR GYRO ONLY ORIENTATION
 #ifdef PRINTDEBUG
   std::cout << "DriveFacingGoal Initialized\r\n";
 #endif
@@ -25,7 +25,7 @@ void DriveFacingGoal::Execute() {
   
   m_drive->DriveFacingGoal(units::meters_per_second_t{m_drive->SignedSquare(xSpeed)},
     units::meters_per_second_t{m_drive->SignedSquare(ySpeed)}, //frc::Rotation2d{}.operator-((units::radian_t)m_gyroOffset),
-    m_drive->AngleToGoal(m_drive->TranslationToGoal(m_drive->GetPose())).operator-((units::radian_t)m_gyroOffset), 
+    m_drive->AngleToGoal(m_drive->TranslationToGoal(m_drive->GetPose())), //.operator-((units::radian_t)m_gyroOffset), USED FOR GYRO ONLY ORIENTATION
     true);
 
   if (m_drive->AtAngleSetpoint())

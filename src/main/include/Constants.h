@@ -23,7 +23,7 @@
 #include <iostream>
 
 // Turn this off when there is no new constants need to be burned onto motorcontrollers
-//#define BURNSHOOTERSPARKMAX 
+#define BURNSHOOTERSPARKMAX 
 //#define BURNSTAGERSPARKMAX
 //#define BURNMODULESPARKMAX
 //#define BURNCLIMBERSPARKMAX
@@ -236,7 +236,7 @@ constexpr double kMinPitchAngle = 0.5; // Radians
 constexpr double kMaxPitchAngle = 1.7; // Radians
 
 // Offset for the pitch
-constexpr double kPitchOffset = 4.413 - (std::numbers::pi / 2);
+constexpr double kPitchOffset = (4.413 + 2.614) - (std::numbers::pi); // calabrated it on a calibration, so pi instead of pi/2
 
 constexpr units::ampere_t kShooterMotorCurrentLimit = 40_A;
 constexpr units::ampere_t kBottomMotorCurrentLimit = 40_A;
@@ -345,8 +345,8 @@ constexpr int kOperatorControllerPort = 1;
 namespace CameraConstants {
 
 // Min and Max standard deviations for the apriltag detetion 
-constexpr double kMinStandardDeviation = 0.4;
-constexpr double kMaxStandardDeviation = 0.5;
+constexpr double kMinStandardDeviation = 0.2;
+constexpr double kMaxStandardDeviation = 3.0;
 
 // Max speed allowed for adding vidion measurments to the robot pose esitmator
 constexpr double kMaxEstimationSpeed = 0.25; // mps
