@@ -17,11 +17,11 @@ namespace ShootingCalculations {
   
   // Put equations for each here
   double GetAngleFromDistance(double distance) {
-    return (1.82 - (0.723 * distance) + (0.115 * pow(distance, 2.0))); // in radians
+    return (1.19 * pow(distance, -0.539)); // in radians
   }
   
   double GetSpeedFromDistance(double distance) {
-    return 8500.0; // in RPM
+    return 5000.0; // in RPM
   }  
   
   double GetTimeFromDistnace(double distance) {

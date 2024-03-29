@@ -224,7 +224,7 @@ constexpr double kBottomShooterMin = -1.0;
 constexpr double kBottomShooterMax = 1.0;
 
 // PID Constants for the pitch of shooter
-constexpr double kPitchP = 3.0;
+constexpr double kPitchP = 3.2;
 constexpr double kPitchI = 0.001;
 constexpr double kPitchD = 0.15;
 constexpr double kPitchFF = 0.0;

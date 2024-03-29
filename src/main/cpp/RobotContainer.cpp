@@ -112,7 +112,8 @@ void RobotContainer::ConfigureButtonBindings() {
   NTEShooterButton.WhileTrue(ManualNteShooter{&m_shooter, &m_operatorController}.ToPtr());//SmartShooter{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
 
   // Manual shooting buttons
-  closeShootButton.WhileTrue(ManualCloseShoot{&m_shooter}.ToPtr());
+  //closeShootButton.WhileTrue(ManualCloseShoot{&m_shooter}.ToPtr());
+  closeShootButton.WhileTrue(SmartShooter{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
   farShooterButton.WhileTrue(ManualFarShoot{&m_shooter}.ToPtr());
 
   ampShooterButton.WhileTrue(AmpShoot{&m_shooter, &m_stager}.ToPtr());
