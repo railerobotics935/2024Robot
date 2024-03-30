@@ -27,6 +27,7 @@ bool SmartIntake::IsFinished() {
   else
     return false;
 }
+
 void SmartIntake::End(bool interrupted) {
   m_intake->SetMotorPower(0.0);
   m_stager->SetMotorPower(0.0);

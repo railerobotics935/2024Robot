@@ -48,8 +48,8 @@ void SmartShootWhileMoving::Execute() {
     // Deterime the tranlsation of the robot based on where the robot will be when we shoot the note
     m_robotToDynamicTargetTranslation = m_dynamicTargetTranslation.operator-(m_drive->GetPose().Translation());
 
-    // Get the new shot time based on the distance of the new 
-    m_dynamicTargetDistance = m_drive->RobotDistanceToGoal({m_robotToDynamicTargetTranslation, frc::Rotation2d{}});
+    // Use Pythagorean theorom to get new distance and new time
+    m_dynamicTargetDistance = std::sqrt(std::pow((double)m_robotToDynamicTargetTranslation.X(), 2) + std::pow((double)m_robotToDynamicTargetTranslation.Y(), 2));
     double newShootingTime = ShootingCalculations::GetTimeFromDistnace(m_dynamicTargetDistance);
 
     // If the difference in shoot times is close enough, end the iterations
@@ -72,26 +72,7 @@ void SmartShootWhileMoving::Execute() {
   const auto ySpeed = -frc::ApplyDeadband(m_driveController->GetRawAxis(ControllerConstants::kDriveLeftXIndex), 0.05);
 
   m_drive->DriveFacingGoal((units::meters_per_second_t)m_drive->SignedSquare(xSpeed), (units::meters_per_second_t)m_drive->SignedSquare(ySpeed), m_drive->AngleToGoal(m_robotToDynamicTargetTranslation), true);
-  
-  // Rumble controllers if at the setpoints
-  if (m_shooter->AtSpeedSetpoint() && m_shooter->AtAngleSetpoint()) {
-    m_opController->SetRumble(frc::GenericHID::RumbleType::kLeftRumble, 1.0);
-    m_driveController->SetRumble(frc::GenericHID::RumbleType::kLeftRumble, 1.0);
-  }
-  else {
-    m_opController->SetRumble(frc::GenericHID::RumbleType::kLeftRumble, 0.0);
-    m_driveController->SetRumble(frc::GenericHID::RumbleType::kLeftRumble, 0.0);
-  }
 
-  // Checking if drive is at correct angle 
-  if (m_drive->AtAngleSetpoint()) {
-    m_opController->SetRumble(frc::GenericHID::RumbleType::kRightRumble, 1.0);
-    m_driveController->SetRumble(frc::GenericHID::RumbleType::kRightRumble, 1.0);
-  }
-  else {
-    m_opController->SetRumble(frc::GenericHID::RumbleType::kRightRumble, 0.0);
-    m_driveController->SetRumble(frc::GenericHID::RumbleType::kRightRumble, 0.0);
-  }
 }
 
 void SmartShootWhileMoving::End(bool interrupted) {
