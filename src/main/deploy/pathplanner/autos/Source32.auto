@@ -54,12 +54,6 @@
                       "data": {
                         "pathName": "Source3"
                       }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "3Source"
-                      }
                     }
                   ]
                 }
@@ -115,13 +109,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Source2"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "2Source"
+                        "pathName": "32"
                       }
                     }
                   ]
@@ -165,12 +153,6 @@
           "type": "named",
           "data": {
             "name": "StopEverything"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "SourceTravel"
           }
         }
       ]

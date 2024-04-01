@@ -135,6 +135,12 @@ public:
   frc::Pose2d GetPose();
 
   /**
+   * Returns the currently-odometry pose of the robot.
+   *
+   * @return The pose.
+   */
+  frc::Pose2d GetOdometryPose();
+  /**
    * Returns the rotation of the robot reletive to the driver to use for field relative
    *
    * @return The rotation.

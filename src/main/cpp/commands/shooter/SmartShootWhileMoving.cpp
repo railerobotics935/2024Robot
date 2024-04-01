@@ -46,7 +46,7 @@ void SmartShootWhileMoving::Execute() {
     m_dynamicTargetTranslation = frc::Translation2d{(units::meter_t)dynamicTargetX, (units::meter_t)dynamicTargetY};
 
     // Deterime the tranlsation of the robot based on where the robot will be when we shoot the note
-    m_robotToDynamicTargetTranslation = m_dynamicTargetTranslation.operator-(m_drive->GetPose().Translation());
+    m_robotToDynamicTargetTranslation = m_drive->GetPose().Translation().operator-(m_dynamicTargetTranslation);
 
     // Use Pythagorean theorom to get new distance and new time
     m_dynamicTargetDistance = std::sqrt(std::pow((double)m_robotToDynamicTargetTranslation.X(), 2) + std::pow((double)m_robotToDynamicTargetTranslation.Y(), 2));

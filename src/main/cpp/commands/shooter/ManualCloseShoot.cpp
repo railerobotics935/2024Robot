@@ -11,7 +11,7 @@ void ManualCloseShoot::Initialize() {
   std::cout << "ManualCloseShoot Initialized\r\n";
 #endif
   m_shooter->SetShooterAngle((units::radian_t)1.0);
-  m_shooter->SetShooterSpeed((units::revolutions_per_minute_t)8500);
+  m_shooter->SetShooterSpeed((units::revolutions_per_minute_t)5000);
 }
 
 void ManualCloseShoot::End(bool interrupted) {

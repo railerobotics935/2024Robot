@@ -12,7 +12,7 @@ void ManualFarShoot::Initialize() {
   std::cout << "ManualFarShoot Initialized\r\n";
 #endif
   m_shooter->SetShooterAngle((units::radian_t)0.75);
-  m_shooter->SetShooterSpeed((units::revolutions_per_minute_t)8500);
+  m_shooter->SetShooterSpeed((units::revolutions_per_minute_t)5000);
 }
 
 void ManualFarShoot::End(bool interrupted) {

@@ -170,14 +170,14 @@ constexpr units::ampere_t kTurningMotorCurrentLimit = 20_A;
 
 constexpr auto kModuleMaxAngularVelocity =  std::numbers::pi * 9_rad_per_s;  // radians per second ?????????
 constexpr auto kModuleMaxAngularAcceleration = std::numbers::pi * 20_rad_per_s / 1_s;  // radians per second^2
-constexpr auto kModuleMaxLinearVelocity = 4.45_mps;
+constexpr auto kModuleMaxLinearVelocity = 4.65_mps;
 }  // namespace ModuleConstants
 
 namespace IntakeConstants {
 // Intake motor 
 constexpr int kMotorID = 24;
 constexpr rev::CANSparkLowLevel::MotorType kMotorType = rev::CANSparkLowLevel::MotorType::kBrushless;
-} // namespace IntakeConstants
+} // namespace IntakeConstant
 
 namespace StagerConstants {
 // Stager motornm

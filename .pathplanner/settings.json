@@ -6,11 +6,12 @@
     "Practice"
   ],
   "autoFolders": [
+    "New Folder",
     "Practice"
   ],
   "defaultMaxVel": 3.0,
-  "defaultMaxAccel": 2.0,
+  "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 440.0,
   "defaultMaxAngAccel": 540.0,
-  "maxModuleSpeed": 4.46
+  "maxModuleSpeed": 4.66
 }

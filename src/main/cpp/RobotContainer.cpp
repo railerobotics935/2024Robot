@@ -29,6 +29,7 @@
 #include "Constants.h"
 #include "commands/shooter/AmpShoot.h"
 
+#include "commands/auto/SetSmartShooterSpeeds.h"
 #include "commands/shooter/SmartShootWhileMoving.h"
 
 using namespace DriveConstants;
@@ -50,7 +51,7 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
   // Configuring command bindings for pathplanner
   // TODO: Create custom commands for all of these
   NamedCommands::registerCommand("SmartIntake", SmartIntake{&m_intake, &m_stager}.ToPtr());
-  NamedCommands::registerCommand("SetShooterSpeeds", SetCloseShooterSpeeds{&m_shooter}.ToPtr());
+  NamedCommands::registerCommand("SetShooterSpeeds", SetCloseShooterSpeeds{&m_shooter}.ToPtr());//SetSmartShooterSpeeds{&m_shooter, &m_drive}.ToPtr());
   NamedCommands::registerCommand("SetFarShooterSpeeds", SetFarShooterSpeeds{&m_shooter}.ToPtr());
   NamedCommands::registerCommand("StageForShooting", StageForShooting{&m_stager}.ToPtr());
   NamedCommands::registerCommand("EndShooting", StopStager{&m_stager}.ToPtr());
