@@ -60,7 +60,7 @@ bool ClimberSubsystem::RightClimberAtBase() {
 }
 
 void ClimberSubsystem::Periodic() {
-  //UpdateNTE();
+  UpdateNTE();
 
   if (LeftClimberAtBase())
     m_leftClimberEncoder.SetPosition(0.0);
@@ -78,18 +78,25 @@ void ClimberSubsystem::UpdateNTE() {
 void ClimberSubsystem::SetClimberPower(double power) {
   if (power < 0.0 && m_leftClimberEncoder.GetPosition() < -6.2) {
     m_leftClimberMotor.Set(0.0);
+  }
+  else {
+    if (LeftClimberAtBase() && power > 0.0)
+      m_leftClimberMotor.Set(0.0);
+    else
+      m_leftClimberMotor.Set(power);
+  }
+
+  if (power < 0.0 && m_rightClimberEncoder.GetPosition() < -6.2) {
     m_rightClimberMotor.Set(0.0);
   }
   else {
-  if (!LeftClimberAtBase() || power < 0.0)
-    m_leftClimberMotor.Set(power);
-  else
-    m_leftClimberMotor.Set(0.0);
-  
-  if (!RightClimberAtBase() || power < 0.0)
-    m_rightClimberMotor.Set(power);
-  else
-    m_rightClimberMotor.Set(0.0);
+    if (RightClimberAtBase() && power > 0.0)
+      m_rightClimberMotor.Set(0.0);
+    else
+      m_rightClimberMotor.Set(power);
   }
+  
+  
+  
 }
 
