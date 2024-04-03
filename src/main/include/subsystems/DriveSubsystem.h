@@ -179,6 +179,11 @@ public:
   */
   frc2::CommandPtr DriveToAmp();
 
+  /** 
+   * Returns a pathplanner command to drive to a note using odometry
+  */
+  frc2::CommandPtr VisionIntake();
+
 //------------------------------------------------------------------------------------------------------------------------------------
 // Oak-D Lite Camera Sensor helper methods
 //------------------------------------------------------------------------------------------------------------------------------------

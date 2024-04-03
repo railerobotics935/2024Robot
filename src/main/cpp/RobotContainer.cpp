@@ -93,7 +93,7 @@ void RobotContainer::ConfigureButtonBindings() {
   frc2::JoystickButton fieldRelativeButton(&m_driveController, ControllerConstants::kFieldRelativeButtonIndex); 
   frc2::JoystickButton driveFacingGoalButton(&m_driveController, ControllerConstants::kDriveFacingGoalButtonIndex);
   frc2::JoystickButton smartShootWhileMovingButton(&m_driveController, ControllerConstants::kShootWhileMovingButtonIndex);
-  frc2::JoystickButton driveToAmpButton(&m_driveController, ControllerConstants::kDriveToAmpButtonIndex);
+  frc2::JoystickButton visionIntakeButton(&m_driveController, ControllerConstants::kDriveToAmpButtonIndex);
   frc2::JoystickButton intakeButton(&m_operatorController, ControllerConstants::kIntakeButtonIndex); 
   frc2::JoystickButton outtakeButton(&m_operatorController, ControllerConstants::kOuttakeButtonIndex); 
   frc2::JoystickButton closeShootButton(&m_operatorController, ControllerConstants::kCloseShooterButton);
@@ -116,7 +116,7 @@ void RobotContainer::ConfigureButtonBindings() {
   NTEShooterButton.WhileTrue(ManualNteShooter{&m_shooter, &m_operatorController}.ToPtr());//SmartShooter{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
 
   smartShootWhileMovingButton.WhileTrue(SmartShootWhileMoving{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
-  //driveToAmpButton.OnTrue(m_drive.DriveToAmp());
+  visionIntakeButton.OnTrue(frc2::ParallelCommandGroup{m_drive.DriveToAmp(), SmartIntake{&m_intake, &m_stager}.ToPtr()});
 
   // Manual shooting buttons
   //closeShootButton.WhileTrue(ManualCloseShoot{&m_shooter}.ToPtr());

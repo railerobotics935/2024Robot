@@ -79,7 +79,7 @@ private:
 
   // Processing variables to hold things
   std::vector<double> m_translationArr;
-  frc::Translation3d m_rawTranslation;
+  frc::Translation2d m_rawTranslation;
   frc::Translation3d m_convertedTranslation;
   std::vector<int> m_robotObjects;
   std::vector<int> m_noteObjects;

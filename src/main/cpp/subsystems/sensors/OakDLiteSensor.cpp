@@ -45,12 +45,7 @@ frc::Translation2d OakDLiteSensor::GetRobotRelativeTranslation(int object) {
   m_translationArr = nte_location[object].GetDoubleArray(std::vector<double>());
 
   // Create Transform3d object for object position relative to robot
-  m_rawTranslation = {(units::meter_t)m_translationArr[0], (units::meter_t)m_translationArr[1], (units::meter_t)m_translationArr[2]};
-  
-  // Convert translation into standard for the robot
-   m_convertedTranslation = frc::CoordinateSystem::Convert(m_rawTranslation, 
-                                frc::CoordinateSystem::EDN(), 
-                                frc::CoordinateSystem::NWU());
+  m_rawTranslation = {(units::meter_t)m_translationArr[0], (units::meter_t)m_translationArr[1]};
 
   // Correcting and adding translations to get final translation of the object 
   return m_convertedTranslation.ToTranslation2d().RotateBy(m_cameraPose3d.ToPose2d().Rotation()).operator+(m_cameraPose3d.ToPose2d().Translation());
