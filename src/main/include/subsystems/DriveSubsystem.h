@@ -182,7 +182,7 @@ public:
   /** 
    * Returns a pathplanner command to drive to a note using odometry
   */
-  frc2::CommandPtr VisionIntake();
+  frc2::CommandPtr VisionIntakePath();
 
 //------------------------------------------------------------------------------------------------------------------------------------
 // Oak-D Lite Camera Sensor helper methods

@@ -21,7 +21,7 @@
 #include <units/velocity.h>
 #include <frc2/command/button/JoystickButton.h>
 #include <frc2/command/WaitCommand.h>
-
+#include <frc2/command/ParallelCommandGroup.h>
 #include "pathplanner/lib/commands/PathPlannerAuto.h"
 #include "pathplanner/lib/auto/NamedCommands.h"
 
@@ -116,7 +116,7 @@ void RobotContainer::ConfigureButtonBindings() {
   NTEShooterButton.WhileTrue(ManualNteShooter{&m_shooter, &m_operatorController}.ToPtr());//SmartShooter{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
 
   smartShootWhileMovingButton.WhileTrue(SmartShootWhileMoving{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
-  visionIntakeButton.OnTrue(frc2::ParallelCommandGroup{m_drive.DriveToAmp(), SmartIntake{&m_intake, &m_stager}.ToPtr()});
+  visionIntakeButton.OnTrue(frc2::cmd::Parallel(m_drive.DriveToAmp(), SmartIntake{&m_intake, &m_stager}.ToPtr()));
 
   // Manual shooting buttons
   //closeShootButton.WhileTrue(ManualCloseShoot{&m_shooter}.ToPtr());

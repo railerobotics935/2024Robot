@@ -631,14 +631,15 @@ frc2::CommandPtr DriveSubsystem::DriveToAmp() {
 }
 
 frc2::CommandPtr DriveSubsystem::VisionIntakePath() {
+  // TODO: If no note is good, craete a dummy path to follow so we are happy and don't try to ask for a note position that dosn't exsist
   // Create poses based on robot position and where the goal is
   // run command to get best note id and grab the pose at the same time
-  m_fieldPoses = {m_drive->GetOdometryPose(), frc::Pose2d{m_drive->GetFieldRelativeTranslation(m_drive->GetBestNoteId()), m_drive->GetOdometryPose().Rotation()}};
+  m_fieldPoses = {GetOdometryPose(), frc::Pose2d{GetFieldRelativeTranslation(GetBestNoteId()), GetOdometryPose().Rotation()}};
 
   auto path = std::make_shared<pathplanner::PathPlannerPath>(
       pathplanner::PathPlannerPath::bezierFromPoses(m_fieldPoses),
       pathplanner::PathConstraints(3.5_mps, 3.5_mps_sq, 360_deg_per_s, 720_deg_per_s_sq), // The constraints for this path. If using a differential drivetrain, the angular constraints have no effect.
-      pathplanner::GoalEndState(1.0_mps, m_drive->GetPose().Rotation()) // Goal end state. You can set a holonomic rotation here. If using a differential drivetrain, the rotation will have no effect.
+      pathplanner::GoalEndState(1.0_mps, GetPose().Rotation()) // Goal end state. You can set a holonomic rotation here. If using a differential drivetrain, the rotation will have no effect.
   );
 
   // create bezier points out of them
