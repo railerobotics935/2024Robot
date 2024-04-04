@@ -76,7 +76,7 @@ void ClimberSubsystem::UpdateNTE() {
 }
 
 void ClimberSubsystem::SetClimberPower(double power) {
-  if (power < 0.0 && m_leftClimberEncoder.GetPosition() < -6.2) {
+  if (power < 0.0 && m_leftClimberEncoder.GetPosition() < -4.4) {
     m_leftClimberMotor.Set(0.0);
   }
   else {
@@ -86,7 +86,7 @@ void ClimberSubsystem::SetClimberPower(double power) {
       m_leftClimberMotor.Set(power);
   }
 
-  if (power < 0.0 && m_rightClimberEncoder.GetPosition() < -6.2) {
+  if (power < 0.0 && m_rightClimberEncoder.GetPosition() < -4.4) {
     m_rightClimberMotor.Set(0.0);
   }
   else {

@@ -6,7 +6,7 @@ RetractClimber::RetractClimber(ClimberSubsystem* climber) : m_climber{climber} {
   AddRequirements(m_climber);
 }
 
-void RetractClimber::Initialize() {
+void RetractClimber::Execute() {
 #ifdef PRINTDEBUG
   std::cout << "RetractClimber Initialized\r\n";
 #endif

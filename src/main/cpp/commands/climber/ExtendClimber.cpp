@@ -6,7 +6,7 @@ ExtendClimber::ExtendClimber(ClimberSubsystem* climber) : m_climber{climber} {
   AddRequirements(m_climber);
 }
 
-void ExtendClimber::Initialize() {
+void ExtendClimber::Execute() {
 #ifdef PRINTDEBUG
   std::cout << "ExtendClimber Initialized\r\n";
 #endif

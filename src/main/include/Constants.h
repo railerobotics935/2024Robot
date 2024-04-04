@@ -28,7 +28,8 @@
 //#define BURNMODULESPARKMAX
 //#define BURNCLIMBERSPARKMAX
 
-#define PRINTDEBUG
+#define USEXBOXCONTROLLER
+//#define PRINTDEBUG
 //#define DEBUGPOSEESTIMATION
 //#define
 
@@ -313,11 +314,17 @@ constexpr int kDriveLeftXIndex = 0; // An input RIGHT creates a NEGATIVE output
 constexpr int kDriveRightYIndex = 5; // An input UP creates a NEGATIVE output
 constexpr int kDriveRightXIndex = 4; // An input RIGHT creates a NEGATIVE output
 
+#ifdef USEXBOXCONTROLLER
 constexpr int kOperatorLeftYIndex = 1; // An input UP creates a NEGATIVE output
 constexpr int kOperatorRightYIndex = 5; // An input UP creates a NEGATIVE output
 constexpr int kStagerIntakeTrigger = 3; // R Trigger
 constexpr int kStagerOuttakeTrigger = 2; //  L Trigger
-
+#else
+constexpr int kOperatorLeftYIndex = 1; // An input UP creates a NEGATIVE output
+constexpr int kOperatorRightYIndex = 3; // An input UP creates a NEGATIVE output
+constexpr int kStagerIntakeTrigger = 7; // RB
+constexpr int kStagerOuttakeTrigger = 8; //  LB
+#endif
 // Drive Controller
 constexpr int kExtendShooterButtonIndex = 6; // RB
 constexpr int kRetractShooterButtonIndex = 5; // LB
@@ -329,13 +336,21 @@ constexpr int kResetGyroButtonIndex = 2; // B
 constexpr int kDriveFacingGoalButtonIndex = 3; // X
 
 // Operator controller 
+#ifdef USEXBOXCONTROLLER
 constexpr int kIntakeButtonIndex = 6; // RB
 constexpr int kOuttakeButtonIndex = 5; // LB
 constexpr int kNTEShooterButton = 4; // Y
 constexpr int kAmpShooterButton = 2; // B
 constexpr int kCloseShooterButton = 3; // X
 constexpr int kFarShooterButton = 1; // A
-
+#else
+constexpr int kIntakeButtonIndex = 6; // RT
+constexpr int kOuttakeButtonIndex = 5; // LT
+constexpr int kNTEShooterButton = 4; // Y
+constexpr int kAmpShooterButton = 3; // B
+constexpr int kCloseShooterButton = 1; // X
+constexpr int kFarShooterButton = 2; // A
+#endif
 } // namespace ControllerConstants
 
 namespace OIConstants {

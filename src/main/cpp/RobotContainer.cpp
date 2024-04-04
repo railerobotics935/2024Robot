@@ -113,16 +113,15 @@ void RobotContainer::ConfigureButtonBindings() {
   outtakeButton.WhileTrue(SmartOuttake{&m_intake, &m_stager}.ToPtr());
   extendClimberButton.WhileTrue(ExtendClimber{&m_climber}.ToPtr());
   retractClimberButton.WhileTrue(RetractClimber{&m_climber}.ToPtr());
-  NTEShooterButton.WhileTrue(ManualNteShooter{&m_shooter, &m_operatorController}.ToPtr());//SmartShooter{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
+  //NTEShooterButton.WhileTrue(ManualNteShooter{&m_shooter, &m_operatorController}.ToPtr());//SmartShooter{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
 
   smartShootWhileMovingButton.WhileTrue(SmartShootWhileMoving{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
-  visionIntakeButton.OnTrue(frc2::cmd::Parallel(m_drive.DriveToAmp(), SmartIntake{&m_intake, &m_stager}.ToPtr()));
+  //visionIntakeButton.OnTrue(frc2::cmd::Parallel(m_drive.DriveToAmp(), SmartIntake{&m_intake, &m_stager}.ToPtr()));
 
   // Manual shooting buttons
   //closeShootButton.WhileTrue(ManualCloseShoot{&m_shooter}.ToPtr());
   closeShootButton.WhileTrue(SmartShooter{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
-  farShooterButton.WhileTrue(ManualFarShoot{&m_shooter}.ToPtr());
-
+  farShooterButton.WhileTrue(ManualCloseShoot{&m_shooter}.ToPtr());
   ampShooterButton.WhileTrue(AmpShoot{&m_shooter, &m_stager}.ToPtr());
 
   /*

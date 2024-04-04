@@ -14,10 +14,20 @@ void ManualStager::Initialize() {
 }
 
 void ManualStager::Execute() {
+
+#ifdef USEXBOXCONTROLLER
   if (frc::ApplyDeadband(m_operatorController->GetRawAxis(ControllerConstants::kStagerIntakeTrigger), 0.05) != 0.0)
     m_stager->SetMotorPower(-frc::ApplyDeadband(m_operatorController->GetRawAxis(ControllerConstants::kStagerIntakeTrigger), 0.05));
   else
     m_stager->SetMotorPower(frc::ApplyDeadband(m_operatorController->GetRawAxis(ControllerConstants::kStagerOuttakeTrigger), 0.05));
+#else
+  if (m_operatorController->GetRawButton(ControllerConstants::kStagerIntakeTrigger))
+    m_stager->SetMotorPower(-1.0);
+  else if (m_operatorController->GetRawButton(ControllerConstants::kStagerOuttakeTrigger))
+    m_stager->SetMotorPower(1.0);
+  else 
+    m_stager->SetMotorPower(0.0);
+#endif
 }
 
 void ManualStager::End(bool interrupted) {

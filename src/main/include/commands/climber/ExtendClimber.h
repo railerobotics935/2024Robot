@@ -17,7 +17,7 @@ public:
    */
   explicit ExtendClimber(ClimberSubsystem* climber);
 
-  void Initialize() override;
+  void Execute() override;
   void End(bool interrupted) override;
   
 private:
