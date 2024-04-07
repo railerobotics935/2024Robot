@@ -21,14 +21,14 @@ void AmpShoot::Execute() {
 }
 
 bool AmpShoot::IsFinished() {
-  if ((double)m_shooter->GetShooterAngle() > 1.7)
+  if ((double)m_shooter->GetShooterAngle() > 1.8)
     return true;
   else
     return false;
 }
 void AmpShoot::End(bool interrupted) {
   // Reset everything to zero
-  m_shooter->SetShooterAngle((units::radian_t)0.8);
+  m_shooter->SetShooterAngle((units::radian_t)1.0);
   m_shooter->SetShooterMotorPower(0.0);
   m_stager->SetMotorPower(0.0);
 #ifdef PRINTDEBUG

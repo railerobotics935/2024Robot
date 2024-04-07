@@ -16,7 +16,7 @@ void ManualCloseShoot::Initialize() {
 
 void ManualCloseShoot::End(bool interrupted) {
   // Reset everything to zero
-  m_shooter->SetShooterAngle((units::radian_t)0.8);
+  m_shooter->SetShooterAngle((units::radian_t)1.0);
   m_shooter->SetShooterMotorPower(0.0);
 #ifdef PRINTDEBUG
   std::cout << "ManualCloseShoot Ended\r\n";

@@ -124,6 +124,9 @@ void RobotContainer::ConfigureButtonBindings() {
   farShooterButton.WhileTrue(ManualCloseShoot{&m_shooter}.ToPtr());
   ampShooterButton.WhileTrue(AmpShoot{&m_shooter, &m_stager}.ToPtr());
 
+  //NTEShooterButton.WhileTrue(AmpShoot{&m_shooter, &m_stager}.ToPtr());
+  //ampShooterButton.WhileTrue(ManualFarShoot{&m_shooter}.ToPtr());
+
   /*
   NTEShooterButton.WhileTrue(frc2::cmd::Run([&] {
     m_shooter.SetShooterAngle((units::radian_t)1.0);

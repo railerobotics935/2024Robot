@@ -10,7 +10,7 @@ void DefaultShooter::Initialize() {
 #ifdef PRINTDEBUG
   std::cout << "DefaultShooter Initialized\r\n";
 #endif
-  m_shooter->SetShooterAngle((units::radian_t)0.8);
+  m_shooter->SetShooterAngle((units::radian_t)1.0);
   m_shooter->SetShooterMotorPower(0.0);
 }
 
