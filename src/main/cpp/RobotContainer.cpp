@@ -108,31 +108,18 @@ void RobotContainer::ConfigureButtonBindings() {
   robotRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetRobotRelative();}, {}));
   fieldRelativeButton.OnTrue(frc2::cmd::RunOnce([&] {m_drive.SetFieldRelative();}, {}));
   //driveFacingGoalButton.WhileTrue(DriveFacingGoal{&m_drive, &m_driveController}.ToPtr());
-  driveFacingGoalButton.WhileTrue(DriveFacingGoal{&m_drive, &m_driveController}.ToPtr());
+  //driveFacingGoalButton.WhileTrue(DriveFacingGoal{&m_drive, &m_driveController}.ToPtr());
   intakeButton.WhileTrue(SmartIntake{&m_intake, &m_stager}.ToPtr());
-  outtakeButton.WhileTrue(SmartOuttake{&m_intake, &m_stager}.ToPtr());
+  outtakeButton.WhileTrue(SmartOuttake{&m_intake, &m_drive,  &m_shooter, &m_stager, &m_operatorController}.ToPtr());
   extendClimberButton.WhileTrue(ExtendClimber{&m_climber}.ToPtr());
   retractClimberButton.WhileTrue(RetractClimber{&m_climber}.ToPtr());
-  //NTEShooterButton.WhileTrue(ManualNteShooter{&m_shooter, &m_operatorController}.ToPtr());//SmartShooter{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
 
-  smartShootWhileMovingButton.WhileTrue(SmartShootWhileMoving{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
-  //visionIntakeButton.OnTrue(frc2::cmd::Parallel(m_drive.DriveToAmp(), SmartIntake{&m_intake, &m_stager}.ToPtr()));
+// Close shoot(manual close shot command) is set shoot speed
 
-  // Manual shooting buttons
-  //closeShootButton.WhileTrue(ManualCloseShoot{&m_shooter}.ToPtr());
-  closeShootButton.WhileTrue(SmartShooter{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
-  farShooterButton.WhileTrue(ManualCloseShoot{&m_shooter}.ToPtr());
-  ampShooterButton.WhileTrue(AmpShoot{&m_shooter, &m_stager}.ToPtr());
+// UpdateNTEbutton sets (manual far shot command) is set specific angle for, high shot
 
-  //NTEShooterButton.WhileTrue(AmpShoot{&m_shooter, &m_stager}.ToPtr());
-  //ampShooterButton.WhileTrue(ManualFarShoot{&m_shooter}.ToPtr());
-
-  /*
-  NTEShooterButton.WhileTrue(frc2::cmd::Run([&] {
-    m_shooter.SetShooterAngle((units::radian_t)1.0);
-    m_shooter.SetIndividualShooterSpeed((units::revolutions_per_minute_t)150,(units::revolutions_per_minute_t)3700);
-  }, {&m_shooter}));
-  */
+  closeShootButton.WhileTrue(ManualCloseShoot{&m_shooter}.ToPtr());
+  NTEShooterButton.WhileTrue(ManualFarShoot{&m_shooter}.ToPtr());
 }
 
 frc2::CommandPtr RobotContainer::GetAutonomousCommand() {

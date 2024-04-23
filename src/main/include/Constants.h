@@ -235,7 +235,7 @@ constexpr double kPitchMax = 0.5;
 
 // Limits so the shooter pitch can't be over extened
 constexpr double kMinPitchAngle = 0.5; // Radians
-constexpr double kMaxPitchAngle = 1.7; // Radians
+constexpr double kMaxPitchAngle = 1.5; // Radians
 
 // Offset for the pitch
 constexpr double kPitchOffset = (4.413 + 2.614) - (std::numbers::pi); // calabrated it on a calibration, so pi instead of pi/2

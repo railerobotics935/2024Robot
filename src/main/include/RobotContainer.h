@@ -39,7 +39,6 @@
 #include "commands/intake/StopIntake.h"
 #include "commands/shooter/DefaultShooter.h"
 #include "commands/shooter/ManualNteShooter.h"
-#include "commands/shooter/SmartShooter.h"
 #include "commands/shooter/ManualCloseShoot.h"
 #include "commands/shooter/ManualFarShoot.h"
 #include "commands/climber/ExtendClimber.h"
@@ -112,11 +111,9 @@ class RobotContainer {
   ManualStager m_manualStager{&m_stager, &m_operatorController};
   SimpleIntake m_simpleIntake{&m_intake};
   SmartIntake m_smartIntake{&m_intake, &m_stager};
-  SmartOuttake m_smartOuttake{&m_intake, &m_stager};
   StopIntake m_stopIntake{&m_intake};
-  DefaultShooter m_defaultShooter{&m_shooter};
+  DefaultShooter m_defaultShooter{&m_shooter, &m_drive, &m_operatorController};
   ManualNteShooter m_manualNteShooter{&m_shooter, &m_operatorController};
-  SmartShooter m_smartShooting{&m_shooter, &m_drive, &m_driveController, &m_operatorController};
   ManualCloseShoot m_manualCloseShoot{&m_shooter};
   ManualFarShoot m_manualFarShoot{&m_shooter};
   ExtendClimber m_extendClimber{&m_climber};

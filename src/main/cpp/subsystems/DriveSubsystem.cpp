@@ -605,7 +605,7 @@ frc::Translation2d DriveSubsystem::GetRobotTranslationFieldReleative(int object)
 double DriveSubsystem::GetDistanceFromRobot(int object) {
   return m_OakDLiteCameraSensor.GetDistanceFromRobot(object);
 }
-
+/*
 frc2::CommandPtr DriveSubsystem::DriveToAmp() {
     // Create poses based on robot position and where the goal is
   if (frc::DriverStation::GetAlliance() == frc::DriverStation::Alliance::kBlue) {
@@ -645,7 +645,7 @@ frc2::CommandPtr DriveSubsystem::VisionIntakePath() {
   // create bezier points out of them
   return pathplanner::AutoBuilder::followPathWithEvents(path);
 }
-
+*/
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 // Utility math functions
 // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------

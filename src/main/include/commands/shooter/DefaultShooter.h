@@ -8,6 +8,7 @@
 #include <networktables/NetworkTableInstance.h>
 
 #include "subsystems/ShooterSubsystem.h"
+#include "subsystems/DriveSubsystem.h"
 
 /**
  * Command to take shooter speed and angle from nte and set the robot to shoot it
@@ -20,7 +21,7 @@ public:
    * 
    * @param shooter memory adress of shooter subsystem
   */
-  explicit DefaultShooter(ShooterSubsystem* shooter);
+  explicit DefaultShooter(ShooterSubsystem* shooter, DriveSubsystem* drive, frc::XboxController* opController);
 
   void Initialize() override;
   void End(bool interrupted) override;
@@ -28,4 +29,6 @@ public:
 private:
 // Declare local subsystems
 ShooterSubsystem* m_shooter;
+DriveSubsystem* m_drive;
+frc::XboxController* m_opController;
 };
