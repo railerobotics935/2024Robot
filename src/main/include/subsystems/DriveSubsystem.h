@@ -177,12 +177,12 @@ public:
   /** 
    * Returns a pathplanner command to drive to the amp using pose estimation
   */
-  frc2::CommandPtr DriveToAmp();
+//  frc2::CommandPtr DriveToAmp(); Unstable/untested
 
   /** 
    * Returns a pathplanner command to drive to a note using odometry
   */
-  frc2::CommandPtr VisionIntakePath();
+//  frc2::CommandPtr VisionIntakePath(); Unstable/untested
 
 //------------------------------------------------------------------------------------------------------------------------------------
 // Oak-D Lite Camera Sensor helper methods
