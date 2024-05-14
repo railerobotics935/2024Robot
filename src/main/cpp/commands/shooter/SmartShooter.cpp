@@ -1,4 +1,4 @@
-
+/*
 #include "commands/shooter/SmartShooter.h"
 #include "commands/drive/DriveFacingGoal.h"
 
@@ -79,3 +79,5 @@ void SmartShooter::End(bool interrupted) {
   std::cout << "SmartShooting Ended\r\n";
 #endif
 }
+
+*/
