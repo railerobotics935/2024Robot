@@ -8,29 +8,25 @@
 #include <networktables/NetworkTableInstance.h>
 
 #include "subsystems/ShooterSubsystem.h"
-#include "subsystems/StagerSubsystem.h"
 
 /**
- * Command to take shooter speed and angle from nte and set the robot to shoot it
+ * Command that shoots the note with the robot up to the amp
  */
 class AmpShoot 
   : public frc2::CommandHelper<frc2::Command, AmpShoot> {
 public:
   /**
-   * Run the shooter so the note enters the amp
+   * Sets shooter to values in networktable entries
    * 
    * @param shooter memory adress of shooter subsystem
-   * @param stager memory adress of stager subsystem
   */
-  explicit AmpShoot(ShooterSubsystem* shooter, StagerSubsystem* stager);
+  explicit AmpShoot(ShooterSubsystem* shooter);
 
   void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
   void End(bool interrupted) override;
 
 private:
 // Declare local subsystems
 ShooterSubsystem* m_shooter;
-StagerSubsystem* m_stager;
+
 };

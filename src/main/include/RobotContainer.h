@@ -41,7 +41,6 @@
 #include "commands/shooter/ManualNteShooter.h"
 #include "commands/shooter/SmartShooter.h"
 #include "commands/shooter/ManualCloseShoot.h"
-#include "commands/shooter/ManualFarShoot.h"
 #include "commands/climber/ExtendClimber.h"
 #include "commands/climber/RetractClimber.h"
 #include "commands/climber/StopClimber.h"

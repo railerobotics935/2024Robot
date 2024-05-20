@@ -341,15 +341,15 @@ constexpr int kIntakeButtonIndex = 6; // RB
 constexpr int kOuttakeButtonIndex = 5; // LB
 constexpr int kNTEShooterButton = 4; // Y
 constexpr int kAmpShooterButton = 2; // B
-constexpr int kCloseShooterButton = 3; // X
-constexpr int kFarShooterButton = 1; // A
+constexpr int kSmartShooterButton = 3; // X
+constexpr int kManualCloseShootButton = 1; // A
 #else
 constexpr int kIntakeButtonIndex = 6; // RT
 constexpr int kOuttakeButtonIndex = 5; // LT
 constexpr int kNTEShooterButton = 4; // Y
 constexpr int kAmpShooterButton = 3; // B
-constexpr int kCloseShooterButton = 1; // X
-constexpr int kFarShooterButton = 2; // A
+constexpr int kSmartShooterButton = 1; // X
+constexpr int kManualCloseShootButton = 2; // A
 #endif
 } // namespace ControllerConstants
 

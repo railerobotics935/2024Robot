@@ -12,15 +12,15 @@
 /**
  * Command to take shooter speed and angle from nte and set the robot to shoot it
  */
-class ManualFarShoot 
-  : public frc2::CommandHelper<frc2::Command, ManualFarShoot> {
+class LoftShoot 
+  : public frc2::CommandHelper<frc2::Command, LoftShoot> {
 public:
   /**
    * Sets shooter to values in networktable entries
    * 
    * @param shooter memory adress of shooter subsystem
   */
-  explicit ManualFarShoot(ShooterSubsystem* shooter);
+  explicit LoftShoot(ShooterSubsystem* shooter);
 
   void Initialize() override;
   void End(bool interrupted) override;
