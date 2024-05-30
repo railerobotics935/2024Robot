@@ -60,7 +60,7 @@ GuftSubsystem::GuftSubsystem(double guftAngleOffset) : m_guftMotor{kGuftID, kGuf
 
 void GuftSubsystem::Periodic() {
   // Implementation of subsystem periodic method goes here.
-  //nte_guftAngle.SetDouble((double)m_guftAbsoluteEncoder.GetPosition());
+  nte_guftAngle.SetDouble((double)m_guftAbsoluteEncoder.GetPosition());
 }
 
 double GuftSubsystem::GetGuftAngle() {

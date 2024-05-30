@@ -1,16 +1,18 @@
 
 #include "commands/shooter/AmpShoot.h"
 
-AmpShoot::AmpShoot(ShooterSubsystem* shooter) : m_shooter{shooter} {
+AmpShoot::AmpShoot(ShooterSubsystem* shooter, GuftSubsystem* guft) : m_shooter{shooter}, m_guft{guft} {
 
   // Add requierment for subsystem
   AddRequirements(m_shooter);
+  AddRequirements(m_guft);
 }
 
 void AmpShoot::Initialize() {
 #ifdef PRINTDEBUG
   std::cout << "AmpShoot Initialized\r\n";
 #endif
+  m_guft->SetGuftAngle((units::radian_t)2.98);
   m_shooter->SetShooterAngle((units::radian_t)1.27);
   m_shooter->SetIndividualShooterSpeed((units::revolutions_per_minute_t)300.0, (units::revolutions_per_minute_t)2000.0);
 }

@@ -235,8 +235,8 @@ constexpr double kPitchMin = -0.5;
 constexpr double kPitchMax = 0.5;
 
 // Limits so the shooter pitch can't be over extened
-constexpr double kMinPitchAngle = 0.5; // Radians
-constexpr double kMaxPitchAngle = 1.7; // Radians
+constexpr double kMinPitchAngle = 0.7; // Radians
+constexpr double kMaxPitchAngle = 1.3; // Radians
 
 // Offset for the pitch
 constexpr double kPitchOffset = (4.413 + 2.614) - (std::numbers::pi); // calabrated it on a calibration, so pi instead of pi/2
@@ -249,7 +249,7 @@ constexpr units::ampere_t kPitchMotorCurrentLimit = 20_A;
 
 namespace GuftConstants {
 // Guft motor 
-constexpr int kGuftID = 29;
+constexpr int kGuftID = 15;
 constexpr rev::CANSparkLowLevel::MotorType kGuftMotorType = rev::CANSparkLowLevel::MotorType::kBrushless;
 
 // Pitch encoder
@@ -257,16 +257,16 @@ constexpr double kGuftPositionFactor = (std::numbers::pi * 2); // radians
 constexpr double kGuftEncoderVelocityFactor = (2 * std::numbers::pi); // radians per second
 
 // PID Constants for the pitch of Guft
-constexpr double kGuftP = 3.2;
-constexpr double kGuftI = 0.001;
-constexpr double kGuftD = 0.15;
+constexpr double kGuftP = 2.0;
+constexpr double kGuftI = 0.0001;
+constexpr double kGuftD = 0.05;
 constexpr double kGuftFF = 0.0;
-constexpr double kGuftMin = -0.5;
-constexpr double kGuftMax = 0.5;
+constexpr double kGuftMin = -0.7;
+constexpr double kGuftMax = 0.7;
 
 // Limits so the Guft pitch can't be over extened
-constexpr double kMinGuftAngle = 0.5; // Radians
-constexpr double kMaxGuftAngle = 1.7; // Radians
+constexpr double kMinGuftAngle = 0.40; // Radians
+constexpr double kMaxGuftAngle = 2.98; // Radians
 
 // Offset for the pitch
 constexpr double kGuftOffset = (0.0) - (std::numbers::pi/2); // calabrated it on a calibration, so pi instead of pi/2

@@ -31,7 +31,7 @@
 
 #include "commands/auto/SetSmartShooterSpeeds.h"
 #include "commands/shooter/SmartShootWhileMoving.h"
-
+#include "commands/shooter/DefaultGuft.h"
 using namespace DriveConstants;
 using namespace pathplanner;
 
@@ -44,7 +44,7 @@ using namespace pathplanner;
  * is, if it is better or not
 */
 
-RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
+RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset}, m_guft{GuftConstants::kGuftOffset} {
   m_revPDH.SetSwitchableChannel(true); //-------------------------------------------------------------------------------------
 
   // Initialize all of your commands and subsystems here
@@ -68,6 +68,7 @@ RobotContainer::RobotContainer() : m_shooter{ShooterConstants::kPitchOffset} {
   m_shooter.SetDefaultCommand(std::move(m_defaultShooter));
   m_stager.SetDefaultCommand(std::move(m_manualStager));
   m_climber.SetDefaultCommand(std::move(m_stopClimber));
+  m_guft.SetDefaultCommand(DefaultGuft{&m_guft}.ToPtr());
   
   // Add auto name options
   m_autoChooser.SetDefaultOption("Speaker21", m_speaker21);
@@ -122,7 +123,7 @@ void RobotContainer::ConfigureButtonBindings() {
   //smartShooterButton.WhileTrue(ManualCloseShoot{&m_shooter}.ToPtr());
   //smartShooterButton.WhileTrue(SmartShooter{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
   manualCloseShootButton.WhileTrue(ManualCloseShoot{&m_shooter}.ToPtr());
-  ampShooterButton.WhileTrue(AmpShoot{&m_shooter}.ToPtr());
+  ampShooterButton.WhileTrue(AmpShoot{&m_shooter, &m_guft}.ToPtr());
 
   /*
   NTEShooterButton.WhileTrue(frc2::cmd::Run([&] {

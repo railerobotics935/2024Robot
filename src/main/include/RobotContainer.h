@@ -23,6 +23,7 @@
 #include "subsystems/ShooterSubsystem.h"
 #include "subsystems/StagerSubsystem.h"
 #include "subsystems/ClimberSubsystem.h"
+#include "subsystems/GuftSubsystem.h"
 
 #include "commands/auto/SetCloseShooterSpeeds.h"
 #include "commands/auto/SetFarShooterSpeeds.h"
@@ -82,6 +83,7 @@ class RobotContainer {
   ShooterSubsystem m_shooter;
   StagerSubsystem m_stager;
   ClimberSubsystem m_climber;
+  GuftSubsystem m_guft;
 
   // Sendable chooser for auto
   frc::SendableChooser<std::string> m_autoChooser;
