@@ -18,13 +18,11 @@
 
 class GuftSubsystem : public frc2::SubsystemBase {
  public:
-  enum GuftState {Retracted, Deployed}; 
-
 
  /**
+  * This is the Guft subsystem (guarenteeification subsystem) it holds the arm that can be deployed that guarentees our amp shot
   * 
-  * 
-  * @param GuftAngleOffset // Angle offset for the pitch encoder
+  * @param GuftAngleOffset // Angle offset for the guft encoder
  */
   GuftSubsystem(double GuftAngleOffset);
 
@@ -68,31 +66,19 @@ class GuftSubsystem : public frc2::SubsystemBase {
 
  private:
   // Local copy of arguments
-  double m_GuftAngleOffset = 0.0;
+  double m_guftAngleOffset = 0.0;
 
   // Networktable entries
-  nt::NetworkTableEntry nte_topGuftSpeed;
-  nt::NetworkTableEntry nte_bottomGuftSpeed;
-  nt::NetworkTableEntry nte_topGuftSetpoint;
-  nt::NetworkTableEntry nte_bottomGuftSetpoint;
-  nt::NetworkTableEntry nte_pitchAngle;
-  nt::NetworkTableEntry nte_pitchSetpoint;
-  nt::NetworkTableEntry nte_topSetpointSpeedRPM;
-  nt::NetworkTableEntry nte_bottomSetpointSpeedRPM;
-  nt::NetworkTableEntry nte_setpointAngleRadians;
 
-  // Motor Controllers
-  rev::CANSparkMax m_topGuftMotor;
-  rev::CANSparkMax m_bottomGuftMotor;
-  rev::CANSparkMax m_pitchMotor;
+  nt::NetworkTableEntry nte_guftAngle;
+  nt::NetworkTableEntry nte_guftSetpoint;
+
+  // Motor Controllers;
+  rev::CANSparkMax m_guftMotor;
 
   // Encoders motor controllers
-  rev::SparkRelativeEncoder m_topGuftEncoder = m_topGuftMotor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor);
-  rev::SparkRelativeEncoder m_bottomGuftEncoder = m_bottomGuftMotor.GetEncoder(rev::SparkRelativeEncoder::Type::kHallSensor);
-  rev::SparkAbsoluteEncoder m_pitchAbsoluteEncoder = m_pitchMotor.GetAbsoluteEncoder(rev::SparkAbsoluteEncoder::Type::kDutyCycle);
+  rev::SparkAbsoluteEncoder m_guftAbsoluteEncoder = m_guftMotor.GetAbsoluteEncoder(rev::SparkAbsoluteEncoder::Type::kDutyCycle);
 
   // PID Contollers for
-  rev::SparkPIDController m_topGuftPIDController = m_topGuftMotor.GetPIDController();
-  rev::SparkPIDController m_bottomGuftPIDController = m_bottomGuftMotor.GetPIDController();
-  rev::SparkPIDController m_pitchPIDController = m_pitchMotor.GetPIDController();
+  rev::SparkPIDController m_guftPIDController = m_guftMotor.GetPIDController();
 };

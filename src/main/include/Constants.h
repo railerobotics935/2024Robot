@@ -24,6 +24,7 @@
 
 // Turn this off when there is no new constants need to be burned onto motorcontrollers
 //#define BURNSHOOTERSPARKMAX 
+#define BURNGUFTSPARKMAX 
 //#define BURNSTAGERSPARKMAX
 //#define BURNMODULESPARKMAX
 //#define BURNCLIMBERSPARKMAX
@@ -248,60 +249,29 @@ constexpr units::ampere_t kPitchMotorCurrentLimit = 20_A;
 
 namespace GuftConstants {
 // Guft motor 
-constexpr int kTopGuftID = 27;
-constexpr int kBottomGuftID = 28;
-constexpr int kPitchID = 29;
+constexpr int kGuftID = 29;
 constexpr rev::CANSparkLowLevel::MotorType kGuftMotorType = rev::CANSparkLowLevel::MotorType::kBrushless;
-constexpr rev::CANSparkLowLevel::MotorType kBottomMotorType = rev::CANSparkLowLevel::MotorType::kBrushless;
-constexpr rev::CANSparkLowLevel::MotorType kPitchMotorType = rev::CANSparkLowLevel::MotorType::kBrushless;
-
-// Calculations required for driving motor conversion factors and feed forward
-constexpr double kGuftMotorFreeSpeedRps =
-    5676.0 / 60;  // NEO free speed is 5676 RPM
-
-// Setup conversion factor for Guft encoders
-constexpr double kGuftGearboxRatio = 0.5; // Large gear is 36T smaller is 18T
-constexpr double kGuftPositionFactor = 1 / kGuftGearboxRatio; // revolutions
-constexpr double kGuftEncoderVelocityFactor = kGuftPositionFactor;  // revolutions per minute
 
 // Pitch encoder
-constexpr double kPitchPositionFactor = (std::numbers::pi * 2); // radians
-constexpr double kPitchEncoderVelocityFactor = (2 * std::numbers::pi); // radians per second
-
-// PID Constants for the speed of the Guft   RR had  0.0001, 0.0005, 0
-constexpr double kTopGuftP = 0.00025;//  0.00025 
-constexpr double kTopGuftI = 0.00000;//  0.000000 
-constexpr double kTopGuftD = 0.01;//  0.01 
-constexpr double kTopGuftFF = 0.000095;//  0.000095 // and 0.00016 Effects steady state error
-constexpr double kTopGuftMin = -1.0;
-constexpr double kTopGuftMax = 1.0;
-
-// PID Constants for the speed of the Guft   RR had  0.0001, 0.0005, 0
-constexpr double kBottomGuftP = 0.00025;//  0.00025 
-constexpr double kBottomGuftI = 0.00000;//  0.000000 
-constexpr double kBottomGuftD = 0.01;//  0.01 
-constexpr double kBottomGuftFF = 0.000095;//  0.000095 // and 0.00016 Effects steady state error
-constexpr double kBottomGuftMin = -1.0;
-constexpr double kBottomGuftMax = 1.0;
+constexpr double kGuftPositionFactor = (std::numbers::pi * 2); // radians
+constexpr double kGuftEncoderVelocityFactor = (2 * std::numbers::pi); // radians per second
 
 // PID Constants for the pitch of Guft
-constexpr double kPitchP = 3.2;
-constexpr double kPitchI = 0.001;
-constexpr double kPitchD = 0.15;
-constexpr double kPitchFF = 0.0;
-constexpr double kPitchMin = -0.5;
-constexpr double kPitchMax = 0.5;
+constexpr double kGuftP = 3.2;
+constexpr double kGuftI = 0.001;
+constexpr double kGuftD = 0.15;
+constexpr double kGuftFF = 0.0;
+constexpr double kGuftMin = -0.5;
+constexpr double kGuftMax = 0.5;
 
 // Limits so the Guft pitch can't be over extened
-constexpr double kMinPitchAngle = 0.5; // Radians
-constexpr double kMaxPitchAngle = 1.7; // Radians
+constexpr double kMinGuftAngle = 0.5; // Radians
+constexpr double kMaxGuftAngle = 1.7; // Radians
 
 // Offset for the pitch
-constexpr double kPitchOffset = (4.413 + 2.614) - (std::numbers::pi); // calabrated it on a calibration, so pi instead of pi/2
+constexpr double kGuftOffset = (0.0) - (std::numbers::pi/2); // calabrated it on a calibration, so pi instead of pi/2
 
-constexpr units::ampere_t kGuftMotorCurrentLimit = 40_A;
-constexpr units::ampere_t kBottomMotorCurrentLimit = 40_A;
-constexpr units::ampere_t kPitchMotorCurrentLimit = 20_A;
+constexpr units::ampere_t kGuftMotorCurrentLimit = 20_A;
 
 } // namespace GuftConstants
 
