@@ -1,4 +1,4 @@
-
+/*
 #pragma once
 
 #include <frc2/command/Command.h>
@@ -22,6 +22,7 @@ public:
    * @param opController Pointer to the operator controller
    * @param driveController Pointer to the driver controller
   */
+ /*
   explicit SmartShooter(ShooterSubsystem* shooter, DriveSubsystem* drive, frc::XboxController* opController, frc::XboxController* driveController);
 
   void Initialize() override;
@@ -37,3 +38,4 @@ private:
 
    double m_distanceToShooter;
 };
+*/
