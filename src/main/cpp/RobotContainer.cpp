@@ -32,6 +32,8 @@
 #include "commands/auto/SetSmartShooterSpeeds.h"
 #include "commands/shooter/SmartShootWhileMoving.h"
 #include "commands/shooter/DefaultGuft.h"
+#include "commands/shooter/ClimberShooter.h"
+
 using namespace DriveConstants;
 using namespace pathplanner;
 
@@ -115,6 +117,10 @@ void RobotContainer::ConfigureButtonBindings() {
   extendClimberButton.WhileTrue(ExtendClimber{&m_climber}.ToPtr());
   retractClimberButton.WhileTrue(RetractClimber{&m_climber}.ToPtr());
 
+  // Also move the shooter into a different position, can be cancled if a different command is sent.
+  extendClimberButton.OnTrue(ClimberShooter{&m_shooter}.ToPtr().WithInterruptBehavior(frc2::Command::InterruptionBehavior::kCancelSelf));
+  retractClimberButton.OnTrue(ClimberShooter{&m_shooter}.ToPtr().WithInterruptBehavior(frc2::Command::InterruptionBehavior::kCancelSelf));
+  
   //NTEShooterButton.WhileTrue(ManualNteShooter{&m_shooter, &m_operatorController}.ToPtr());//SmartShooter{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
   //smartShootWhileMovingButton.WhileTrue(SmartShootWhileMoving{&m_shooter, &m_drive, &m_operatorController, &m_driveController}.ToPtr());
   //visionIntakeButton.OnTrue(frc2::cmd::Parallel(m_drive.DriveToAmp(), SmartIntake{&m_intake, &m_stager}.ToPtr()));
