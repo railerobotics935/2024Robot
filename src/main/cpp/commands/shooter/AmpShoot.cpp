@@ -12,7 +12,7 @@ void AmpShoot::Initialize() {
 #ifdef PRINTDEBUG
   std::cout << "AmpShoot Initialized\r\n";
 #endif
-  m_guft->SetGuftAngle((units::radian_t)2.98);
+  m_guft->SetGuftAngle((units::radian_t)2.93);
   m_shooter->SetShooterAngle((units::radian_t)1.27);
   m_shooter->SetIndividualShooterSpeed((units::revolutions_per_minute_t)300.0, (units::revolutions_per_minute_t)2000.0);
 }

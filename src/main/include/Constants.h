@@ -24,7 +24,7 @@
 
 // Turn this off when there is no new constants need to be burned onto motorcontrollers
 //#define BURNSHOOTERSPARKMAX 
-#define BURNGUFTSPARKMAX 
+//#define BURNGUFTSPARKMAX 
 //#define BURNSTAGERSPARKMAX
 //#define BURNMODULESPARKMAX
 //#define BURNCLIMBERSPARKMAX
@@ -228,7 +228,7 @@ constexpr double kBottomShooterMax = 1.0;
 
 // PID Constants for the pitch of shooter
 constexpr double kPitchP = 3.2;
-constexpr double kPitchI = 0.001;
+constexpr double kPitchI = 0.001; // 0.001
 constexpr double kPitchD = 0.15;
 constexpr double kPitchFF = 0.0;
 constexpr double kPitchMin = -0.5;
